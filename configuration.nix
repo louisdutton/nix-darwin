@@ -13,22 +13,14 @@
   # zsh > bash
   programs.zsh.enable = true;
 
-  # default host and user
+  # host and user
   networking.hostName = user.hostName;
   users = {
-    # defaultUserShell = pkgs.zsh; # nixos only
     users.${user.name} = {
       shell = pkgs.zsh;
       home = user.home;
-      # isNormalUser = true; # nixos only
     };
   };
-
-  # nix helper (nixos only)
-  # programs.nh = {
-  #   enable = true;
-  #   flake = user.flake;
-  # };
 
   # docker
   # virtualisation.docker.enable = true;

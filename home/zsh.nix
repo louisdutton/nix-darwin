@@ -85,7 +85,7 @@
     enableCompletion = true;
 
     shellAliases = {
-      rebuild = "nh os switch ~/.config/nixos";
+      rebuild = "darwin-rebuild switch --flake ~/.config/nix-darwin";
       d = "nix develop --command zsh";
       c = "clear";
       e = "$EDITOR";
