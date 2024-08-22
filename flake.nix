@@ -11,8 +11,14 @@
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { nix-darwin, home-manager, nixvim, ... }:
-  let
+  outputs =
+    {
+      nix-darwin,
+      home-manager,
+      nixvim,
+      ...
+    }:
+    let
       shared = rec {
         name = "louis";
         home = /Users/${name};
@@ -20,36 +26,36 @@
         displayName = "Louis Dutton";
         email = "louis.dutton@travelchapter.com";
       };
-  in
-  {
-    darwinConfigurations."mini" =
-    let
-	user = shared // {	
-	 system = "aarch64-darwin";
-	 hostName = "mini";
-	};
     in
-    nix-darwin.lib.darwinSystem {
-	system = user.system;
-	specialArgs = {
-		inherit user;
-	};
-      modules = [
-        ./configuration.nix
-        ./macos.nix
-	./vim
-        home-manager.darwinModules.home-manager
-	nixvim.nixDarwinModules.nixvim
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.louis = import ./home;
-	 home-manager.backupFileExtension = "backup";
-	home-manager.extraSpecialArgs = {
+    {
+      darwinConfigurations."mini" =
+        let
+          user = shared // {
+            system = "aarch64-darwin";
+            hostName = "mini";
+          };
+        in
+        nix-darwin.lib.darwinSystem {
+          system = user.system;
+          specialArgs = {
+            inherit user;
+          };
+          modules = [
+            ./configuration.nix
+            ./macos.nix
+            ./vim
+            home-manager.darwinModules.home-manager
+            nixvim.nixDarwinModules.nixvim
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.louis = import ./home;
+              home-manager.backupFileExtension = "backup";
+              home-manager.extraSpecialArgs = {
                 inherit user;
               };
-        }
-      ];
+            }
+          ];
+        };
     };
-  };
 }
