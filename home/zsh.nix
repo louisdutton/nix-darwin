@@ -99,13 +99,6 @@
       weather = "xh wttr.in/Truro format==j1 | jq '.current_condition.[0].FeelsLikeC'";
       checkout = "git checkout $(git branch --list | fzf)";
       "-" = "cd -";
-
-      # mulesoft
-      mule-redeploy =
-        let
-          job = "Deploy to develop";
-        in
-        "gl ci retry '${job}' && gl ci trace '${job}'";
     };
 
     plugins = [
