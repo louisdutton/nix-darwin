@@ -96,6 +96,8 @@
       top = "btop";
       sso = "aws sso login --sso-session travelchapter";
       tree = "ls --tree --git-ignore";
+      l = "ls -l";
+      lsa = "ls -a";
       weather = "xh wttr.in/Truro format==j1 | jq '.current_condition.[0].FeelsLikeC'";
       checkout = "git checkout $(git branch --list | fzf)";
       "-" = "cd -";
