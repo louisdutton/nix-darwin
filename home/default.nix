@@ -25,8 +25,8 @@
   };
 
   # languages
-  javascript.enable = true;
-  rust.enable = true;
+  javascript.enable = false;
   java.enable = false;
-  go.enable = true;
+  rust.enable = false;
+  go.enable = false;
 }
