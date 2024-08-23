@@ -15,9 +15,6 @@ in
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [ nodejs ];
-    home.sessionVariables = {
-      NODE_EXTRA_CA_CERTS = "/etc/ssl/certs/Cloudflare_CA.pem";
-    };
 
     programs.bun = {
       enable = true;
