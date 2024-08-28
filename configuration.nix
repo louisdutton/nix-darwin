@@ -22,6 +22,12 @@
     };
   };
 
+  # keymappping
+  system.keyboard = {
+    enableKeyMapping = true;
+    remapCapsLockToEscape = true;
+  };
+
   # docker
   # virtualisation.docker.enable = true;
   # users.${user.name}.extraGroups = [ "docker" ];
