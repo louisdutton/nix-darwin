@@ -1,5 +1,13 @@
 { pkgs, ... }:
 {
+  # automatically init nix shell when entering a relevant directory
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
+  };
+
+  # better cat
   programs.bat = {
     enable = true;
     config = {
@@ -18,6 +26,7 @@
     };
   };
 
+  # better top
   home.file.".config/btop/themes/catppuccin.theme" = {
     source = builtins.fetchurl {
       url = "https://raw.githubusercontent.com/catppuccin/btop/main/themes/catppuccin_mocha.theme";
@@ -33,6 +42,7 @@
     };
   };
 
+  #	better ls
   programs.eza = {
     enable = true;
     enableZshIntegration = true;
@@ -43,12 +53,14 @@
     ];
   };
 
+  # better cd
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
     options = [ "--cmd cd" ];
   };
 
+  # search utils
   programs.ripgrep.enable = true;
   programs.fd.enable = true;
   programs.fzf =
@@ -78,7 +90,9 @@
       };
     };
 
+  # better prompt
   programs.starship.enable = true;
+
   programs.zsh = {
     enable = true;
     autocd = true;
