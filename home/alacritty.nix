@@ -19,7 +19,7 @@
         {
           key = "Back";
           mods = "Command";
-          chars = "\u0015";
+          chars = "\\u0015";
         }
       ];
 
