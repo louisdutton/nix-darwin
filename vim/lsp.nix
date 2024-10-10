@@ -13,14 +13,13 @@
         eslint.enable = true;
         html.enable = true;
         lemminx.enable = true;
-        java-language-server.enable = true;
-        kotlin-language-server.enable = true;
         jsonls.enable = true;
         yamlls.enable = true;
-        taplo.enable = true;
+        taplo.enable = true; # toml
         gopls.enable = true;
         clangd.enable = true;
 
+        # nix
         nil-ls = {
           enable = true;
           settings.nix = {
@@ -29,6 +28,7 @@
           };
         };
 
+        # rust
         rust-analyzer = {
           enable = true;
           installCargo = false;
