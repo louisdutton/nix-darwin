@@ -53,7 +53,6 @@
       "networkmanager"
       "wheel"
     ];
-    packages = with pkgs; [ ];
   };
 
   # Allow unfree packages
@@ -71,6 +70,7 @@
     git
     gh
     vim
+    xclip
     kitty
     waybar
     hyprpaper
