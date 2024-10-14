@@ -1,10 +1,8 @@
 {
-  description = "Louis Dutton's darwin configuration";
+  description = "Louis Dutton's nixos configuration";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.url = "github:nix-community/nixvim";
@@ -13,8 +11,8 @@
 
   outputs =
     {
-      nix-darwin,
       home-manager,
+      nixpkgs,
       nixvim,
       ...
     }:
@@ -22,30 +20,29 @@
       shared = rec {
         name = "louis";
         home = /Users/${name};
-        flake = home + /.config/nix-darwin;
+        flake = home + /projects/nixos;
         displayName = "Louis Dutton";
-        email = "louis.dutton@travelchapter.com";
+        email = "louis@dutton.digital";
       };
     in
     {
-      darwinConfigurations."mini" =
+      nixosConfigurations.nixos =
         let
           user = shared // {
-            system = "aarch64-darwin";
-            hostName = "mini";
+            system = "x86_64-linux";
+            hostName = "nixos";
           };
         in
-        nix-darwin.lib.darwinSystem {
+        nixpkgs.lib.nixosSystem {
           system = user.system;
           specialArgs = {
             inherit user;
           };
           modules = [
             ./configuration.nix
-            ./macos.nix
             ./vim
-            home-manager.darwinModules.home-manager
-            nixvim.nixDarwinModules.nixvim
+            home-manager.nixosModules.home-manager
+            nixvim.nixosModules.nixvim
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;

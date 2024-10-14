@@ -99,7 +99,7 @@
     enableCompletion = true;
 
     shellAliases = {
-      rebuild = "darwin-rebuild switch --flake ~/.config/nix-darwin";
+      rebuild = "nixos-rebuild switch --flake ~/projects/nixos";
       d = "nix develop --command zsh";
       c = "clear";
       e = "$EDITOR";
