@@ -106,7 +106,10 @@
   stylix = {
     enable = true;
     image = ./totoro.png;
-    fonts.sizes.terminal = 11;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest.yaml";
+    opacity.terminal = 0.75;
+    fonts.sizes.applications = 10;
+    fonts.sizes.terminal = 10;
     fonts.monospace = {
       package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
       name = "JetBrainsMono Nerd Font";
