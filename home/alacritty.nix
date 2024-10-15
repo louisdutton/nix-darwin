@@ -8,7 +8,6 @@
         decorations = "Buttonless";
         startup_mode = "Windowed";
         resize_increments = true;
-        blur = true;
         padding = {
           x = 12;
           y = 12;
