@@ -107,13 +107,14 @@
     enable = true;
     image = ./totoro.png;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest.yaml";
-    opacity.terminal = 0.85;
+    opacity.terminal = 0.9;
     fonts.sizes.applications = 10;
     fonts.sizes.terminal = 10;
     fonts.monospace = {
       package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
       name = "JetBrainsMono Nerd Font";
     };
+    targets.nixvim.enable = false;
   };
 
   # This value determines the NixOS release from which the default
