@@ -3,11 +3,6 @@
   imports = [
     ./zsh.nix
     ./git.nix
-    ./aws.nix
-    ./javascript.nix
-    ./rust.nix
-    ./go.nix
-    ./java.nix
     ./alacritty.nix
   ];
 
@@ -23,4 +18,11 @@
     EDITOR = "nvim";
     VISUAL = "nvim";
   };
+
+  # desktop
+  programs.waybar.enable = true;
+  programs.wofi = {
+    enable = true;
+  };
+  services.hyprpaper.enable = true;
 }

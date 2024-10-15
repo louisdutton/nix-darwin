@@ -67,13 +67,10 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     git
-    gh
-    vim
     xclip
     kitty
     waybar
     hyprpaper
-    wofi
     firefox
   ];
 

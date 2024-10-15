@@ -1,7 +1,7 @@
 { ... }:
 {
   programs.awscli = {
-    enable = true;
+    enable = false;
     settings =
       let
         region = "eu-west-1";
