@@ -14,12 +14,12 @@
     viAlias = true;
     vimAlias = true;
 
-    colorschemes.catppuccin = {
-      enable = true;
-      settings = {
-        transparent_background = true;
-      };
-    };
+    # colorschemes.catppuccin = {
+    #   enable = true;
+    #   settings = {
+    #     transparent_background = true;
+    #   };
+    # };
 
     extraPlugins = with pkgs.vimPlugins; [ nvim-surround ];
     extraConfigLua = # lua

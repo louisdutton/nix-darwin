@@ -8,36 +8,13 @@
   };
 
   # better cat
-  programs.bat = {
-    enable = true;
-    config = {
-      theme = "catppuccin";
-    };
-    themes = {
-      catppuccin = {
-        src = pkgs.fetchFromGitHub {
-          owner = "catppuccin";
-          repo = "bat";
-          rev = "d714cc1d358ea51bfc02550dabab693f70cccea0";
-          sha256 = "Q5B4NDrfCIK3UAMs94vdXnR42k4AXCqZz6sRn8bzmf4=";
-        };
-        file = "themes/Catppuccin Mocha.tmTheme";
-      };
-    };
-  };
+  programs.bat.enable = true;
 
   # better top
-  home.file.".config/btop/themes/catppuccin.theme" = {
-    source = builtins.fetchurl {
-      url = "https://raw.githubusercontent.com/catppuccin/btop/main/themes/catppuccin_mocha.theme";
-      sha256 = "0i263xwkkv8zgr71w13dnq6cv10bkiya7b06yqgjqa6skfmnjx2c";
-    };
-  };
   programs.btop = {
     enable = true;
     settings = {
-      color_theme = "catppuccin";
-      theme_background = false;
+      # theme_background = false;
       vim_keys = true;
     };
   };
@@ -74,20 +51,6 @@
       defaultCommand = fdFile;
       fileWidgetCommand = fdFile;
       changeDirWidgetCommand = fdDir;
-      colors = {
-        "bg" = "-1";
-        "bg+" = "#313244";
-        "spinner" = "#f5e0dc";
-        "hl" = "#f38ba8";
-        "hl+" = "#f38ba8";
-        "fg" = "#cdd6f4";
-        "fg+" = "#cdd6f4";
-        "header" = "#f38ba8";
-        "info" = "#cba6f7";
-        "pointer" = "#f5e0dc";
-        "marker" = "#f5e0dc";
-        "prompt" = "#cba6f7";
-      };
     };
 
   # better prompt

@@ -7,6 +7,8 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.url = "github:nix-community/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
+    stylix.url = "github:danth/stylix";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -14,6 +16,7 @@
       home-manager,
       nixpkgs,
       nixvim,
+      stylix,
       ...
     }:
     let
@@ -30,7 +33,6 @@
         let
           user = shared // {
             system = "x86_64-linux";
-            hostName = "nixos";
           };
         in
         nixpkgs.lib.nixosSystem {
@@ -43,6 +45,7 @@
             ./vim
             home-manager.nixosModules.home-manager
             nixvim.nixosModules.nixvim
+            stylix.nixosModules.stylix
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;

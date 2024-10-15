@@ -23,10 +23,4 @@
     EDITOR = "nvim";
     VISUAL = "nvim";
   };
-
-  # languages
-  javascript.enable = false;
-  java.enable = false;
-  rust.enable = false;
-  go.enable = false;
 }

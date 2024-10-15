@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 {
   imports = [
-    # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
 
@@ -9,20 +8,21 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # networking
   networking.hostName = "nixos"; # Define your hostname.
+  networking.networkmanager.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  # Enable networking
-  networking.networkmanager.enable = true;
-
-  # Set your time zone.
+  # internationalisation
   time.timeZone = "Europe/London";
-
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.UTF-8";
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_GB.UTF-8";
@@ -36,16 +36,15 @@
     LC_TIME = "en_GB.UTF-8";
   };
 
-  # Configure keymap in X11
+  # keymap
+  console.keyMap = "uk";
   services.xserver.xkb = {
     layout = "gb";
     variant = "";
   };
 
-  # Configure console keymap
-  console.keyMap = "uk";
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # users
+  users.defaultUserShell = pkgs.zsh;
   users.users.louis = {
     isNormalUser = true;
     description = "Louis";
@@ -78,10 +77,6 @@
     firefox
   ];
 
-  fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
-  ];
-
   programs.zsh.enable = true;
   programs.hyprland = {
     enable = true;
@@ -96,19 +91,20 @@
   #   enableSSHSupport = true;
   # };
 
-  # List services that you want to enable:
-
-  # Enable automatic login for the user.
+  # services
   services.getty.autologinUser = "louis";
-
-  # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  # theming
+  stylix = {
+    enable = true;
+    image = ./totoro.png;
+    fonts.sizes.terminal = 11;
+    fonts.monospace = {
+      package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
+      name = "JetBrainsMono Nerd Font";
+    };
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
