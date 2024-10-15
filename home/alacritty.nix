@@ -121,7 +121,7 @@ in
 
       font = {
         normal.family = "JetBrainsMono Nerd Font";
-        size = 14.5;
+        size = 11;
         offset = {
           x = 0;
           y = -3;
