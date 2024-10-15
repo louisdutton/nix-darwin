@@ -99,7 +99,7 @@
     enableCompletion = true;
 
     shellAliases = {
-      rebuild = "nixos-rebuild switch --flake ~/projects/nixos";
+      rebuild = "sudo nixos-rebuild switch --flake ~/projects/nixos";
       d = "nix develop --command zsh";
       c = "clear";
       e = "$EDITOR";
