@@ -18,7 +18,7 @@
 
   programs.gh = {
     enable = true;
-    gitCredentialHelper.enable = true;
+    gitCredentialHelper.enable = false;
   };
 
   programs.git = {
@@ -31,6 +31,7 @@
       };
       credential = {
         "https://gitlab.com".helper = "!glab auth git-credential";
+        "https://github.com".helper = "!gh auth git-credential";
       };
     };
   };
