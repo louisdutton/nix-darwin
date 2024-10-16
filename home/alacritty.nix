@@ -5,6 +5,7 @@
       enable_audio_bell = false;
       window_padding_width = 10;
       window_padding_height = 10;
+      confirm_os_window_close = 0;
     };
   };
   programs.alacritty = {
