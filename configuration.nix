@@ -66,12 +66,21 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    # misc
     git
-    xclip
+    wl-clipboard
+
+    # apps
     kitty
+    firefox
+
+    # desktop
     waybar
     hyprpaper
-    firefox
+
+    # audio
+    pamixer
+    playerctl
   ];
 
   programs.zsh.enable = true;

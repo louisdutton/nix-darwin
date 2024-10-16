@@ -73,6 +73,19 @@
           "${mod} SHIFT, 9, movetoworkspace, 9"
           "${mod} SHIFT, 0, movetoworkspace, 10"
         ];
+        bindle = [
+          ",XF86AudioRaiseVolume, exec, pamixer -i 5"
+          ",XF86AudioLowerVolume, exec, pamixer -d 5"
+          ",XF86AudioMute, exec, pamixer -t"
+          ",XF86MonBrightnessUp, exec, light -A 30"
+          ",XF86MonBrightnessDown, exec, light -U 30"
+          # ",XF86Search, exec, launchpad"
+        ];
+        bindl = [
+          ",XF86AudioPlay, exec, playerctl play-pause"
+          ",XF86AudioNext, exec, playerctl next"
+          ",XF86AudioPrev, exec, playerctl previous"
+        ];
       };
   };
 
