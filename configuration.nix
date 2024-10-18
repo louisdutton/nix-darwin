@@ -116,7 +116,7 @@
     enable = true;
     image = ./totoro.png;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest.yaml";
-    opacity.terminal = 0.9;
+    opacity.terminal = 0.95;
     fonts.sizes.applications = 10;
     fonts.sizes.terminal = 10;
     fonts.monospace = {

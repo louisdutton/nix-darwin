@@ -3,7 +3,7 @@
     enable = true;
     settings =
       let
-        term = "kitty";
+        term = "alacritty";
         menu = "wofi --show drun -a";
         wallpaper = "hyprpaper";
         bar = "waybar";
@@ -17,6 +17,12 @@
           # "nm-applet --indicator"
         ];
 
+        general = {
+          border_size = 2;
+          gaps_in = 5;
+          gaps_out = 10;
+        };
+
         input = {
           kb_layout = "gb";
           repeat_delay = 200;
@@ -27,7 +33,7 @@
           rounding = 10;
           drop_shadow = false;
           blur = {
-            enabled = true;
+            enabled = false;
             size = 8;
             passes = 2;
             vibrancy = 0.1696;
