@@ -18,5 +18,6 @@
     MANPAGER = "nvim +Man!";
     EDITOR = "nvim";
     VISUAL = "nvim";
+    ZSH_SYSTEM_CLIPBOARD_USE_WL_CLIPBOARD = "true";
   };
 }
