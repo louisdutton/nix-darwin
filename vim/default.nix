@@ -3,6 +3,7 @@
   imports = [
     ./keymaps.nix
     ./lsp.nix
+    ./dap.nix
     ./format.nix
     ./options.nix
     ./autocmd.nix
@@ -48,9 +49,9 @@
       oil.enable = true;
 
       noice = {
-        enable = true;
+        enable = false;
         presets = {
-          lsp_doc_border = true;
+          lsp_doc_border = false;
         };
       };
 
