@@ -71,8 +71,7 @@
     wl-clipboard
 
     # apps
-    kitty
-    firefox
+    brave
 
     # desktop
     waybar
