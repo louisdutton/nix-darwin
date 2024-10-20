@@ -9,7 +9,7 @@
     lsp = {
       enable = true;
       servers = {
-        tsserver.enable = true;
+        ts_ls.enable = true;
         eslint.enable = true;
         html.enable = true;
         lemminx.enable = true;
@@ -20,7 +20,7 @@
         clangd.enable = true;
 
         # nix
-        nil-ls = {
+        nil_ls = {
           enable = true;
           settings.nix = {
             flake.autoEvalInputs = false; # runs out of memory
@@ -29,7 +29,7 @@
         };
 
         # rust
-        rust-analyzer = {
+        rust_analyzer = {
           enable = true;
           installCargo = false;
           installRustc = false;

@@ -4,7 +4,7 @@
     ./zsh.nix
     ./git.nix
     ./alacritty.nix
-    ./desktop.nix
+    # ./desktop.nix
   ];
 
   home.stateVersion = "24.05";

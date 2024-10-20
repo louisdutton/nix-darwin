@@ -1,8 +1,10 @@
 {
-  description = "Louis Dutton's nixos configuration";
+  description = "Louis Dutton's NixOS configuration";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.url = "github:nix-community/nixvim";
@@ -14,6 +16,7 @@
   outputs =
     {
       home-manager,
+      nix-darwin,
       nixpkgs,
       nixvim,
       stylix,
@@ -27,12 +30,23 @@
         displayName = "Louis Dutton";
         email = "louis@dutton.digital";
       };
+      baseModules = [
+        ./configuration.nix
+        ./vim
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.louis = import ./home;
+          home-manager.backupFileExtension = "backup";
+        }
+      ];
     in
     {
       nixosConfigurations.nixos =
         let
           user = shared // {
             system = "x86_64-linux";
+            rebuildCmd = "nixos-rebuild";
           };
         in
         nixpkgs.lib.nixosSystem {
@@ -40,17 +54,37 @@
           specialArgs = {
             inherit user;
           };
-          modules = [
-            ./configuration.nix
-            ./vim
+          modules = baseModules ++ [
+            ./linux.nix
             home-manager.nixosModules.home-manager
             nixvim.nixosModules.nixvim
             stylix.nixosModules.stylix
             {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.louis = import ./home;
-              home-manager.backupFileExtension = "backup";
+              home-manager.extraSpecialArgs = {
+                inherit user;
+              };
+            }
+          ];
+        };
+
+      darwinConfigurations.nixos =
+        let
+          user = shared // {
+            system = "aarch64-darwin";
+            rebuildCmd = "darwin-rebuild";
+          };
+        in
+        nix-darwin.lib.darwinSystem {
+          system = user.system;
+          specialArgs = {
+            inherit user;
+          };
+          modules = baseModules ++ [
+            ./darwin.nix
+            home-manager.darwinModules.home-manager
+            nixvim.nixDarwinModules.nixvim
+            stylix.darwinModules.stylix
+            {
               home-manager.extraSpecialArgs = {
                 inherit user;
               };

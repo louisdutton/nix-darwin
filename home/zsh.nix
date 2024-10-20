@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, user, ... }:
 {
   # automatically init nix shell when entering a relevant directory
   programs.direnv = {
@@ -23,7 +23,7 @@
   programs.eza = {
     enable = true;
     enableZshIntegration = true;
-    icons = true;
+    icons = "auto";
     extraOptions = [
       "--group-directories-first"
       "--header"
@@ -62,7 +62,7 @@
     enableCompletion = true;
 
     shellAliases = {
-      rebuild = "sudo nixos-rebuild switch --flake ~/projects/nixos";
+      rebuild = "sudo ${user.rebuildCmd} switch --flake ~/projects/nixos";
       d = "nix develop --command zsh";
       c = "clear";
       e = "$EDITOR";

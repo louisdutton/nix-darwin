@@ -5,7 +5,7 @@
       cursor.style = "Beam";
 
       window = {
-        decorations = "Buttonless";
+        decorations = "None";
         startup_mode = "Windowed";
         resize_increments = true;
         padding = {
