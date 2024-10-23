@@ -4,6 +4,7 @@
     ./zsh.nix
     ./git.nix
     ./alacritty.nix
+    ./browser.nix
     # ./desktop.nix
   ];
 

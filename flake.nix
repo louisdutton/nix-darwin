@@ -11,6 +11,7 @@
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     stylix.url = "github:danth/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
+    firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
   };
 
   outputs =
@@ -20,6 +21,7 @@
       nixpkgs,
       nixvim,
       stylix,
+      firefox-darwin,
       ...
     }:
     let
@@ -85,6 +87,7 @@
             nixvim.nixDarwinModules.nixvim
             stylix.darwinModules.stylix
             {
+              nixpkgs.overlays = [ firefox-darwin.overlay ];
               home-manager.extraSpecialArgs = {
                 inherit user;
               };
