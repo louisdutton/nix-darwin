@@ -12,10 +12,13 @@
     stylix.url = "github:danth/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
+    firefox-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+    firefox-addons.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
-    {
+    inputs@{
       home-manager,
       nix-darwin,
       nixpkgs,
@@ -25,10 +28,8 @@
       ...
     }:
     let
-      shared = rec {
+      shared = {
         name = "louis";
-        home = /Users/${name};
-        flake = home + /projects/nixos;
         displayName = "Louis Dutton";
         email = "louis@dutton.digital";
       };
@@ -47,12 +48,11 @@
       nixosConfigurations.nixos =
         let
           user = shared // {
-            system = "x86_64-linux";
             rebuildCmd = "nixos-rebuild";
           };
         in
         nixpkgs.lib.nixosSystem {
-          system = user.system;
+          system = "x86_64-linux";
           specialArgs = {
             inherit user;
           };
@@ -72,14 +72,14 @@
       darwinConfigurations.nixos =
         let
           user = shared // {
-            system = "aarch64-darwin";
             rebuildCmd = "darwin-rebuild";
           };
         in
         nix-darwin.lib.darwinSystem {
-          system = user.system;
+          system = "aarch64-darwin";
           specialArgs = {
             inherit user;
+            inherit inputs;
           };
           modules = baseModules ++ [
             ./darwin.nix
@@ -90,6 +90,7 @@
               nixpkgs.overlays = [ firefox-darwin.overlay ];
               home-manager.extraSpecialArgs = {
                 inherit user;
+                inherit inputs;
               };
             }
           ];
