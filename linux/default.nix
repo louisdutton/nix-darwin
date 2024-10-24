@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, user, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -10,7 +10,7 @@
 
   # users
   users.defaultUserShell = pkgs.zsh;
-  users.users.louis = {
+  users.users.${user.name} = {
     isNormalUser = true;
     extraGroups = [
       "networkmanager"
@@ -51,23 +51,28 @@
     variant = "";
   };
 
-  # system packages
-  environment.systemPackages = with pkgs; [
-    # misc
-    git
-    wl-clipboard
+  environment = {
+    systemPackages = with pkgs; [
+      # misc
+      git
+      wl-clipboard
 
-    # apps
-    brave
+      # apps
+      brave
 
-    # desktop
-    waybar
-    hyprpaper
+      # desktop
+      waybar
+      hyprpaper
 
-    # audio
-    pamixer
-    playerctl
-  ];
+      # audio
+      pamixer
+      playerctl
+    ];
+
+    shellAliases = {
+      rebuild = "sudo nixos-rebuild switch --flake ~/.config/nixos";
+    };
+  };
 
   programs.hyprland = {
     enable = true;
@@ -83,7 +88,7 @@
   # };
 
   # services
-  services.getty.autologinUser = "louis";
+  services.getty.autologinUser = user.name;
   # services.openssh.enable = true;
 
   # audio

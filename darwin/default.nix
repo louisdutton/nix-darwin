@@ -1,16 +1,27 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  user,
+  ...
+}:
 {
   nix = {
     channel.enable = false;
   };
 
   # homedir fix
-  users.users.louis.home = "/Users/louis";
+  users.users.${user.name}.home = "/Users/louis";
 
-  environment.systemPackages = with pkgs; [
-    raycast
-    alacritty
-  ];
+  environment = {
+    systemPackages = with pkgs; [
+      raycast
+      alacritty
+    ];
+
+    shellAliases = {
+      rebuild = "sudo darwin-rebuild switch --flake ~/.config/nix-darwin";
+    };
+  };
 
   system = {
     checks.verifyNixChannels = false;

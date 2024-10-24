@@ -1,4 +1,4 @@
-{ pkgs, user, ... }:
+{ pkgs, ... }:
 {
   # automatically init nix shell when entering a relevant directory
   programs.direnv = {
@@ -62,7 +62,6 @@
     enableCompletion = true;
 
     shellAliases = {
-      rebuild = "sudo ${user.rebuildCmd} switch --flake ~/projects/nixos";
       d = "nix develop --command zsh";
       c = "clear";
       e = "$EDITOR";

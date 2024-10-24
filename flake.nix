@@ -28,72 +28,50 @@
       ...
     }:
     let
-      shared = {
+      user = {
         name = "louis";
         displayName = "Louis Dutton";
         email = "louis@dutton.digital";
       };
-      baseModules = [
+      specialArgs = {
+        inherit inputs user;
+      };
+      modules = [
         ./configuration.nix
         ./vim
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.louis = import ./home;
+          home-manager.users.${user.name} = import ./home;
           home-manager.backupFileExtension = "backup";
+          home-manager.extraSpecialArgs = specialArgs;
         }
       ];
     in
     {
-      nixosConfigurations.nixos =
-        let
-          user = shared // {
-            rebuildCmd = "nixos-rebuild";
-          };
-        in
-        nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit user;
-          };
-          modules = baseModules ++ [
-            ./linux.nix
-            home-manager.nixosModules.home-manager
-            nixvim.nixosModules.nixvim
-            stylix.nixosModules.stylix
-            {
-              home-manager.extraSpecialArgs = {
-                inherit user;
-              };
-            }
-          ];
-        };
+      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
+        system = "x86_64-linux";
+        modules = modules ++ [
+          ./linux
+          home-manager.nixosModules.home-manager
+          nixvim.nixosModules.nixvim
+          stylix.nixosModules.stylix
+        ];
+      };
 
-      darwinConfigurations.nixos =
-        let
-          user = shared // {
-            rebuildCmd = "darwin-rebuild";
-          };
-        in
-        nix-darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
-          specialArgs = {
-            inherit user;
-            inherit inputs;
-          };
-          modules = baseModules ++ [
-            ./darwin.nix
-            home-manager.darwinModules.home-manager
-            nixvim.nixDarwinModules.nixvim
-            stylix.darwinModules.stylix
-            {
-              nixpkgs.overlays = [ firefox-darwin.overlay ];
-              home-manager.extraSpecialArgs = {
-                inherit user;
-                inherit inputs;
-              };
-            }
-          ];
-        };
+      darwinConfigurations.nixos = nix-darwin.lib.darwinSystem {
+        inherit specialArgs;
+        system = "aarch64-darwin";
+        modules = modules ++ [
+          ./darwin
+          home-manager.darwinModules.home-manager
+          nixvim.nixDarwinModules.nixvim
+          stylix.darwinModules.stylix
+          {
+            nixpkgs.overlays = [ firefox-darwin.overlay ];
+          }
+        ];
+      };
     };
 }

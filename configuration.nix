@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, user, ... }:
 {
   # nix
   nixpkgs.config.allowUnfree = true;
@@ -14,9 +14,9 @@
   # users
   time.timeZone = "Europe/London";
   networking.hostName = "nixos";
-  users.users.louis = {
+  users.users.${user.name} = {
     shell = pkgs.zsh;
-    description = "Louis";
+    description = user.displayName;
   };
 
   # theming
