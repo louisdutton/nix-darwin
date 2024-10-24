@@ -5,6 +5,7 @@
     ./git.nix
     ./alacritty.nix
     ./browser.nix
+    ./email.nix
     # ./desktop.nix
   ];
 
