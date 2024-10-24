@@ -15,8 +15,8 @@
 
       # unique programs
       cmd - n : alacritty
-      cmd - space : ${pkgs.raycast}/Applications/Raycast.app/Contents/MacOS/Raycast
       cmd - b : ${pkgs.firefox-devedition-bin}/Applications/Firefox\ Developer\ Edition.app/Contents/MacOS/firefox
+      cmd - space : choose-app
 
       # space navigation
       cmd - 1 : yabai -m space --focus 1

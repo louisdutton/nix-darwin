@@ -9,6 +9,7 @@
     ./skhd.nix
     ./sketchybar.nix
     ./jankyborders.nix
+    ./choose.nix
   ];
 
   # Auto upgrade nix package and the daemon service.
@@ -22,8 +23,8 @@
 
   environment = {
     systemPackages = with pkgs; [
-      raycast
       alacritty
+      slack
     ];
 
     shellAliases = {
@@ -63,8 +64,8 @@
         # keyboard
         AppleKeyboardUIMode = 3; # full keyboard control
         ApplePressAndHoldEnabled = false;
-        InitialKeyRepeat = 15; # 120, 90, 60, 30, 12, 6, 2
-        KeyRepeat = 2; # 120, 90, 60, 30, 12, 6, 2
+        # InitialKeyRepeat = 15; # 120, 90, 60, 30, 12, 6, 2
+        # KeyRepeat = 2; # 120, 90, 60, 30, 12, 6, 2
         NSAutomaticCapitalizationEnabled = false;
         NSAutomaticDashSubstitutionEnabled = false;
         NSAutomaticPeriodSubstitutionEnabled = false;
