@@ -22,7 +22,7 @@
   # theming
   stylix = {
     enable = true;
-    image = ./totoro.png;
+    image = ./wallpapers/wallpaper.png;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest.yaml";
     opacity.terminal = 0.95;
     fonts.sizes.applications = 10;
