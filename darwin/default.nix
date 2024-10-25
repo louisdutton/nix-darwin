@@ -5,8 +5,9 @@
 }:
 {
   imports = [
-    ./yabai.nix
-    ./skhd.nix
+    # ./yabai.nix
+    # ./skhd.nix
+    ./aerospace.nix
     ./sketchybar.nix
     ./jankyborders.nix
     ./choose.nix
