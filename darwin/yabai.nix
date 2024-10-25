@@ -25,7 +25,7 @@
       window_shadow = "off";
       split_ratio = 0.5;
 
-      external_bar = "all:45:0";
+      external_bar = "all:32:0";
     };
 
     extraConfig = ''
