@@ -1,7 +1,6 @@
 { pkgs, user, ... }:
 let
   toml = pkgs.formats.toml { };
-  exec = cmd: "exec-and-forget zsh -c ${cmd}";
 in
 {
   environment.systemPackages = with pkgs; [
@@ -88,9 +87,9 @@ in
             # All possible modifiers: cmd alt ctrl shift
 
             # All possible commands: https://nikitabobko.github.io/AeroSpace/commands
-            cmd-n = exec "alacritty";
-            cmd-b = exec "${pkgs.firefox-devedition-bin}/Applications/Firefox\ Developer\ Edition.app/Contents/MacOS/firefox";
-            cmd-space = exec "exec-and-forget zsh -c choose-app";
+            cmd-n = "exec-and-forget open -n -a Alacritty";
+            cmd-b = "exec-and-forget open -n -a 'Firefox Developer Edition'";
+            cmd-space = "exec-and-forget zsh -c choose-app";
 
             cmd-r = "reload-config";
             cmd-f = "fullscreen";
