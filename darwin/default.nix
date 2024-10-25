@@ -1,6 +1,7 @@
 {
   pkgs,
   user,
+  config,
   ...
 }:
 {
@@ -84,10 +85,11 @@
     stateVersion = 5;
   };
 
-  # system.userActivationScripts.wallpaper = {
-  #   enable = true;
-  #   source = ''
-  #     osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"${config.lib.stylix.image}\" as POSIX file"
-  #   '';
-  # };
+  # set wallpaper on all displays
+  system.userActivationScripts.wallpaper = {
+    enable = true;
+    source = ''
+      osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"/Users/louis/.config/nix-darwin/wallpapers/ocean.png\" as POSIX file"
+    '';
+  };
 }
