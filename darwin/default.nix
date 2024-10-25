@@ -65,8 +65,8 @@
         # keyboard
         AppleKeyboardUIMode = 3; # full keyboard control
         ApplePressAndHoldEnabled = false;
-        # InitialKeyRepeat = 15; # 120, 90, 60, 30, 12, 6, 2
-        # KeyRepeat = 2; # 120, 90, 60, 30, 12, 6, 2
+        InitialKeyRepeat = 10;
+        KeyRepeat = 1;
         NSAutomaticCapitalizationEnabled = false;
         NSAutomaticDashSubstitutionEnabled = false;
         NSAutomaticPeriodSubstitutionEnabled = false;
