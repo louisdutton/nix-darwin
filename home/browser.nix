@@ -25,7 +25,7 @@
         extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
           vimium
           proton-pass
-          # sideberry
+          sidebery
         ];
 
         # about:config
