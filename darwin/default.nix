@@ -1,7 +1,6 @@
 {
   pkgs,
   user,
-  config,
   ...
 }:
 {
@@ -56,7 +55,12 @@
         QuitMenuItem = true;
         AppleShowAllFiles = true;
         AppleShowAllExtensions = true;
+        ShowPathbar = true;
+        _FXShowPosixPathInTitle = true;
       };
+
+      # disable desktop click 
+      WindowManager.EnableStandardClickToShowDesktop = false;
 
       NSGlobalDomain = {
         AppleInterfaceStyle = "Dark";
@@ -65,19 +69,26 @@
         # keyboard
         AppleKeyboardUIMode = 3; # full keyboard control
         ApplePressAndHoldEnabled = false;
-        InitialKeyRepeat = 10;
-        KeyRepeat = 1;
         NSAutomaticCapitalizationEnabled = false;
         NSAutomaticDashSubstitutionEnabled = false;
         NSAutomaticPeriodSubstitutionEnabled = false;
         NSAutomaticQuoteSubstitutionEnabled = false;
         NSAutomaticSpellingCorrectionEnabled = false;
 
+        # ms = x: x * 15
+        InitialKeyRepeat = 10;
+        KeyRepeat = 1;
+
         NSNavPanelExpandedStateForSaveMode = true;
         NSNavPanelExpandedStateForSaveMode2 = true;
 
+        # improve experience in tiling window managers
         NSAutomaticWindowAnimationsEnabled = false;
+        NSWindowResizeTime = 0.0;
+        NSUseAnimatedFocusRing = false;
         _HIHideMenuBar = true;
+
+        "com.apple.sound.beep.volume" = 0.0; # disable beep / alert sound
       };
     };
 
@@ -86,9 +97,9 @@
   };
 
   # set wallpaper on all displays
-  system.userActivationScripts.wallpaper = {
+  system.activationScripts.wallpaper = {
     enable = true;
-    source = ''
+    text = ''
       osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"/Users/louis/.config/nix-darwin/wallpapers/ocean.png\" as POSIX file"
     '';
   };
