@@ -1,4 +1,9 @@
-{ inputs, pkgs, ... }:
+{
+  inputs,
+  pkgs,
+  config,
+  ...
+}:
 {
   programs.firefox = {
     enable = true;
@@ -25,12 +30,10 @@
         extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
           vimium
           proton-pass
-          sidebery
         ];
 
         # about:config
         settings = {
-          "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
           "extensions.screenshots.disabled" = true;
           "extensions.pocket.enabled" = false;
           "extensions.autoDisableScopes" = 0;
@@ -55,57 +58,32 @@
           "browser.newtabpage.activity-stream.showSponsored" = false;
           "browser.newtabpage.activity-stream.system.showSponsored" = false;
           "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+
+          # custom theme compat
+          "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+          "layers.acceleration.force-enabled" = true;
+          "gfx.webrender.all" = true;
+
+          # font
+          "font.default.x-western" = "monospace";
+          "font.name.monospace.x-western" = "JetBrainsMono Nerd Font";
+
+          # "browser.uiCustomization.state" = # json
         };
 
         userChrome = # css
           ''
-            /*
-            ┏━╸┏━┓┏┓╻┏━╸╻┏━╸╻ ╻┏━┓┏━┓╺┳╸╻┏━┓┏┓╻
-            ┃  ┃ ┃┃┗┫┣╸ ┃┃╺┓┃ ┃┣┳┛┣━┫ ┃ ┃┃ ┃┃┗┫
-            ┗━╸┗━┛╹ ╹╹  ╹┗━┛┗━┛╹┗╸╹ ╹ ╹ ╹┗━┛╹ ╹
-            */
-
-            /*
-            ┏━┓╻╺┳┓┏━╸┏┓ ┏━╸┏━┓╻ ╻
-            ┗━┓┃ ┃┃┣╸ ┣┻┓┣╸ ┣┳┛┗┳┛
-            ┗━┛╹╺┻┛┗━╸┗━┛┗━╸╹┗╸ ╹
-            */
-            #sidebar-box #sidebar-header {
-              visibility: collapse;
+            /* sidebar */
+            #sidebar-main {
+            	--toolbar-bgcolor: #${config.lib.stylix.colors.base00};
             }
 
-            #sidebar-box {
-              --uc-sidebar-width: 10px !important;
-              --uc-sidebar-hover-width: 275px;
-              --uc-autohide-sidebar-delay: 1s;
-              position: relative;
-              min-width: var(--uc-sidebar-width) !important;
-              width: var(--uc-sidebar-width) !important;
-              max-width: var(--uc-sidebar-width) !important;
-              z-index:1;
-            }
+            #tabbrowser-tabs {
+            	padding-top: 10px !important;
+            };
 
-            #sidebar-box > #sidebar {
-              transition: min-width 400ms linear var(--uc-autohide-sidebar-delay), 
-                          opacity 400ms ease calc(var(--uc-autohide-sidebar-delay) + 100ms) !important;
-              min-width: var(--uc-sidebar-width) !important;
-              opacity: 0 !important;
-              will-change: min-width, opacity;
-            }
-
-            #sidebar-box:hover > #sidebar {
-              min-width: var(--uc-sidebar-hover-width) !important;
-              opacity: 1 !important;
-              transition-delay: 0s !important;
-            }
-
-            #sidebar-box > #sidebar-splitter, 
-            #sidebar-splitter {
-                display: none;
-            }
-
-            #sidebar-box {
-              background: var(--lwt-accent-color) !important;
+            .tab-background {
+            	--tab-selected-bgcolor: #${config.lib.stylix.colors.base02};
             }
 
             /*
@@ -118,25 +96,25 @@
             */
 
             @media not all and (display-mode: fullscreen) {
-              #appcontent .browserStack,
-              #browser,
-              .browserContainer {
-                background: var(--lwt-accent-color)
-              }
+            	#appcontent .browserStack,
+            	#browser,
+            	.browserContainer {
+            		background: var(--lwt-accent-color)
+            	}
 
-              #browser > #appcontent {
-                --margin: 10px;  
+            	#browser > #appcontent {
+            		--margin: 10px;  
 
-                margin-left: 0px;
-                margin-right: var(--margin);
-                margin-top: 0px;
-                margin-bottom: var(--margin);
-              
-                browser {
-                  --outline: 1px solid var(--arrowpanel-background);
-                  border: var(--outline);
-                }
-              }
+            		margin-left: 0px;
+            		margin-right: var(--margin);
+            		margin-top: 0px;
+            		margin-bottom: var(--margin);
+            	
+            		browser {
+            			--outline: 1px solid var(--arrowpanel-background);
+            			border: var(--outline);
+            		}
+            	}
             }
 
             /*
@@ -160,21 +138,21 @@
             #permission-popup-menulist menupopup,
             #contentAreaContextMenu[showservicesmenu="true"],
             #contentAreaContextMenu[showservicesmenu="true"] menupopup {
-              --panel-background: var(--arrowpanel-background) !important;
-              --panel-border-color: var(--toolbar-bgcolor) !important;
-              --toolbar-field-focus-background-color: var(--toolbarbutton-icon-fill) !important;
-              --panel-color: var(--toolbarbutton-icon-fill) !important;
+            	--panel-background: var(--arrowpanel-background) !important;
+            	--panel-border-color: var(--toolbar-bgcolor) !important;
+            	--toolbar-field-focus-background-color: var(--toolbarbutton-icon-fill) !important;
+            	--panel-color: var(--toolbarbutton-icon-fill) !important;
 
-              menu:where([_moz-menuactive="true"]:not([disabled="true"])), 
-              menuitem:where([_moz-menuactive="true"]:not([disabled="true"])) {
-                background-color: var(--panel-item-hover-bgcolor) !important;
-                color: var(--toolbarbutton-icon-fill) !important;
-              }
-              
-              menu:where([_moz-menuactive="true"][disabled="true"]), 
-              menuitem:where([_moz-menuactive="true"][disabled="true"]) {
-                background-color: transparent !important;
-              } 
+            	menu:where([_moz-menuactive="true"]:not([disabled="true"])), 
+            	menuitem:where([_moz-menuactive="true"]:not([disabled="true"])) {
+            		background-color: var(--panel-item-hover-bgcolor) !important;
+            		color: var(--toolbarbutton-icon-fill) !important;
+            	}
+            	
+            	menu:where([_moz-menuactive="true"][disabled="true"]), 
+            	menuitem:where([_moz-menuactive="true"][disabled="true"]) {
+            		background-color: transparent !important;
+            	} 
             }
 
             /*
@@ -190,28 +168,28 @@
              */
 
             #unified-extensions-view{
-                --uei-icon-size: 24px;
-                --extensions-in-row: 4;
+            		--uei-icon-size: 24px;
+            		--extensions-in-row: 4;
 
-                width: 100% !important;
-                :is(
-                  toolbarseparator,
-                  .unified-extensions-item-menu-button.subviewbutton,
-                  .unified-extensions-item-action-button .unified-extensions-item-contents
-                ) {display: none !important;}
+            		width: 100% !important;
+            		:is(
+            			toolbarseparator,
+            			.unified-extensions-item-menu-button.subviewbutton,
+            			.unified-extensions-item-action-button .unified-extensions-item-contents
+            		) {display: none !important;}
 
-                :is(
-                  #overflowed-extensions-list,
-                  #unified-extensions-area,
-                  .unified-extensions-list 
-                ){
-                  display: grid !important;
-                  grid-template-columns: repeat(var(--extensions-in-row),auto);
-                  justify-items: center !important;
-                  align-items: center !important;
-                }
-                
-                .unified-extensions-item-action-button {padding-right: 3px !important;}
+            		:is(
+            			#overflowed-extensions-list,
+            			#unified-extensions-area,
+            			.unified-extensions-list 
+            		){
+            			display: grid !important;
+            			grid-template-columns: repeat(var(--extensions-in-row),auto);
+            			justify-items: center !important;
+            			align-items: center !important;
+            		}
+            		
+            		.unified-extensions-item-action-button {padding-right: 3px !important;}
             }
 
             /*
@@ -221,8 +199,8 @@
             */
 
             * {
-              font-family: monospace !important;
-              font-size: 16px !important;
+            	font-family: monospace !important;
+            	font-size: 14px !important;
             }
 
             /*
@@ -235,32 +213,32 @@
             */
 
             #nav-bar:not([customizing]) {
-              opacity: 0;
-              min-height: 10px;
-              max-height: 10px;
-              transition: max-height 1s linear 3s, opacity 600ms ease 3s !important;
+            	opacity: 0;
+            	min-height: 10px;
+            	max-height: 10px; 
+            	transition: max-height 1s linear 3s, opacity 600ms ease 3s !important;
             }
 
             #nav-bar:hover,
             #nav-bar:focus-within {
-              opacity: 1;
-              min-height: 10px;
-              max-height: 50px; 
-              transition-duration: 200ms !important;
-              transition-delay: 0s, 200ms !important;
+            	opacity: 1;
+            	min-height: 10px;
+            	max-height: 50px; 
+            	transition-duration: 200ms !important;
+            	transition-delay: 0s, 200ms !important;
             }
 
             #urlbar:focus-within {
-              height: 100% !important;
+            	height: 100% !important;
             }
 
             .urlbar-input-container {
-                height: 105% !important;
+            		height: 105% !important;
             }
 
             .urlbarView {
-                background: var(--arrowpanel-background) !important;
-                border-radius: 5px;
+            		background: var(--arrowpanel-background) !important;
+            		border-radius: 5px;
             }
 
             /* 
@@ -276,7 +254,7 @@
             #TabsToolbar { display: none !important; }
 
             #TabsToolbar .titlebar-spacer {
-                display: none !important;
+            		display: none !important;
             }
 
             /* Titlebar Window Control Buttons */
@@ -284,33 +262,29 @@
 
             /* Url Bar  */
             #urlbar-input-container {
-              border: 1px solid rgba(0, 0, 0, 0) !important;
+            	border: 1px solid rgba(0, 0, 0, 0) !important;
             }
 
             #urlbar-container {
-              margin: 0 !important;
-              padding-block: 2px !important;
-              min-height: var(--urlbar-height) !important;
+            	margin: 0 !important;
+            	padding-block: 2px !important;
+            	min-height: var(--urlbar-height) !important;
             }
 
             #urlbar {
-              top: 0 !important;
+            	top: 0 !important;
             }
 
             #urlbar[focused='true'] > #urlbar-background {
-              box-shadow: none !important;
-            }
-
-            #navigator-toolbox {
-              border: none !important;
+            	box-shadow: none !important;
             }
 
             /* Bookmarks bar  */
             .bookmark-item .toolbarbutton-icon {
-              display: none;
+            	display: none;
             }
             toolbarbutton.bookmark-item:not(.subviewbutton) {
-              min-width: 1.6em;
+            	min-width: 1.6em;
             }
 
             /* Toolbar  */
@@ -323,7 +297,7 @@
             #back-button,
             #forward-button,
             .tab-secondary-label {
-              display: none !important;
+            	display: none !important;
             }
 
             /* Disable elements  */
@@ -338,7 +312,7 @@
             #context-sendlinktodevice,
             #context-sendimage,
             #context-print-selection {
-              display: none !important;
+            	display: none !important;
             }
 
             #context_bookmarkTab,
@@ -347,7 +321,7 @@
             #context_reopenInContainer,
             #context_selectAllTabs,
             #context_closeTabOptions {
-              display: none !important;
+            	display: none !important;
             }
           '';
 
