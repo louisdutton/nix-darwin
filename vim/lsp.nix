@@ -20,12 +20,8 @@
         clangd.enable = true;
 
         # nix
-        nil_ls = {
+        nixd = {
           enable = true;
-          settings.nix = {
-            flake.autoEvalInputs = false; # runs out of memory
-            maxMemoryMB = null;
-          };
         };
 
         # rust
