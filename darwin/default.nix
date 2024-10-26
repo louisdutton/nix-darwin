@@ -29,7 +29,7 @@
     ];
 
     shellAliases = {
-      rebuild = "sudo darwin-rebuild switch --flake ~/.config/nix-darwin";
+      rebuild = "darwin-rebuild switch --flake ~/.config/nix-darwin";
     };
   };
 
