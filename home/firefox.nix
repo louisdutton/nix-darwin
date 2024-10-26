@@ -73,9 +73,81 @@
 
         userChrome = # css
           ''
+            :root {
+            	--background-color-box: #374247 !important;
+            	
+            	--toolbar-field-background-color: transparent !important;
+            	--toolbar-field-focus-background-color: #374247 !important;
+            	--toolbar-field-focus-color: #d3c6aa !important;
+            	--toolbar-bgcolor: #2f383e !important;
+            	--toolbar-color: #d3c6aa !important;
+            	--tab-selected-bgcolor: #a7c080 !important;
+            	--tab-selected-textcolor: #2b3339 !important;
+            	--tab-bgcolor: #323c41 !important;
+            	
+            	--link-color: #a7c080 !important;
+            	--color-accent-primary: #a7c080 !important;
+            	
+            	/* text */
+            	--text-color: #d3c6aa !important;
+            		
+            	/* sidebar */
+              --content-area-shadow: none !important;
+              --sidebar-border-color: none !important;
+              --sidebar-background-color: #374247 !important;
+              --sidebar-text-color: #d3c6aa !important;
+            	
+            	/* panels */
+            	--arrowpanel-background: #374247 !important;
+            	--arrowpanel-color: #d3c6aa !important;
+            	
+            	/* url */
+              /*--urlbarView-action-button-background-color: light-dark(white, #1c1b22);*/
+            	/*--urlbarView-action-button-hover-color: light-dark(#5b5b66, #fbfbfe);*/
+            	/*--urlbarView-action-button-selected-color: light-dark(#1c1b22, light-dark(white, #1c1b22));*/
+            	/*--urlbarView-action-color: LinkText;*/
+            	/*--urlbarView-action-slide-in-distance: 200px;*/
+            	/*--urlbarView-favicon-margin-end: calc(calc((max(32px, 1.4em) - 2px - 2px - 16px ) / 2) + 4px + ((28px - 16px) / 2));*/
+            	/*--urlbarView-favicon-margin-start: calc((28px - 16px) / 2);*/
+            	/*--urlbarView-favicon-width: 16px;*/
+            	--urlbarView-highlight-background: #a7c080 !important;
+            	--urlbarView-highlight-color: #2b3339 !important;
+            	/*--urlbarView-hover-background: color-mix(in srgb, currentColor 17%, transparent);*/
+            	/*--urlbarView-icon-margin-end: calc(calc((max(32px, 1.4em) - 2px - 2px - 16px ) / 2) + 4px);*/
+            	/*--urlbarView-icon-margin-start: 0px;*/
+            	/*--urlbarView-item-block-padding: 6px;*/
+            	/*--urlbarView-item-inline-padding: calc((max(32px, 1.4em) - 2px - 2px - 16px ) / 2);*/
+            	/*--urlbarView-labeled-row-label-top: calc(-1.27em - 2px);*/
+            	/*--urlbarView-labeled-row-margin-top: calc(1.46em + 4px);*/
+            	/*--urlbarView-labeled-tip-margin-top-extra: 8px;*/
+            	/*--urlbarView-result-button-background-opacity: 60%;*/
+            	/*--urlbarView-result-button-hover-background-color: color-mix(in srgb, FieldText 60%, transparent);*/
+            	/*--urlbarView-result-button-hover-color: Field;*/
+            	/*--urlbarView-result-button-selected-background-color: color-mix(in srgb, Field 60%, transparent);*/
+            	/*--urlbarView-result-button-selected-color: FieldText;*/
+            	/*--urlbarView-result-button-size: 24px;*/
+            	--urlbarView-results-padding: 0 !important;
+            	/*--urlbarView-rich-suggestion-default-icon-size: 28px;*/
+            	--urlbarView-row-gutter: 0 !important;
+            	/*--urlbarView-secondary-text-color: color-mix(in srgb, currentColor 73%, transparent);*/
+            	/*--urlbarView-separator-color: color-mix(in srgb, currentColor 14%, transparent);*/
+            	/*--urlbarView-small-font-size: 0.85em;*/
+
+
+            }
+
+            .urlbarView-Row { border-radius: 0 !important; }
+            .urlbarView-url { margin-top: 0px !important; }
+            .urlbarView-button-menu
+            {
+            	display: none !important;
+            	user-select: none;
+            }
+
             /* sidebar */
-            #sidebar-main {
-            	--toolbar-bgcolor: #${config.lib.stylix.colors.base00};
+            /* ignore horizontal options */
+            moz-radio-group[name="tabDirection"] {
+            	display: none !important;
             }
 
             #tabbrowser-tabs {
@@ -83,7 +155,7 @@
             };
 
             .tab-background {
-            	--tab-selected-bgcolor: #${config.lib.stylix.colors.base02};
+            	box-shadow: none !important;
             }
 
             /*
@@ -168,8 +240,7 @@
              */
 
             #unified-extensions-view{
-            		--uei-icon-size: 24px;
-            		--extensions-in-row: 4;
+            		--uei-icon-size: 20px;
 
             		width: 100% !important;
             		:is(
@@ -183,10 +254,9 @@
             			#unified-extensions-area,
             			.unified-extensions-list 
             		){
-            			display: grid !important;
-            			grid-template-columns: repeat(var(--extensions-in-row),auto);
-            			justify-items: center !important;
-            			align-items: center !important;
+            			display: flex !important;
+            			flex-direction: row;
+            			gap: 5px;
             		}
             		
             		.unified-extensions-item-action-button {padding-right: 3px !important;}
@@ -200,7 +270,7 @@
 
             * {
             	font-family: monospace !important;
-            	font-size: 14px !important;
+            	font-size: 13px !important;
             }
 
             /*
@@ -212,33 +282,32 @@
             ╹ ╹╹ ╹┗┛ ┗━┛╹ ╹╹┗╸
             */
 
-            #nav-bar:not([customizing]) {
-            	opacity: 0;
-            	min-height: 10px;
-            	max-height: 10px; 
-            	transition: max-height 1s linear 3s, opacity 600ms ease 3s !important;
+            #nav-bar {
+            	height: 40px;
             }
 
             #nav-bar:hover,
             #nav-bar:focus-within {
-            	opacity: 1;
-            	min-height: 10px;
-            	max-height: 50px; 
-            	transition-duration: 200ms !important;
-            	transition-delay: 0s, 200ms !important;
+            	
             }
 
             #urlbar:focus-within {
             	height: 100% !important;
             }
 
+            #urlbar-background {
+            	animation: none !important;
+            	box-shadow: none !important;
+            	border: none !important;
+            }
+
             .urlbar-input-container {
-            		height: 105% !important;
+            		height: 40px !important;
             }
 
             .urlbarView {
             		background: var(--arrowpanel-background) !important;
-            		border-radius: 5px;
+            		border-radius: 10px;
             }
 
             /* 
@@ -297,6 +366,12 @@
             #back-button,
             #forward-button,
             .tab-secondary-label {
+            	display: none !important;
+            }
+
+            #new-tab-button,
+            #PanelUI-menu-button,
+            #unified-extensions-button {
             	display: none !important;
             }
 

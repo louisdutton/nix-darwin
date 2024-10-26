@@ -4,7 +4,7 @@
     ./zsh.nix
     ./git.nix
     ./alacritty.nix
-    ./browser.nix
+    ./firefox.nix
     ./email.nix
     # ./desktop.nix
   ];
@@ -15,7 +15,7 @@
     gcalcli
     sd
     xh
-    jq
+    j
   ];
 
   home.sessionVariables = {
