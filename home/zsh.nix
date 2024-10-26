@@ -57,7 +57,7 @@
   programs.starship.enable = true;
 
   # remove init messaage
-  home.file.".hushlogin".enable = true;
+  home.file.".hushlogin".text = "";
 
   programs.zsh = {
     enable = true;
