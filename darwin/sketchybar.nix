@@ -66,8 +66,8 @@ let
       "background.height" = 25;
       "label.drawing" = "off";
       script = "~/${pluginDir}/space.sh";
-      click_script = "yabai -m space --focus ${space}";
-    }) (builtins.genList (x: toString (x + 1)) 10);
+      click_script = "aerospace workspace ${space}";
+    }) (builtins.genList (x: toString (x + 1)) 9);
 
     items = {
       right = {

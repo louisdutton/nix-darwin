@@ -20,6 +20,12 @@ in
         #   };
         # };
 
+        exec-on-workspace-change = [
+          "zsh"
+          "-c"
+          "sketchybar --trigger aerospace_workspace_change AEROSPACE_FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE AEROSPACE_PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE"
+        ];
+
         # Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
         enable-normalization-flatten-containers = true;
         enable-normalization-opposite-orientation-for-nested-containers = true;
@@ -99,10 +105,10 @@ in
             cmd-comma = "layout accordion horizontal vertical";
 
             # See: https://nikitabobko.github.io/AeroSpace/commands#focus
-            cmd-h = "focus left";
-            cmd-j = "focus down";
-            cmd-k = "focus up";
-            cmd-l = "focus right";
+            cmd-h = "focus left --boundaries all-monitors-outer-frame";
+            cmd-j = "focus down --boundaries all-monitors-outer-frame";
+            cmd-k = "focus up --boundaries all-monitors-outer-frame";
+            cmd-l = "focus right --boundaries all-monitors-outer-frame";
 
             # See: https://nikitabobko.github.io/AeroSpace/commands#move
             cmd-shift-h = "move left";
