@@ -17,7 +17,6 @@
 
   # system shell
   programs.zsh.enable = true;
-  programs.bash.enable = false;
 
   # users
   time.timeZone = "Europe/London";
