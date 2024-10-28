@@ -11,13 +11,7 @@
   programs.bat.enable = true;
 
   # better top
-  programs.btop = {
-    enable = true;
-    settings = {
-      # theme_background = false;
-      vim_keys = true;
-    };
-  };
+  programs.htop.enable = true;
 
   #	better ls
   programs.eza = {
@@ -72,7 +66,7 @@
       gl = "glab";
       clean = "git clean -xdf";
       cat = "bat";
-      top = "btop";
+      top = "htop";
       tree = "ls --tree --git-ignore";
       l = "ls -l";
       la = "ls -la";
