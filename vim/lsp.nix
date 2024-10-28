@@ -18,13 +18,14 @@
         taplo.enable = true; # toml
         gopls.enable = true;
         clangd.enable = true;
+        cssls.enable = true;
 
         # nix
         nixd = {
           enable = true;
           settings.options = {
             nixos.expr = "(builtins.getFlake \"/Users/louis/.config/nix-darwin\").darwinConfigurations.nixos.options";
-            # home-manager.expr = 	"(builtins.getFlake \"/Users/louis/.config/nix-darwin\").nixosConfigurations.nixos.options"
+            # home-manager.expr = "(builtins.getFlake \"/Users/louis/.config/nix-darwin\").nixosConfigurations.nixos.options"
           };
         };
 
