@@ -209,7 +209,7 @@ moz-radio-group[name="tabDirection"] {
 */
 
 #nav-bar {
-	display: none;
+	height: 40px;
 }
 
 #nav-bar:hover,
@@ -296,8 +296,8 @@ toolbarbutton.bookmark-item:not(.subviewbutton) {
 }
 
 #new-tab-button,
-#PanelUI-menu-button,
-#unified-extensions-button {
+/*#unified-extensions-button,*/
+#PanelUI-menu-button {
 	display: none !important;
 }
 

@@ -41,6 +41,7 @@ in
         extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
           proton-pass
           tridactyl
+          darkreader
         ];
 
         # about:config
