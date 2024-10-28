@@ -15,10 +15,10 @@
           timeoutMs = 500;
         };
         formatters_by_ft = {
-          javascript = [ "prettierd" ];
-          typescript = [ "prettierd" ];
-          json = [ "prettierd" ];
-          yaml = [ "prettierd" ];
+          javascript = [ "prettier" ];
+          typescript = [ "prettier" ];
+          json = [ "prettier" ];
+          yaml = [ "prettier" ];
           nix = [ "nixfmt" ];
         };
       };
