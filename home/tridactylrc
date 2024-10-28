@@ -1,0 +1,67 @@
+" Run :source to get it in the browser, or just restart.
+" For syntax highlighting see https://github.com/tridactyl/vim-tridactyl
+" vim: set filetype=tridactyl
+
+" ------------ binds ---------------
+
+" make q take you to the left (I find it much less confusing)
+bind q composite tabprev; tabclose #
+bind Q
+unbind d
+unbind D
+
+" Open right click menu on links
+bind ; fillcmdline_notrail
+
+" make t open the selection with tabopen
+bind --mode=visual t composite js document.getSelection().toString() | fillcmdline tabopen
+
+" Handy multiwindow/multitasking binds
+bind gd tabdetach
+bind gD composite tabduplicate; tabdetach
+
+" Binds for new reader mode
+bind gr reader
+bind gR reader --tab
+
+" Allow Ctrl bindings in the ex mode
+unbind --mode=ex <C-a>
+unbind --mode=ex <C-c>
+
+" Only hint search results on Google and DDG
+bindurl www.google.com f hint -Jc #search a
+bindurl www.google.com F hint -Jbc #search a
+
+" Make `gi` on GitHub take you to the search box
+bindurl ^https://github.com gi hint -Vc .AppHeader-searchButton
+
+
+" ------------ commands ---------------
+
+" Suspend / "discard" all tabs - handy for stretching out battery life
+command discardall jsb browser.tabs.query({}).then(ts => browser.tabs.discard(ts.map(t=>t.id)))
+
+" Stupid workaround to let hint -; be used with composite which steals semi-colons
+command hint_focus hint -;
+
+" ------------ security ---------------
+
+" Make Tridactyl work on more sites at the expense of some security.
+fixamo_quiet
+jsb browser.webRequest.onHeadersReceived.addListener(tri.request.clobberCSP,{urls:["<all_urls>"],types:["main_frame"]},["blocking","responseHeaders"])
+
+" -------------- misc -----------------
+
+" set editorcmd to suckless terminal, or use the defaults on other platforms
+" js tri.browserBg.runtime.getPlatformInfo().then(os=>{const editorcmd = os.os=="linux" ? "st vim" : "auto"; tri.config.set("editorcmd", editorcmd)})
+
+" Sane hinting mode
+set hintfiltermode vimperator-reflow
+
+" Defaults to 300ms but I'm a 'move fast and close the wrong tabs' kinda chap
+set hintdelay 100
+
+" ----------- redirects ---------------
+
+" New reddit is bad
+" autocmd DocStart ^http(s?)://www.reddit.com js tri.excmds.urlmodify("-t", "www", "old")

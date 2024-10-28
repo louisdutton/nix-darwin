@@ -10,9 +10,15 @@ let
   };
 in
 {
+
   programs.firefox = {
     enable = true;
     package = pkgs.firefox-devedition-bin;
+
+    # enable native communication for tridactyl extension
+    nativeMessagingHosts = with pkgs; [
+      tridactyl-native
+    ];
 
     # about:policies#documentation.
     policies = {
@@ -28,12 +34,6 @@ in
       OverrideFirstRunPage = "";
       OverridePostUpdatePage = "";
       PasswordManagerEnabled = false;
-
-      ExtensionSettings = {
-        "tridactyl.vim@cmcaine.co.uk" =
-          {
-          };
-      };
     };
 
     profiles = {
@@ -45,7 +45,7 @@ in
 
         # about:config
         settings =
-          builtins.mapAttrs k: v: { inherit k; lock v; } {
+          builtins.mapAttrs (name: value: lock value) {
             #	disable builtin extensions
             "extensions.screenshots.disabled" = true;
             "extensions.pocket.enabled" = false;
@@ -88,9 +88,14 @@ in
             "font.default.x-western" = "monospace";
             "font.name.monospace.x-western" = "JetBrainsMono Nerd Font";
           }
-          // {
-            # unlocked contentblocking to allow certain sites to function
-            "browser.contentblocking.category" = true "strict";
+          //
+          # unlocked
+          {
+            "browser.contentblocking.category" = true; # "strict" breaks many sites
+
+            # insecurely remove extension restrictions
+            "privacy.resistFingerprinting.block_mozAddonManager" = true;
+            "extensions.webextensions.restrictedDomains" = "";
           };
 
         userChrome = builtins.readFile ./userChrome.css;
@@ -98,4 +103,6 @@ in
       };
     };
   };
+
+  home.file.".config/tridactyl/tridactylrc".text = builtins.readFile ./tridactylrc;
 }
