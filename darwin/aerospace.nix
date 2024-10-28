@@ -33,7 +33,7 @@ in
         # See: https://nikitabobko.github.io/AeroSpace/guide#layouts
         # The "accordion-padding" specifies the size of accordion padding
         # You can set 0 to disable the padding feature
-        accordion-padding = 30;
+        accordion-padding = 10;
 
         # Possible values: tiles|accordion
         default-root-container-layout = "tiles";
