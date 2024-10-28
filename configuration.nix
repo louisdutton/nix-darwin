@@ -38,6 +38,5 @@
       package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
       name = "JetBrainsMono Nerd Font";
     };
-    targets.nixvim.enable = true;
   };
 }
