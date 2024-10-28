@@ -27,8 +27,9 @@
     profiles = {
       default = {
         extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
-          vimium
+          # vimium
           proton-pass
+          tridactyl
         ];
 
         # about:config
