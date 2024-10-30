@@ -208,32 +208,17 @@ moz-radio-group[name="tabDirection"] {
 ╹ ╹╹ ╹┗┛ ┗━┛╹ ╹╹┗╸
 */
 
-#nav-bar {
-	height: 40px;
+#navigator-toolbox {
+    height: 0px !important;
+    min-height: 0px !important;
+    overflow: hidden !important;
 }
 
-#nav-bar:hover,
-#nav-bar:focus-within {
-	
-}
-
-#urlbar:focus-within {
-	height: 100% !important;
-}
-
-#urlbar-background {
-	animation: none !important;
-	box-shadow: none !important;
-	border: none !important;
-}
-
-.urlbar-input-container {
-		height: 40px !important;
-}
-
-.urlbarView {
-		background: var(--arrowpanel-background) !important;
-		border-radius: 10px;
+#navigator-toolbox:focus,
+#navigator-toolbox:focus-within,
+#navigator-toolbox:active {
+    height: auto !important;
+    overflow: visible !important;
 }
 
 /* 
