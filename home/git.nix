@@ -5,12 +5,51 @@
   programs.lazygit = {
     enable = true;
     settings = {
-      keybindings = {
+      gui = {
+        mouseEvents = false;
+        expandFocusedSidePanel = true;
+        showBottomLine = false;
+        showRandomTip = false;
+        showCommandLog = false;
+        showPannelJumps = false;
+        border = "hidden";
+        filterMode = "fuzzy";
+        nerdFontsVersion = 3;
+      };
+
+      keybinding = {
         universal = {
-          nextTab = "l";
-          prevTab = "h";
-          "nextBlock-alt" = false;
-          "prevBlock-alt" = false;
+          nextTab = "i";
+          prevTab = "m";
+          scrollLeft = "M";
+          scrollRight = "I";
+          prevItem-alt = "e";
+          nextItem-alt = "n";
+          nextBlock-alt = ">";
+          prevBlock-alt = "<";
+          undo = "u";
+          redo = "U";
+          nextMatch = "h";
+          prevMatch = "H";
+          new = "a";
+          edit = "E";
+          createRebaseOptionsMenu = "^";
+        };
+
+        files = {
+          ignoreFile = "I";
+        };
+
+        branches = {
+          viewGitFlowOptions = "I";
+        };
+
+        commits = {
+          startInteractiveRebase = "I";
+        };
+
+        submodules = {
+          init = "I";
         };
       };
     };

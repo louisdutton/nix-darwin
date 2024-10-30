@@ -10,17 +10,10 @@ let
     move = "ctrl-shift";
 
     # nav
-    # qwerty
-    left = "h";
-    down = "j";
-    up = "k";
-    right = "l";
-
-    # colemak
-    # left = "m";
-    # down = "n";
-    # up = "e";
-    # right = "i";
+    left = "m";
+    down = "n";
+    up = "e";
+    right = "i";
 
     # misc
     next = "tab";
@@ -84,6 +77,7 @@ in
         mode = {
           # All possible commands: https://nikitabobko.github.io/AeroSpace/commands
           main.binding = with keymap; {
+            "${mod}-q" = "close --quit-if-last-window";
             "${mod}-r" = "reload-config";
             "${mod}-f" = "fullscreen";
 

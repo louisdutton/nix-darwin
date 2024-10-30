@@ -4,6 +4,33 @@
 
 " ------------ binds ---------------
 
+" navigation
+unbind h
+unbind j
+unbind k
+unbind l
+unbind H
+unbind J
+unbind K
+unbind L
+bind m scrollpx -50
+bind n scrollline 10
+bind e scrollline -10
+bind i scrollpx 50
+bind M back
+bind N scrollto 100
+bind E scrollto 0
+bind I forward
+bind s mode insert
+
+bind --mode=visual m js document.getSelection().modify("extend","backward","character")
+bind --mode=visual n js document.getSelection().modify("extend","forward","line")
+bind --mode=visual e js document.getSelection().modify("extend","backward","line")
+bind --mode=visual i js document.getSelection().modify("extend","forward","character")
+
+bind --mode=visual M js document.getSelection().modify("extend","backward","lineboundary")
+bind --mode=visual I js document.getSelection().modify("extend","forward","lineboundary")
+
 " make q take you to the left (I find it much less confusing)
 bind q composite tabprev; tabclose #
 bind Q
@@ -12,12 +39,8 @@ unbind D
 
 " find
 bind / fillcmdline find
-bind n findnext 
-bind N findnext --reverse
-
-" nav to top/bottom of page
-bind K scrollto 0
-bind J scrollto 100
+bind h findnext 
+bind H findnext --reverse
 
 " quicker cmd mode
 bind ; fillcmdline_notrail

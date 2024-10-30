@@ -4,6 +4,7 @@ let
     options.silent = true;
   };
   nmap = key: action: bind key action // { mode = "n"; };
+  omap = key: action: bind key action // { mode = "o"; };
 in
 {
   programs.nixvim = {
@@ -14,23 +15,32 @@ in
       (bind ";" ":")
 
       # navigation
-      (bind "H" "^")
-      (bind "L" "$")
-      (bind "K" "gg")
-      (bind "J" "G")
+      (bind "m" "h")
+      (bind "n" "j")
+      (bind "e" "k")
+      (bind "i" "l")
+      (bind "M" "^")
+      (bind "I" "$")
+      (bind "E" "gg")
+      (bind "N" "G")
 
-      # surround
-      (nmap "s" "ys")
-      (nmap "S" "yS")
+      # fix o-pending bindings
+      (omap "i" "i")
 
-      # delete and change
-      (nmap "dH" "d^")
-      (nmap "dL" "d$")
-      (nmap "cH" "c^")
-      (nmap "cL" "c$")
+      # colemek insert
+      (bind "s" "i")
+      (bind "S" "I")
+
+      # colemek next/prev
+      (bind "h" "n")
+      (bind "H" "N")
 
       # redo
       (nmap "U" "<c-r>")
+
+      # save and quit
+      (nmap "<leader>w" ":w<cr>")
+      (nmap "<leader>q" ":q<cr>")
 
       # git
       (nmap "<leader>g" ":LazyGit<cr>")
@@ -51,7 +61,7 @@ in
         gi = "implementation";
         gt = "type_definition";
         "<leader>a" = "code_action";
-        "<leader>k" = "hover";
+        "<leader>i" = "hover";
         "<leader>r" = "rename";
       };
     };
