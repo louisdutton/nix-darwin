@@ -67,6 +67,11 @@ in
             "browser.urlbar.suggest.searches" = false;
             "browser.urlbar.showSearchSuggestionsFirst" = false;
 
+            # disable quick find
+            "accessibility.typeaheadfind.manual" = false;
+            "accessibility.typeaheadfind" = false;
+            "accessibility.typeaheadfind.autostart" = false;
+
             # newtabpage
             "browser.newtabpage.activity-stream.telemetry" = false;
             "browser.newtabpage.activity-stream.feeds.telemetry" = false;
@@ -88,6 +93,7 @@ in
             # font
             "font.default.x-western" = "monospace";
             "font.name.monospace.x-western" = "JetBrainsMono Nerd Font";
+            "browser.display.use_document_fonts" = 0;
           }
           //
           # unlocked
