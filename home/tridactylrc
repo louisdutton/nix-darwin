@@ -10,7 +10,11 @@ bind Q
 unbind d
 unbind D
 
-" Open right click menu on links
+" nav to top/bottom of page
+bind K scrollto 0
+bind J scrollto 100
+
+" quicker cmd mode
 bind ; fillcmdline_notrail
 
 " make t open the selection with tabopen
