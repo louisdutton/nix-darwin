@@ -10,6 +10,11 @@ bind Q
 unbind d
 unbind D
 
+" find
+bind / fillcmdline find
+bind n findnext 
+bind N findnext --reverse
+
 " nav to top/bottom of page
 bind K scrollto 0
 bind J scrollto 100
@@ -61,9 +66,10 @@ jsb browser.webRequest.onHeadersReceived.addListener(tri.request.clobberCSP,{url
 
 " Sane hinting mode
 set hintfiltermode vimperator-reflow
-
-" Defaults to 300ms but I'm a 'move fast and close the wrong tabs' kinda chap
 set hintdelay 100
+
+" disable autofocus
+set allowautofocus false
 
 " ----------- redirects ---------------
 
