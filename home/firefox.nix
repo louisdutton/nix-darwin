@@ -92,7 +92,6 @@ in
 
             # font
             "font.default.x-western" = "monospace";
-            "font.name.monospace.x-western" = "JetBrainsMono Nerd Font";
             "browser.display.use_document_fonts" = 0;
           }
           //

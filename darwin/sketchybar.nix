@@ -1,6 +1,6 @@
 { user, config, ... }:
 let
-  font = "JetBrainsMono Nerd Font";
+  font = config.stylix.fonts.monospace.name;
   configDir = ".config/sketchybar";
   pluginDir = "${configDir}/plugins";
 
