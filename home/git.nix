@@ -5,6 +5,10 @@
   programs.lazygit = {
     enable = true;
     settings = {
+      git.paging = {
+        colorArg = "always";
+        pager = "delta --paging=never";
+      };
       gui = {
         mouseEvents = false;
         expandFocusedSidePanel = true;
@@ -12,7 +16,7 @@
         showRandomTip = false;
         showCommandLog = false;
         showPannelJumps = false;
-        border = "hidden";
+        border = "rounded";
         filterMode = "fuzzy";
         nerdFontsVersion = 3;
       };
@@ -73,6 +77,13 @@
         "https://github.com".helper = "!gh auth git-credential";
       };
     };
-  };
 
+    delta = {
+      enable = true;
+      options = {
+        dark = true;
+        syntax-theme = "base16-stylix";
+      };
+    };
+  };
 }
