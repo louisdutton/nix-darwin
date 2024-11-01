@@ -1,23 +1,12 @@
-{ pkgs, user, ... }:
+{
+  pkgs,
+  user,
+  keymap,
+  ...
+}:
 let
   toml = pkgs.formats.toml { };
-
   padding = 10;
-
-  keymap = {
-    # mods
-    mod = "ctrl";
-    move = "ctrl-shift";
-
-    # nav
-    left = "m";
-    down = "n";
-    up = "e";
-    right = "i";
-
-    # misc
-    next = "tab";
-  };
 in
 {
   environment.systemPackages = with pkgs; [
@@ -101,8 +90,8 @@ in
             "${move}-minus" = "resize smart -50";
             "${move}-equal" = "resize smart +50";
 
-            "${mod}-${next}" = "workspace-back-and-forth"; # https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
-            "${move}-${next}" = "move-workspace-to-monitor --wrap-around next"; # https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
+            "${mod}-tab" = "workspace-back-and-forth"; # https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
+            "${move}-tab" = "move-workspace-to-monitor --wrap-around next"; # https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
 
             # https://nikitabobko.github.io/AeroSpace/commands#workspace
             "${mod}-1" = "workspace 1";

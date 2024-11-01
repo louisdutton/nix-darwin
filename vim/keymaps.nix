@@ -6,37 +6,39 @@ let
   nmap = key: action: bind key action // { mode = "n"; };
   omap = key: action: bind key action // { mode = "o"; };
 in
+{ keymap, ... }:
 {
   programs.nixvim = {
     globals.mapleader = " ";
 
-    keymaps = [
+    keymaps = with keymap; [
       # quick commands
       (bind ";" ":")
 
       # navigation
-      (bind "m" "h")
-      (bind "n" "j")
-      (bind "e" "k")
-      (bind "i" "l")
-      (bind "M" "^")
-      (bind "I" "$")
-      (bind "E" "gg")
-      (bind "N" "G")
+      (bind left "h")
+      (bind down "j")
+      (bind up "k")
+      (bind right "l")
+      (bind farleft "^")
+      (bind farright "$")
+      (bind farup "gg")
+      (bind fardown "G")
 
-      # fix o-pending bindings
+      # fix o-pending bindings for colemak
       (omap "i" "i")
 
-      # colemek insert
-      (bind "s" "i")
-      (bind "S" "I")
+      # colemak insert
+      (bind insert "i")
+      (bind farinsert "I")
 
-      # colemek next/prev
-      (bind "h" "n")
-      (bind "H" "N")
+      # colemak next/prev
+      (bind next "n")
+      (bind prev "N")
 
       # redo
-      (nmap "U" "<c-r>")
+      (nmap undo "u")
+      (nmap redo "<c-r>")
 
       # save and quit
       (nmap "<leader>w" ":w<cr>")
@@ -61,7 +63,7 @@ in
         gi = "implementation";
         gt = "type_definition";
         "<leader>a" = "code_action";
-        "<leader>i" = "hover";
+        "<leader>k" = "hover";
         "<leader>r" = "rename";
       };
     };

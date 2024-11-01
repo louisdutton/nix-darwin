@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, keymap, ... }:
 {
   # automatically init nix shell when entering a relevant directory
   programs.direnv = {
@@ -86,7 +86,8 @@
       }
     ];
 
-    initExtra = # bash
+    initExtra =
+      with keymap; # bash
       ''
         # vi mode
         bindkey -v
@@ -100,22 +101,22 @@
         bindkey '^[^?' backward-kill-word
 
         # vicmd
-        bindkey -M vicmd "m" backward-char
-        bindkey -M vicmd "n" down-line-or-history
-        bindkey -M vicmd "e" up-line-or-history
-        bindkey -M vicmd "i" forward-char
-        bindkey -M vicmd "M" vi-beginning-of-line
-        bindkey -M vicmd "I" vi-end-of-line
+        bindkey -M vicmd "${left}" backward-char
+        bindkey -M vicmd "${down}" down-line-or-history
+        bindkey -M vicmd "${up}" up-line-or-history
+        bindkey -M vicmd "${right}" forward-char
+        bindkey -M vicmd "${farleft}" vi-beginning-of-line
+        bindkey -M vicmd "${farright}" vi-end-of-line
 
-        bindkey -M vicmd "s" vi-insert
-        bindkey -M vicmd "S" vi-insert-bol
-        bindkey -M vicmd "k" vi-repeat-search
-        bindkey -M vicmd "K" vi-rev-repeat-search
-        bindkey -M vicmd "j" vi-forward-word-end
-        bindkey -M vicmd "J" vi-forward-blank-word-end
+        bindkey -M vicmd "${insert}" vi-insert
+        bindkey -M vicmd "${farinsert}" vi-insert-bol
+        bindkey -M vicmd "${next}" vi-repeat-search
+        bindkey -M vicmd "${prev}" vi-rev-repeat-search
+        # bindkey -M vicmd "j" vi-forward-word-end
+        # bindkey -M vicmd "J" vi-forward-blank-word-end
 
-        bindkey -M vicmd "u" undo
-        bindkey -M vicmd "U" redo
+        bindkey -M vicmd "${undo}" undo
+        bindkey -M vicmd "${redo}" redo
 
         # Change cursor shape for different vi modes.
         function zle-keymap-select {

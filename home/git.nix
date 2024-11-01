@@ -1,4 +1,9 @@
-{ user, pkgs, ... }:
+{
+  user,
+  pkgs,
+  keymap,
+  ...
+}:
 {
   home.packages = with pkgs; [ glab ];
 
@@ -7,7 +12,7 @@
     settings = {
       git.paging = {
         colorArg = "always";
-        pager = "delta --paging=never";
+        pager = "delta --paging=never --side-by-side";
       };
       gui = {
         mouseEvents = false;
@@ -21,39 +26,34 @@
         nerdFontsVersion = 3;
       };
 
-      keybinding = {
+      keybinding = with keymap; {
         universal = {
-          nextTab = "i";
-          prevTab = "m";
-          scrollLeft = "M";
-          scrollRight = "I";
-          prevItem-alt = "e";
-          nextItem-alt = "n";
-          nextBlock-alt = ">";
-          prevBlock-alt = "<";
-          undo = "u";
-          redo = "U";
-          nextMatch = "h";
-          prevMatch = "H";
-          new = "a";
-          edit = "E";
-          createRebaseOptionsMenu = "^";
+          nextBlock = right;
+          prevBlock = left;
+          nextTab = farright;
+          prevTab = farleft;
+          nextMatch = next;
+          prevMatch = prev;
+          prevItem = up;
+          nextItem = down;
+          undo = undo;
+          redo = redo;
         };
 
         files = {
-          ignoreFile = "I";
+          ignoreFile = "i";
         };
 
         branches = {
-          viewGitFlowOptions = "I";
+          viewGitFlowOptions = "i";
         };
 
         commits = {
-          startInteractiveRebase = "I";
+          startInteractiveRebase = "i";
         };
 
         submodules = {
-          init = "I";
+          init = "i";
         };
       };
     };

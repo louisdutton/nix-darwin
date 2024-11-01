@@ -35,6 +35,7 @@
       };
       specialArgs = {
         inherit inputs user;
+        keymap = import ./keys.nix;
       };
       modules = [
         ./configuration.nix
