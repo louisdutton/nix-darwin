@@ -4,8 +4,8 @@
     ./zsh.nix
     ./git.nix
     ./alacritty.nix
-    ./firefox.nix
     ./email.nix
+    ./firefox
     # ./desktop.nix
   ];
 

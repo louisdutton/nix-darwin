@@ -27,9 +27,31 @@
 	--arrowpanel-color: #d3c6aa !important;
 }
 
+/* fonts */
+* {
+	font-family: monospace !important;
+	font-size: 13px !important;
+}
+
 /* completely hide navbar */
-#navigator-toolbox {
-	display: none;
+#nav-bar {
+  /* customize this value. */
+  --navbar-margin: -38px;
+
+  margin-top: var(--navbar-margin);
+  margin-bottom: 0;
+  z-index: -100;
+  transition: all 0.3s ease !important;
+  opacity: 0;
+}
+
+#navigator-toolbox:focus-within > #nav-bar,
+#navigator-toolbox:hover > #nav-bar
+{
+  margin-top: 0;
+  margin-bottom: var(--navbar-margin);
+  z-index: 100;
+  opacity: 1;
 }
 
 /* main browser viewport */
@@ -39,14 +61,6 @@
 }
 
 /* sidebar */
-/* ignore options */
-moz-radio-group[name="tabDirection"],
-moz-radio-group[name="position"],
-moz-radio-group[name="visibility"]
-{
-	display: none !important;
-}
-
 #tabbrowser-tabs {
 	padding-top: 10px !important;
 };
@@ -55,8 +69,11 @@ moz-radio-group[name="visibility"]
 	box-shadow: none !important;
 }
 
-/* fonts */
-* {
-	font-family: monospace !important;
-	font-size: 13px !important;
+/* hide options */
+moz-radio-group[name="tabDirection"],
+moz-radio-group[name="position"],
+moz-radio-group[name="visibility"]
+{
+	display: none !important;
 }
+
