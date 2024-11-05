@@ -10,6 +10,21 @@
       ];
     };
 
+    adapters.executables.lldb = {
+      command = "lldb";
+    };
+
+    configurations.odin = [
+      {
+        name = "Launch";
+        type = "lldb";
+        request = "launch";
+        program = "./src.bin";
+        cwd = "\${workspaceFolder}";
+        stopAtBeginningOfMainSubprogram = false;
+      }
+    ];
+
     configurations.c = [
       {
         name = "Launch";
@@ -51,6 +66,10 @@
         cwd = "$${workspaceFolder}";
       }
     ];
+
+    extensions.dap-go = {
+      enable = true;
+    };
 
     extensions.dap-ui = {
       enable = true;

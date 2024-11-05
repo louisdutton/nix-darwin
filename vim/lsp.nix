@@ -19,6 +19,7 @@
         gopls.enable = true;
         clangd.enable = true;
         cssls.enable = true;
+        ols.enable = true;
 
         # nix
         nixd = {
