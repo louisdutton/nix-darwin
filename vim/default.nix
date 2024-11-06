@@ -37,10 +37,16 @@
 
     plugins = {
       lualine.enable = true;
-      treesitter.enable = true;
-      treesitter-textobjects.enable = true;
       web-devicons.enable = true;
 
+      # syntax parser
+      treesitter-textobjects.enable = true;
+      treesitter = {
+        enable = true;
+        settings.highlight.enable = true;
+      };
+
+      # filesystem manager
       oil = {
         enable = true;
         settings = {
