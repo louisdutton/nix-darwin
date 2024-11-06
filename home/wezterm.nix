@@ -5,6 +5,7 @@
     extraConfig = ''
       local wezterm = require 'wezterm'
       local config = wezterm.config_builder()
+      local action = wezterm.action
 
       -- window
       config.window_decorations = 'RESIZE'
@@ -17,6 +18,11 @@
 
       -- cursor
       config.cursor_blink_rate = 0
+
+      -- keymaps
+      config.keys = {
+      	{ mods = "CMD", key = "Backspace", action = action.SendKey({ mods = "CTRL", key = "u" }) },
+      }
 
       -- misc
       config.audible_bell = 'Disabled'
