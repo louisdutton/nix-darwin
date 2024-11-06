@@ -1,4 +1,4 @@
-{ ... }:
+{ self, ... }:
 {
   programs.nixvim.plugins = {
     lspkind = {
@@ -24,10 +24,15 @@
         # nix
         nixd = {
           enable = true;
-          settings.options = {
-            nixos.expr = "(builtins.getFlake \"/Users/louis/.config/nix-darwin\").darwinConfigurations.nixos.options";
-            # home-manager.expr = "(builtins.getFlake \"/Users/louis/.config/nix-darwin\").nixosConfigurations.nixos.options"
-          };
+          settings.options =
+            let
+              # system = ''''${builtins.currentSystem)}'';
+              flake = ''builtins.getFlake "${self}")'';
+            in
+            rec {
+              nixos.expr = "${flake}.darwinConfigurations.nixos.options";
+              home-manager.expr = "${nixos.expr}.home-manager.users.type.getSubOptions [ ]";
+            };
         };
 
         # rust

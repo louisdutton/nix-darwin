@@ -19,6 +19,7 @@
 
   outputs =
     inputs@{
+      self,
       home-manager,
       nix-darwin,
       nixpkgs,
@@ -34,7 +35,7 @@
         email = "louis@dutton.digital";
       };
       specialArgs = {
-        inherit inputs user;
+        inherit inputs user self;
         keymap = import ./keys.nix;
       };
       modules = [
