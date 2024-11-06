@@ -5,12 +5,9 @@
 }:
 {
   imports = [
-    # ./yabai.nix
-    # ./skhd.nix
     ./aerospace.nix
     ./sketchybar.nix
     ./jankyborders.nix
-    ./choose.nix
   ];
 
   # Auto upgrade nix package and the daemon service.
