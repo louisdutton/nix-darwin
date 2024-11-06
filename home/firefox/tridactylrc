@@ -10,18 +10,23 @@ bind j scrollline 10
 bind k scrollline -10
 bind l scrollpx 50
 bind H back
-bind J scrollto 100
-bind K scrollto 0
+
+bind gj scrollto 100
+bind gk scrollto 0
+
 bind L forward
-bind i mode insert
 
 bind --mode=visual h js document.getSelection().modify("extend","backward","character")
 bind --mode=visual j js document.getSelection().modify("extend","forward","line")
 bind --mode=visual k js document.getSelection().modify("extend","backward","line")
 bind --mode=visual l js document.getSelection().modify("extend","forward","character")
 
-bind --mode=visual H js document.getSelection().modify("extend","backward","lineboundary")
-bind --mode=visual L js document.getSelection().modify("extend","forward","lineboundary")
+bind --mode=visual gh js document.getSelection().modify("extend","backward","lineboundary")
+bind --mode=visual gl js document.getSelection().modify("extend","forward","lineboundary")terminator -u -e "vim %f '+normal!%lGzv%c|'"
+
+" tabs
+bind --mode=normal J tabnext
+bind --mode=normal K tabprev
 
 " make q take you to the left (I find it much less confusing)
 bind q composite tabprev; tabclose #
