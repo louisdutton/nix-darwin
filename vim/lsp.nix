@@ -20,7 +20,9 @@
     lsp-signature.enable = true;
 
     # include lsp info in the status bar
-    lsp-status.enable = true;
+    lsp-status = {
+      enable = true;
+    };
 
     # disable semantic token provider in favour of treesitter
     lsp.onAttach = # lua
@@ -31,11 +33,12 @@
     lsp = {
       enable = true;
       servers = {
-        # config
+        # config / docs
         jsonls.enable = true;
         yamlls.enable = true;
         taplo.enable = true; # toml
         lemminx.enable = true; # xml
+        marksman.enable = true;
 
         # webdev
         ts_ls.enable = true;
