@@ -15,13 +15,6 @@
     viAlias = true;
     vimAlias = true;
 
-    colorschemes.everforest = {
-      enable = true;
-      settings = {
-        transparent_background = 2;
-      };
-    };
-
     extraPlugins = with pkgs.vimPlugins; [ nvim-surround ];
     extraConfigLua = # lua
       ''

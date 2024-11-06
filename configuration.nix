@@ -38,5 +38,9 @@
       package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
       name = "JetBrainsMono Nerd Font";
     };
+
+    targets.nixvim.transparentBackground.main = true;
+    targets.nixvim.transparentBackground.signColumn = true;
+    targets.nixvim.plugin = "base16-nvim";
   };
 }
