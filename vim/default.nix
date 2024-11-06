@@ -39,8 +39,17 @@
       lualine.enable = true;
       treesitter.enable = true;
       treesitter-textobjects.enable = true;
-      oil.enable = true;
       web-devicons.enable = true;
+
+      oil = {
+        enable = true;
+        settings = {
+          skip_confirm_for_simple_edits = true;
+          constrain_cursor = "name";
+          view_options.show_hidden = true;
+          lsp_file_method.autosave_changes = true;
+        };
+      };
 
       mini = {
         enable = true;
