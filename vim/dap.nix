@@ -1,17 +1,41 @@
 {
   programs.nixvim.plugins.dap = {
     enable = true;
-    adapters.executables.gdb = {
-      command = "gdb";
-      args = [
-        "--interpreter=dap"
-        "--eval-command"
-        "set print pretty on"
-      ];
+
+    extensions = {
+      dap-go.enable = true;
+      dap-ui.enable = true;
+      dap-virtual-text.enable = true;
     };
 
-    adapters.executables.lldb = {
-      command = "lldb";
+    signs = {
+      dapBreakpoint = {
+        text = "●";
+        texthl = "DapBreakpoint";
+      };
+      dapBreakpointCondition = {
+        text = "●";
+        texthl = "DapBreakpointCondition";
+      };
+      dapLogPoint = {
+        text = "◆";
+        texthl = "DapLogPoint";
+      };
+    };
+
+    adapters.executables = {
+      gdb = {
+        command = "gdb";
+        args = [
+          "--interpreter=dap"
+          "--eval-command"
+          "set print pretty on"
+        ];
+      };
+
+      lldb = {
+        command = "lldb";
+      };
     };
 
     configurations.odin = [
@@ -19,7 +43,7 @@
         name = "Launch";
         type = "lldb";
         request = "launch";
-        program = "./src.bin";
+        program = "./src.bin"; # TODO lua picker
         cwd = "\${workspaceFolder}";
         stopAtBeginningOfMainSubprogram = false;
       }
@@ -66,13 +90,5 @@
         cwd = "$${workspaceFolder}";
       }
     ];
-
-    extensions.dap-go = {
-      enable = true;
-    };
-
-    extensions.dap-ui = {
-      enable = true;
-    };
   };
 }
