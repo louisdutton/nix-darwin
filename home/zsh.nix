@@ -72,6 +72,7 @@
       la = "ls -la";
       lsa = "ls -a";
       "-" = "cd -";
+      clip = "pbcopy";
     };
 
     plugins = [
@@ -93,8 +94,6 @@
         bindkey -v
         export KEYTIMEOUT=1
 
-        # colemak
-
         # viins
         bindkey "^H" backward-delete-char
         bindkey "^?" backward-delete-char
@@ -112,8 +111,6 @@
         bindkey -M vicmd "${farinsert}" vi-insert-bol
         bindkey -M vicmd "${next}" vi-repeat-search
         bindkey -M vicmd "${prev}" vi-rev-repeat-search
-        # bindkey -M vicmd "j" vi-forward-word-end
-        # bindkey -M vicmd "J" vi-forward-blank-word-end
 
         bindkey -M vicmd "${undo}" undo
         bindkey -M vicmd "${redo}" redo
@@ -153,16 +150,19 @@
       '';
     completionInit = # bash
       ''
-        autoload -Uz compinit                                   	# autoload completion
-        compinit                                                	# initialise completion
-        zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'     	# case-insensitive completion
-        zstyle ':completion:*' menu select                      	# menu selection
-        zstyle ':completion:*' list-colors "''${(s.:.)LS_COLORS}" # list colors
-        bindkey '^[[Z' reverse-menu-complete                    	# shift-tab to navigate backwards
+        autoload -Uz compinit
+        compinit
+
+        zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # case-insensitive completion
+        zstyle ':completion:*' menu select
+        zstyle ':completion:*' list-colors "''${(s.:.)LS_COLORS}"
+
         setopt COMPLETE_IN_WORD
         setopt ALWAYS_TO_END
         setopt MENU_COMPLETE
         setopt COMPLETE_IN_WORD
+
+        bindkey '^[[Z' reverse-menu-complete # shift-tab to focus previous comp option
       '';
   };
 }

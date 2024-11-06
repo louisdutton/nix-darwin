@@ -49,13 +49,6 @@
       oil.enable = true;
       web-devicons.enable = true;
 
-      noice = {
-        enable = false;
-        presets = {
-          lsp_doc_border = false;
-        };
-      };
-
       mini = {
         enable = true;
         modules = {
