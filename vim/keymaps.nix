@@ -29,9 +29,9 @@ in
       (nmap "<leader>q" ":q<cr>")
 
       # git
-      (nmap "<leader>gg" ":LazyGit<cr>")
-      (nmap "<leader>gb" ":Gitsigns toggle_current_line_blame<cr>")
-      (nmap "<leader>gh" ":Gitsigns preview_hunk<cr>")
+      (nmap "<leader>g" ":LazyGit<cr>")
+      (nmap "<leader>B" ":Gitsigns toggle_current_line_blame<cr>")
+      (nmap "<leader>H" ":Gitsigns preview_hunk<cr>")
 
       # oil
       (nmap "-" ":Oil<cr>")
