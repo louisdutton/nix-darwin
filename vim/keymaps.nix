@@ -4,7 +4,6 @@ let
     options.silent = true;
   };
   nmap = key: action: bind key action // { mode = "n"; };
-  omap = key: action: bind key action // { mode = "o"; };
 in
 { keymap, ... }:
 {
@@ -16,25 +15,10 @@ in
       (bind ";" ":")
 
       # navigation
-      (bind left "h")
-      (bind down "j")
-      (bind up "k")
-      (bind right "l")
       (bind farleft "^")
       (bind farright "$")
       (bind farup "gg")
       (bind fardown "G")
-
-      # fix o-pending bindings for colemak
-      (omap "i" "i")
-
-      # colemak insert
-      (bind insert "i")
-      (bind farinsert "I")
-
-      # colemak next/prev
-      (bind next "n")
-      (bind prev "N")
 
       # redo
       (nmap undo "u")
@@ -45,9 +29,19 @@ in
       (nmap "<leader>q" ":q<cr>")
 
       # git
-      (nmap "<leader>g" ":LazyGit<cr>")
-      (nmap "<leader>B" ":Gitsigns toggle_current_line_blame<cr>")
-      (nmap "<leader>h" ":Gitsigns preview_hunk<cr>")
+      (nmap "<leader>gg" ":LazyGit<cr>")
+      (nmap "<leader>gb" ":Gitsigns toggle_current_line_blame<cr>")
+      (nmap "<leader>gh" ":Gitsigns preview_hunk<cr>")
+
+      # oil
+      (nmap "-" ":Oil<cr>")
+
+      # dap
+      (nmap "<leader>c" ":DapContinue<cr>")
+      (nmap "<leader>i" ":DapStepInto<cr>")
+      (nmap "<leader>o" ":DapStepOver<cr>")
+      (nmap "<leader>O" ":DapStepOut<cr>")
+      (nmap "<leader>b" ":DapToggleBreakpoint")
     ];
 
     plugins.lsp.keymaps = {
