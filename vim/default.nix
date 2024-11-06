@@ -7,7 +7,7 @@
     ./format.nix
     ./options.nix
     ./autocmd.nix
-    ./completion.nix
+    ./cmp.nix
   ];
 
   programs.nixvim = {
