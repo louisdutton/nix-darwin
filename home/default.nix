@@ -3,7 +3,7 @@
   imports = [
     ./zsh.nix
     ./git.nix
-    ./alacritty.nix
+    ./wezterm.nix
     ./email.nix
     ./firefox
     # ./desktop.nix

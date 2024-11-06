@@ -43,4 +43,7 @@
     targets.nixvim.transparentBackground.signColumn = true;
     targets.nixvim.plugin = "base16-nvim";
   };
+
+  home-manager.users.louis.stylix.targets.nixvim.transparentBackground.main = true;
+  home-manager.users.louis.stylix.targets.nixvim.transparentBackground.signColumn = true;
 }
