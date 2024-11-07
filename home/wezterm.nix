@@ -20,6 +20,8 @@
       config.cursor_blink_rate = 0
 
       -- keymaps
+      config.send_composed_key_when_left_alt_is_pressed = true
+      config.send_composed_key_when_right_alt_is_pressed = false
       config.keys = {
       	{ mods = "CMD", key = "Backspace", action = action.SendKey({ mods = "CTRL", key = "u" }) },
       }
