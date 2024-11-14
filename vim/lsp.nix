@@ -1,14 +1,5 @@
 { self, ... }:
 {
-  # detailed diagnostics for the current line via virtual lines
-  programs.nixvim.plugins.lsp-lines.enable = true;
-  programs.nixvim.diagnostics = {
-    virtual_lines = {
-      only_current_line = true;
-    };
-    virtual_text = false;
-  };
-
   programs.nixvim.plugins = {
     # show lsp sources
     lspkind = {
@@ -49,7 +40,7 @@
         # proper languages
         gopls.enable = true;
         clangd.enable = true; # c/c++
-        ols.enable = true; # xml
+        ols.enable = true; # odin
 
         # nix
         nixd = {
