@@ -41,7 +41,7 @@ in
       (nmap "<leader>i" ":DapStepInto<cr>")
       (nmap "<leader>o" ":DapStepOver<cr>")
       (nmap "<leader>O" ":DapStepOut<cr>")
-      (nmap "<leader>b" ":DapToggleBreakpoint")
+      (nmap "<leader>b" ":DapToggleBreakpoint<cr>")
     ];
 
     plugins.lsp.keymaps = {
