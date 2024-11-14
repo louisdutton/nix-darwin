@@ -33,7 +33,8 @@
 
         # webdev
         ts_ls.enable = true;
-        eslint.enable = true;
+        # eslint.enable = true;
+        biome.enable = true; # formatter & linter
         html.enable = true;
         cssls.enable = true;
 
