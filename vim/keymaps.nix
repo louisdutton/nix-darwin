@@ -42,6 +42,9 @@ in
       (nmap "<leader>o" ":DapStepOver<cr>")
       (nmap "<leader>O" ":DapStepOut<cr>")
       (nmap "<leader>b" ":DapToggleBreakpoint<cr>")
+      (nmap "<leader>b" ":DapToggleBreakpoint<cr>")
+      (nmap "<leader>K" ":lua require('dapui').eval()<cr>")
+      (nmap "<leader>D" ":lua require('dapui').toggle()<cr>")
     ];
 
     plugins.lsp.keymaps = {
