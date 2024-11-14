@@ -55,14 +55,47 @@ in
       };
 
       lspBuf = {
-        gd = "definition";
-        gr = "references";
-        gi = "implementation";
+        # gd = "definition";
+        # gr = "references";
+        # gi = "implementation";
         gt = "type_definition";
         "<leader>a" = "code_action";
         "<leader>k" = "hover";
         "<leader>r" = "rename";
       };
+
+      extra = [
+        {
+          action = {
+            __raw = "require('telescope.builtin').lsp_definitions";
+          };
+          key = "gd";
+        }
+        {
+          action = {
+            __raw = "require('telescope.builtin').lsp_references";
+          };
+          key = "gr";
+        }
+        {
+          action = {
+            __raw = "require('telescope.builtin').lsp_implementations";
+          };
+          key = "gi";
+        }
+        {
+          action = {
+            __raw = "require('telescope.builtin').lsp_type_definitions";
+          };
+          key = "gt";
+        }
+        {
+          action = {
+            __raw = "require('telescope.builtin').lsp_dynamic_workspace_symbols";
+          };
+          key = "<leader>s";
+        }
+      ];
     };
   };
 }
