@@ -30,6 +30,7 @@
         taplo.enable = true; # toml
         lemminx.enable = true; # xml
         marksman.enable = true;
+        tailwindcss.enable = true;
 
         # webdev
         ts_ls.enable = true;
