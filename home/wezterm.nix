@@ -8,6 +8,7 @@
       local action = wezterm.action
 
       -- window
+      config.window_close_confirmation = "NeverPrompt"
       config.window_decorations = 'RESIZE'
       config.front_end = 'WebGpu'
       config.enable_tab_bar = false
