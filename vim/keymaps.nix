@@ -5,7 +5,7 @@ let
   };
   nmap = key: action: bind key action // { mode = "n"; };
 in
-{ keymap, ... }:
+{ keymap, pkgs, ... }:
 {
   programs.nixvim = {
     globals.mapleader = " ";
@@ -47,6 +47,72 @@ in
       (nmap "<leader>D" ":lua require('dapui').toggle()<cr>")
     ];
 
+    plugins.fzf-lua = {
+      enable = true;
+      fzfPackage = pkgs.fzf;
+      settings = {
+        winopts = {
+          preview.default = "bat_native";
+          backdrop = 100;
+        };
+        # fzf_opts."--ansi" = false;
+        files = {
+          git_icons = false;
+          file_icons = false;
+        };
+      };
+      keymaps =
+        let
+          jump = action: {
+            inherit action;
+            settings = {
+              sync = true;
+              jump_to_single_result = true;
+            };
+          };
+          noPreview = action: {
+            inherit action;
+            settings = {
+              winopts.preview.hidden = "hidden";
+            };
+          };
+        in
+        {
+          # unique
+          "<leader>F" = "resume";
+
+          # grep
+          "<leader>/" = "live_grep_native";
+
+          # buffers and files
+          "<leader>ff" = "files";
+          "<leader>fo" = "oldfiles";
+          "<leader>fb" = "buffers";
+          "<leader>fq" = "quickfix";
+
+          # git
+          "<leader>fgf" = "git_files";
+          "<leader>fgb" = "git_branches";
+          "<leader>fgh" = "git_bcommits";
+
+          # lsp
+          "gd" = jump "lsp_definitions";
+          "gD" = jump "lsp_declarations";
+          "gr" = jump "lsp_references";
+          "gt" = jump "lsp_typedefs";
+          "gi" = jump "lsp_implementations";
+          "<leader>a" = noPreview "lsp_code_actions";
+          "<leader>fs" = "lsp_live_workspace_symbols";
+          "<leader>fd" = "lsp_workspace_diagnostics";
+
+          # misc
+          "<leader>fh" = "helptags";
+          "<leader>fm" = "manpages";
+          "<leader>fc" = "commands";
+          "<leader>fk" = "keymaps";
+        };
+    };
+
     plugins.lsp.keymaps = {
       silent = true;
       diagnostic = {
@@ -55,47 +121,9 @@ in
       };
 
       lspBuf = {
-        # gd = "definition";
-        # gr = "references";
-        # gi = "implementation";
-        gt = "type_definition";
-        "<leader>a" = "code_action";
         "<leader>k" = "hover";
         "<leader>r" = "rename";
       };
-
-      extra = [
-        {
-          action = {
-            __raw = "require('telescope.builtin').lsp_definitions";
-          };
-          key = "gd";
-        }
-        {
-          action = {
-            __raw = "require('telescope.builtin').lsp_references";
-          };
-          key = "gr";
-        }
-        {
-          action = {
-            __raw = "require('telescope.builtin').lsp_implementations";
-          };
-          key = "gi";
-        }
-        {
-          action = {
-            __raw = "require('telescope.builtin').lsp_type_definitions";
-          };
-          key = "gt";
-        }
-        {
-          action = {
-            __raw = "require('telescope.builtin').lsp_dynamic_workspace_symbols";
-          };
-          key = "<leader>s";
-        }
-      ];
     };
   };
 }

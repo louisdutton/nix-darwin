@@ -91,16 +91,6 @@
         gitPackage = null;
         lazygitPackage = null;
       };
-
-      telescope = {
-        enable = true;
-        keymaps = {
-          "<leader>t" = "builtin";
-          "<leader>f" = "find_files";
-          "<leader>/" = "live_grep";
-          "?" = "current_buffer_fuzzy_find";
-        };
-      };
     };
   };
 }
