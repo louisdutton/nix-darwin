@@ -7,6 +7,7 @@
     shiftwidth = 2;
     wrap = false;
     clipboard = "unnamedplus";
+    expandtab = true;
     breakindent = true;
     undofile = true;
     ignorecase = true;
@@ -16,8 +17,6 @@
     timeoutlen = 300;
     completeopt = "menuone,noselect";
     termguicolors = true;
-    fillchars = {
-      eob = " ";
-    };
+    fillchars.eob = " ";
   };
 }
