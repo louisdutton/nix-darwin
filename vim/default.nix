@@ -3,6 +3,7 @@
   imports = [
     ./keymaps.nix
     ./lsp.nix
+    ./dadbod.nix
     ./dap.nix
     ./format.nix
     ./options.nix
