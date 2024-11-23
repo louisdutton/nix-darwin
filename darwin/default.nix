@@ -98,7 +98,7 @@
   system.activationScripts.wallpaper = {
     enable = true;
     text = ''
-      osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"/Users/louis/.config/nix-darwin/wallpapers/ocean.png\" as POSIX file"
+      osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"/Users/louis/.config/nix-darwin/wallpapers/catppuccin.png\" as POSIX file"
     '';
   };
 }

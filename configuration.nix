@@ -29,8 +29,8 @@
   # theming
   stylix = {
     enable = true;
-    image = ./wallpapers/wallpaper.png;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest.yaml";
+    image = ./wallpapers/catppuccin.png;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-frappe.yaml";
     opacity.terminal = 0.95;
     fonts.sizes.applications = 10;
     fonts.sizes.terminal = 14; # TODO make dynamic based on machine
