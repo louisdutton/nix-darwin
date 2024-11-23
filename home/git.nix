@@ -10,13 +10,10 @@
   programs.lazygit = {
     enable = true;
     settings = {
-      git.paging = {
-        colorArg = "always";
-        pager = "delta --paging=never --side-by-side";
-      };
       gui = {
         mouseEvents = false;
-        expandFocusedSidePanel = true;
+        expandFocusedSidePanel = false;
+        showListFooter = false;
         showBottomLine = false;
         showRandomTip = false;
         showCommandLog = false;
@@ -26,14 +23,19 @@
         nerdFontsVersion = 3;
       };
 
+      # reduce prompting
+      disableStartupPopups = true;
+      notARepository = "quit";
+      promptToReturnFromSubprocess = false;
+
       keybinding = with keymap; {
         universal = {
           nextBlock = right;
           prevBlock = left;
-          nextTab = farright;
-          prevTab = farleft;
-          nextMatch = next;
-          prevMatch = prev;
+          # nextTab = farright;
+          # prevTab = farleft;
+          nextMatchAlt = next;
+          prevMatchAlt = prev;
           prevItem = up;
           nextItem = down;
           undo = undo;
