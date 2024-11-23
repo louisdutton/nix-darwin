@@ -1,4 +1,9 @@
-{ user, config, ... }:
+{
+  user,
+  config,
+  pkgs,
+  ...
+}:
 let
   font = config.stylix.fonts.monospace.name;
   configDir = ".config/sketchybar";
@@ -44,16 +49,19 @@ let
     };
 
     default = {
-      padding_left = 5;
-      padding_right = 5;
+      padding_left = 4;
+      padding_right = 4;
+
       "icon.font" = "${font}:Bold:14.0";
-      "label.font" = "${font}:Bold:14.0";
       "icon.color" = "0xff${config.lib.stylix.colors.base05}";
+      "icon.padding_left" = 8;
+
+      "label.font" = "${font}:Bold:14.0";
       "label.color" = "0xff${config.lib.stylix.colors.base05}";
-      "icon.padding_left" = 4;
-      "icon.padding_right" = 4;
       "label.padding_left" = 4;
-      "label.padding_right" = 4;
+      "label.padding_right" = 8;
+
+      "background.corner_radius" = 5;
     };
 
     spaces = map (space: {
@@ -62,7 +70,6 @@ let
       "icon.padding_left" = 8;
       "icon.padding_right" = 8;
       "background.color" = "0xff${config.lib.stylix.colors.base02}";
-      "background.corner_radius" = 5;
       "background.height" = 25;
       "label.drawing" = "off";
       script = "~/${pluginDir}/space.sh";
@@ -85,6 +92,13 @@ let
           icon = "";
           script = "~/${pluginDir}/clock.sh";
         };
+
+        pomodoro = {
+          update_freq = 1;
+          icon = "";
+          script = "~/${pluginDir}/pomodoro.sh";
+          "background.color" = "0xff${config.lib.stylix.colors.base02}";
+        };
       };
 
       left = {
@@ -100,24 +114,46 @@ let
       };
     };
 
-    subscriptions = [
-      {
-        from = "front_app";
-        to = [ "front_app_switched" ];
-      }
-      {
-        from = "volume";
-        to = [ "volume_change" ];
-      }
-      {
-        from = "battery";
-        to = [ "system_woke power_source_change" ];
-      }
-    ];
+    subscriptions =
+      let
+        sub = from: to: { inherit from to; };
+      in
+      [
+        (sub "front_app" [ "front_app_switched" ])
+        (sub "volume" [ "volume_change" ])
+        (sub "battery" [
+          "system_woke"
+          "power_source_change"
+        ])
+      ];
 
     plugins = {
       clock = ''
         sketchybar --set "$NAME" label="$(date '+%d/%m %H:%M')"
+      '';
+
+      pomodoro = ''
+        status="$(${pkgs.openpomodoro-cli}/bin/pomodoro status -f '%r')"
+
+        if [ "$status" = "" ]; then
+          sketchybar --set "$NAME" drawing="off"
+        else
+          sketchybar --set "$NAME" drawing="on"
+          sketchybar --set "$NAME" label="$status"
+
+          case "$status" in
+            [1-9][0-9]:[0-9][0-9]) color="0xff${config.lib.stylix.colors.base0D}"
+            ;;
+            [5-9]:[0-9][0-9]) color="0xff${config.lib.stylix.colors.base0A}"
+            ;;
+            *) color="0xff${config.lib.stylix.colors.base08}"
+          esac
+
+          sketchybar --set "$NAME" \
+            background.color="$color" \
+            icon.color="0xff${config.lib.stylix.colors.base00}" \
+            label.color="0xff${config.lib.stylix.colors.base00}"
+        fi
       '';
 
       battery = ''
@@ -128,7 +164,7 @@ let
           exit 0
         fi
 
-        case "''${PERCENTAGE}" in
+        case "$PERCENTAGE" in
           9[0-9]|100) ICON=""
           ;;
           [6-8][0-9]) ICON=""

@@ -16,6 +16,7 @@
     sd
     xh
     jq
+    openpomodoro-cli
   ];
 
   home.sessionVariables = {
