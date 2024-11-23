@@ -15,6 +15,7 @@
     gcalcli
     sd
     xh
+    jq
   ];
 
   home.sessionVariables = {
