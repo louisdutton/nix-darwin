@@ -156,6 +156,7 @@
         zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # case-insensitive completion
         zstyle ':completion:*' menu select
         zstyle ':completion:*' list-colors "''${(s.:.)LS_COLORS}"
+        zstyle ':completion:*:-command-:*' tag-order '!parameters' # rm env vars from cmd completion
 
         setopt COMPLETE_IN_WORD
         setopt ALWAYS_TO_END
