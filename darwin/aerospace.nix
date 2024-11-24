@@ -66,6 +66,9 @@ in
         mode = {
           # All possible commands: https://nikitabobko.github.io/AeroSpace/commands
           main.binding = with keymap; {
+            # open terminal
+            "${mod}-enter" = "exec-and-forget open -a wezterm";
+
             "${mod}-q" = "close --quit-if-last-window";
             "${mod}-r" = "reload-config";
             "${mod}-f" = "fullscreen";
