@@ -72,9 +72,9 @@ let
       "background.color" = "0xff${config.lib.stylix.colors.base02}";
       "background.height" = 25;
       "label.drawing" = "off";
-      script = "~/${pluginDir}/space.sh";
+      script = "~/${pluginDir}/space.sh ${space}";
       click_script = "aerospace workspace ${space}";
-    }) (builtins.genList (x: toString (x + 1)) 9);
+    }) (builtins.genList (x: toString (x + 1)) 3);
 
     items = {
       right = {
@@ -125,6 +125,11 @@ let
           "system_woke"
           "power_source_change"
         ])
+      ]
+      ++ [
+        (sub "space.1" [ "aerospace_workspace_change" ])
+        (sub "space.2" [ "aerospace_workspace_change" ])
+        (sub "space.3" [ "aerospace_workspace_change" ])
       ];
 
     plugins = {
@@ -190,7 +195,11 @@ let
       '';
 
       space = ''
-        sketchybar --set "$NAME" background.drawing="$SELECTED"
+        if [ "$1" = "$AEROSPACE_FOCUSED_WORKSPACE" ]; then
+            sketchybar --set $NAME background.drawing=on
+        else
+            sketchybar --set $NAME background.drawing=off
+        fi
       '';
 
       volume = ''
@@ -224,6 +233,7 @@ in
         builtins.concatStringsSep " \\\n  " (
           [
             "sketchybar"
+            "--add event aerospace_workspace_change"
             (mkCmd "--bar" sketchybar.bar)
             (mkCmd "--default" sketchybar.default)
           ]
