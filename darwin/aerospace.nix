@@ -112,5 +112,18 @@ in
             "${mod}-shift-semicolon" = "mode service";
           };
         };
+
+        # autocmds
+        on-window-detected =
+          let
+            bind = id: space: {
+              "if".app-id = id;
+              run = "move-node-to-workspace ${space}";
+            };
+          in
+          [
+            (bind "com.github.wez.wezterm" "1")
+            (bind "com.tinyspeck.slackmacgap" "3")
+          ];
       };
 }
