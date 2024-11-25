@@ -54,8 +54,11 @@ in
           outer = {
             left = padding;
             bottom = padding;
-            top = 20;
             right = padding;
+            top = [
+              { monitor."built-in" = 20; }
+              50 # any external monitor
+            ];
           };
         };
 
