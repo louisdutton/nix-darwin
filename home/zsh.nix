@@ -47,9 +47,6 @@
       changeDirWidgetCommand = fdDir;
     };
 
-  # better prompt
-  programs.starship.enable = true;
-
   # remove init messaage
   home.file.".hushlogin".text = "";
 

@@ -2,6 +2,7 @@
 {
   imports = [
     ./zsh.nix
+    ./starship.nix
     ./git.nix
     ./wezterm.nix
     ./email.nix
