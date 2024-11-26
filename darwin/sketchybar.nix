@@ -133,92 +133,98 @@ let
       ];
 
     plugins = {
-      clock = ''
-        sketchybar --set "$NAME" label="$(date '+%d/%m %H:%M')"
-      '';
+      clock = # sh
+        ''
+          sketchybar --set "$NAME" label="$(date '+%d/%m %H:%M')"
+        '';
 
-      pomodoro = ''
-        status="$(${pkgs.openpomodoro-cli}/bin/pomodoro status -f '%r')"
+      pomodoro = # sh
+        ''
+          status="$(${pkgs.openpomodoro-cli}/bin/pomodoro status -f '%r')"
 
-        if [ "$status" = "" ]; then
-          sketchybar --set "$NAME" drawing="off"
-        else
-          sketchybar --set "$NAME" drawing="on"
-          sketchybar --set "$NAME" label="$status"
+          if [ "$status" = "" ]; then
+            sketchybar --set "$NAME" drawing="off"
+          else
+            sketchybar --set "$NAME" drawing="on"
+            sketchybar --set "$NAME" label="$status"
 
-          case "$status" in
-            [1-9][0-9]:[0-9][0-9]) color="0xff${config.lib.stylix.colors.base0D}"
+            case "$status" in
+              [1-9][0-9]:[0-9][0-9]) color="0xff${config.lib.stylix.colors.base0D}"
+              ;;
+              [5-9]:[0-9][0-9]) color="0xff${config.lib.stylix.colors.base0A}"
+              ;;
+              *) color="0xff${config.lib.stylix.colors.base08}"
+            esac
+
+            sketchybar --set "$NAME" \
+              background.color="$color" \
+              icon.color="0xff${config.lib.stylix.colors.base00}" \
+              label.color="0xff${config.lib.stylix.colors.base00}"
+          fi
+        '';
+
+      battery = # sh
+        ''
+          PERCENTAGE="$(pmset -g batt | grep -Eo "\d+%" | cut -d% -f1)"
+          CHARGING="$(pmset -g batt | grep 'AC Power')"
+
+          if [ "$PERCENTAGE" = "" ]; then
+            exit 0
+          fi
+
+          case "$PERCENTAGE" in
+            9[0-9]|100) ICON=""
             ;;
-            [5-9]:[0-9][0-9]) color="0xff${config.lib.stylix.colors.base0A}"
+            [6-8][0-9]) ICON=""
             ;;
-            *) color="0xff${config.lib.stylix.colors.base08}"
+            [3-5][0-9]) ICON=""
+            ;;
+            [1-2][0-9]) ICON=""
+            ;;
+            *) ICON=""
           esac
 
-          sketchybar --set "$NAME" \
-            background.color="$color" \
-            icon.color="0xff${config.lib.stylix.colors.base00}" \
-            label.color="0xff${config.lib.stylix.colors.base00}"
-        fi
-      '';
+          if [[ "$CHARGING" != "" ]]; then
+            ICON=""
+          fi
 
-      battery = ''
-        PERCENTAGE="$(pmset -g batt | grep -Eo "\d+%" | cut -d% -f1)"
-        CHARGING="$(pmset -g batt | grep 'AC Power')"
+          sketchybar --set "$NAME" icon="$ICON" label="''${PERCENTAGE}%"
+        '';
 
-        if [ "$PERCENTAGE" = "" ]; then
-          exit 0
-        fi
+      front_app = # sh
+        ''
+          if [ "$SENDER" = "front_app_switched" ]; then
+            sketchybar --set "$NAME" label="$INFO"
+          fi
+        '';
 
-        case "$PERCENTAGE" in
-          9[0-9]|100) ICON=""
-          ;;
-          [6-8][0-9]) ICON=""
-          ;;
-          [3-5][0-9]) ICON=""
-          ;;
-          [1-2][0-9]) ICON=""
-          ;;
-          *) ICON=""
-        esac
+      space = # sh
+        ''
+          if [ "$1" = "$AEROSPACE_FOCUSED_WORKSPACE" ]; then
+              sketchybar --set $NAME background.drawing=on
+          else
+              sketchybar --set $NAME background.drawing=off
+          fi
+        '';
 
-        if [[ "$CHARGING" != "" ]]; then
-          ICON=""
-        fi
+      volume = # sh
+        ''
+          if [ "$SENDER" = "volume_change" ]; then
+            VOLUME="$INFO"
 
-        sketchybar --set "$NAME" icon="$ICON" label="''${PERCENTAGE}%"
-      '';
+            case "$VOLUME" in
+              [6-9][0-9]|100) ICON="󰕾"
+              ;;
+              [3-5][0-9]) ICON="󰖀"
+              ;;
+              [1-9]|[1-2][0-9]) ICON="󰕿"
+              ;;
+              *) ICON="󰖁"
+            esac
 
-      front_app = ''
-        if [ "$SENDER" = "front_app_switched" ]; then
-          sketchybar --set "$NAME" label="$INFO"
-        fi
-      '';
-
-      space = ''
-        if [ "$1" = "$AEROSPACE_FOCUSED_WORKSPACE" ]; then
-            sketchybar --set $NAME background.drawing=on
-        else
-            sketchybar --set $NAME background.drawing=off
-        fi
-      '';
-
-      volume = ''
-        if [ "$SENDER" = "volume_change" ]; then
-          VOLUME="$INFO"
-
-          case "$VOLUME" in
-            [6-9][0-9]|100) ICON="󰕾"
-            ;;
-            [3-5][0-9]) ICON="󰖀"
-            ;;
-            [1-9]|[1-2][0-9]) ICON="󰕿"
-            ;;
-            *) ICON="󰖁"
-          esac
-
-          sketchybar --set "$NAME" icon="$ICON" label="$VOLUME%"
-        fi
-      '';
+            sketchybar --set "$NAME" icon="$ICON" label="$VOLUME%"
+          fi
+        '';
     };
   };
 
