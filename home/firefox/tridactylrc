@@ -22,7 +22,7 @@ bind --mode=visual k js document.getSelection().modify("extend","backward","line
 bind --mode=visual l js document.getSelection().modify("extend","forward","character")
 
 bind --mode=visual gh js document.getSelection().modify("extend","backward","lineboundary")
-bind --mode=visual gl js document.getSelection().modify("extend","forward","lineboundary")terminator -u -e "vim %f '+normal!%lGzv%c|'"
+bind --mode=visual gl js document.getSelection().modify("extend","forward","lineboundary")
 
 " tabs
 bind --mode=normal J tabnext
@@ -41,9 +41,6 @@ bind N findnext --reverse
 
 " quicker cmd mode
 bind ; fillcmdline_notrail
-
-" make t open the selection with tabopen
-bind --mode=visual t composite js document.getSelection().toString() | fillcmdline tabopen
 
 " Handy multiwindow/multitasking binds
 bind gd tabdetach
