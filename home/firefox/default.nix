@@ -90,8 +90,8 @@ in
             "gfx.webrender.all" = true;
 
             # font
-            "font.default.x-western" = "monospace";
-            "browser.display.use_document_fonts" = 0;
+            # "font.default.x-western" = "monospace";
+            # "browser.display.use_document_fonts" = 0;
           }
           //
           # unlocked
