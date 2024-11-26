@@ -2,6 +2,7 @@
   user,
   config,
   pkgs,
+  lib,
   ...
 }:
 let
@@ -12,13 +13,30 @@ let
   kv = name: value: "${name}=\"${toString value}\"";
   mkArgs = opts: builtins.concatStringsSep " " (builtins.attrValues (builtins.mapAttrs kv opts));
   mkCmd = cmd: opts: "${cmd} ${mkArgs opts}";
+
   mkAdd =
     type: name: opts: position:
     mkCmd "--add ${type} ${name} ${position} --set ${name}" opts;
+
   mkItem =
     name: opts: position:
     mkAdd "item" name opts position;
-  mkSpace = opts: position: mkAdd "space" "space.${opts.space}" opts position;
+
+  mkSpace =
+    numericId:
+    let
+      id = toString numericId;
+    in
+    mkAdd "space" "space.${id}" {
+      space = "1 2 3"; # FIXME: can't omit it nothing shows
+      icon = id;
+      "icon.padding_left" = 8;
+      "icon.padding_right" = 8;
+      "background.color" = "0xff${config.lib.stylix.colors.base02}";
+      "background.height" = 25;
+      "label.drawing" = "off";
+      script = "~/${pluginDir}/space.sh ${id}";
+    } "left";
 
   mkFile = name: text: {
     inherit name;
@@ -63,18 +81,6 @@ let
 
       "background.corner_radius" = 5;
     };
-
-    spaces = map (space: {
-      inherit space;
-      icon = space;
-      "icon.padding_left" = 8;
-      "icon.padding_right" = 8;
-      "background.color" = "0xff${config.lib.stylix.colors.base02}";
-      "background.height" = 25;
-      "label.drawing" = "off";
-      script = "~/${pluginDir}/space.sh ${space}";
-      click_script = "aerospace workspace ${space}";
-    }) (builtins.genList (x: toString (x + 1)) 3);
 
     items = {
       right = {
@@ -201,9 +207,13 @@ let
       space = # sh
         ''
           if [ "$1" = "$AEROSPACE_FOCUSED_WORKSPACE" ]; then
-              sketchybar --set $NAME background.drawing=on
+              sketchybar                                                              \
+                --set $NAME background.color="0xff${config.lib.stylix.colors.base0D}" \
+                --set $NAME icon.color="0xff${config.lib.stylix.colors.base00}"
           else
-              sketchybar --set $NAME background.drawing=off
+              sketchybar                                                              \
+                --set $NAME background.color="0xff${config.lib.stylix.colors.base02}" \
+                --set $NAME icon.color="0xff${config.lib.stylix.colors.base05}"
           fi
         '';
 
@@ -243,7 +253,7 @@ in
             (mkCmd "--bar" sketchybar.bar)
             (mkCmd "--default" sketchybar.default)
           ]
-          ++ map (s: mkSpace s "left") sketchybar.spaces
+          ++ map mkSpace (lib.range 1 3)
           ++ builtins.attrValues (builtins.mapAttrs (k: v: mkItem k v "left") sketchybar.items.left)
           ++ builtins.attrValues (builtins.mapAttrs (k: v: mkItem k v "right") sketchybar.items.right)
           ++ map (s: "--subscribe ${s.from} ${builtins.concatStringsSep " " s.to}") sketchybar.subscriptions
