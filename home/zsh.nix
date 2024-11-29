@@ -11,7 +11,10 @@
   programs.bat.enable = true;
 
   # better top
-  programs.htop.enable = true;
+  programs.htop = {
+    enable = true;
+    package = pkgs.htop-vim;
+  };
 
   #	better ls
   programs.eza = {
