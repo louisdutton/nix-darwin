@@ -1,7 +1,6 @@
 {
   user,
   config,
-  pkgs,
   lib,
   ...
 }:
@@ -98,13 +97,6 @@ let
           icon = "";
           script = "~/${pluginDir}/clock.sh";
         };
-
-        pomodoro = {
-          update_freq = 1;
-          icon = "";
-          script = "~/${pluginDir}/pomodoro.sh";
-          "background.color" = "0xff${config.lib.stylix.colors.base02}";
-        };
       };
 
       left = {
@@ -142,31 +134,6 @@ let
       clock = # sh
         ''
           sketchybar --set "$NAME" label="$(date '+%d/%m %H:%M')"
-        '';
-
-      pomodoro = # sh
-        ''
-          status="$(${pkgs.openpomodoro-cli}/bin/pomodoro status -f '%r')"
-
-          if [ "$status" = "" ]; then
-            sketchybar --set "$NAME" drawing="off"
-          else
-            sketchybar --set "$NAME" drawing="on"
-            sketchybar --set "$NAME" label="$status"
-
-            case "$status" in
-              [1-9][0-9]:[0-9][0-9]) color="0xff${config.lib.stylix.colors.base0D}"
-              ;;
-              [5-9]:[0-9][0-9]) color="0xff${config.lib.stylix.colors.base0A}"
-              ;;
-              *) color="0xff${config.lib.stylix.colors.base08}"
-            esac
-
-            sketchybar --set "$NAME" \
-              background.color="$color" \
-              icon.color="0xff${config.lib.stylix.colors.base00}" \
-              label.color="0xff${config.lib.stylix.colors.base00}"
-          fi
         '';
 
       battery = # sh

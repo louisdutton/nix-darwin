@@ -15,14 +15,10 @@
     ];
   };
 
-  # system shell
-  programs.zsh.enable = true;
-
   # users
   time.timeZone = "Europe/London";
   networking.hostName = "nixos";
   users.users.${user.name} = {
-    shell = pkgs.zsh;
     description = user.displayName;
   };
 
@@ -44,6 +40,8 @@
     targets.nixvim.plugin = "base16-nvim";
   };
 
-  home-manager.users.louis.stylix.targets.nixvim.transparentBackground.main = true;
-  home-manager.users.louis.stylix.targets.nixvim.transparentBackground.signColumn = true;
+  home-manager.users.louis.stylix.targets.nixvim.transparentBackground = {
+    main = true;
+    signColumn = true;
+  }; 
 }

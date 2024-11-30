@@ -3,23 +3,45 @@
   # better prompt
   programs.starship = {
     enable = true;
-    enableZshIntegration = true;
+    enableNushellIntegration = true;
     settings = {
+      directory = {
+        read_only = " 󰌾";
+        format = "[$path]($style) ";
+      };
+
+      git_commit.tag_symbol = "  ";
+      git_branch = {
+        symbol = " ";
+        truncation_length = 32;
+      };
+
+      golang = {
+        symbol = " ";
+        format = "[$symbol$version]($style) ";
+      };
+
+      nix_shell = {
+        symbol = " ";
+        format = "[$symbol$state]($style) ";
+      };
+
+      nodejs = {
+        symbol = " ";
+        format = "[$symbol$version]($style) ";
+      };
+
+      docker_context.symbol = " ";
+      elixir.symbol = " ";
+      elm.symbol = " ";
+      fennel.symbol = " ";
+      fossil_branch.symbol = " ";
       aws.symbol = "  ";
       buf.symbol = " ";
       c.symbol = " ";
       conda.symbol = " ";
       crystal.symbol = " ";
       dart.symbol = " ";
-      directory.read_only = " 󰌾";
-      docker_context.symbol = " ";
-      elixir.symbol = " ";
-      elm.symbol = " ";
-      fennel.symbol = " ";
-      fossil_branch.symbol = " ";
-      git_branch.symbol = " ";
-      git_commit.tag_symbol = "  ";
-      golang.symbol = " ";
       guix_shell.symbol = " ";
       haskell.symbol = " ";
       haxe.symbol = " ";
@@ -32,8 +54,6 @@
       memory_usage.symbol = "󰍛 ";
       meson.symbol = "󰔷 ";
       nim.symbol = "󰆥 ";
-      nix_shell.symbol = " ";
-      nodejs.symbol = " ";
       ocaml.symbol = " ";
       package.symbol = "󰏗 ";
       perl.symbol = " ";

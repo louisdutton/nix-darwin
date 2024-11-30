@@ -2,6 +2,7 @@
   pkgs,
   user,
   keymap,
+  lib,
   ...
 }:
 let
@@ -19,17 +20,11 @@ in
         after-login-command = [ ];
         after-startup-command = [ ];
         start-at-login = true;
-        # exec = {
-        #   inherit-env-vars = true;
-        #   env-vars = {
-        #     PATH = "/Users/louis/.nix-profile/bin /etc/profiles/per-user/louis/bin /run/current-system/sw/bin /nix/var/nix/profiles/default/bin /usr/local/bin /usr/bin /usr/sbin /bin /sbin /Users/louis/.zsh/plugins/zsh-system-clipboard";
-        #   };
-        # };
 
         exec-on-workspace-change = [
-          "/bin/zsh"
+          (lib.getExe pkgs.zsh)
           "-c"
-          "${pkgs.sketchybar}/bin/sketchybar --trigger aerospace_workspace_change AEROSPACE_FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE AEROSPACE_PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE"
+          "${lib.getExe pkgs.sketchybar} --trigger aerospace_workspace_change AEROSPACE_FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE AEROSPACE_PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE"
         ];
 
         # https://nikitabobko.github.io/AeroSpace/guide#normalization
