@@ -44,6 +44,13 @@
         clangd.enable = true; # c/c++
         ols.enable = true; # odin
 
+        # haskell
+        hls = {
+          enable = true;
+          installGhc = true;
+        };
+
+
         # nix
         nixd = {
           enable = true;
