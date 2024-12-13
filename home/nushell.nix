@@ -62,7 +62,7 @@
       # NIX_SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
       # NIX_USER_PROFILE_DIR = "/nix/var/nix/profiles/per-user/louis";
 
-      #xdg  
+      #xdg
       XDG_CONFIG_DIRS = "/Users/louis/.nix-profile/etc/xdg:/etc/profiles/per-user/louis/etc/xdg:/run/current-system/sw/etc/xdg:/nix/var/nix/profiles/default/etc/xdg";
       XDG_DATA_DIRS = "/Users/louis/.nix-profile/share:/etc/profiles/per-user/louis/share:/run/current-system/sw/share:/nix/var/nix/profiles/default/share";
 
