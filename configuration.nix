@@ -31,7 +31,7 @@
     fonts.sizes.applications = 10;
     fonts.sizes.terminal = 14; # TODO make dynamic based on machine
     fonts.monospace = {
-      package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
+      package = pkgs.nerd-fonts.jetbrains-mono;
       name = "JetBrainsMono Nerd Font";
     };
 
@@ -43,5 +43,5 @@
   home-manager.users.louis.stylix.targets.nixvim.transparentBackground = {
     main = true;
     signColumn = true;
-  }; 
+  };
 }
