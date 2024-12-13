@@ -117,11 +117,11 @@
               correct_cursor_pos: false
             }
             style: {
-                text: green
-                selected_text: { attr: r }
-                description_text: yellow
-                match_text: { attr: u }
-                selected_match_text: { attr: ur }
+              text: green
+              selected_text: { attr: r }
+              description_text: yellow
+              match_text: { attr: u }
+              selected_match_text: { attr: ur }
             }
           }
         ];
@@ -147,6 +147,20 @@
             keycode: char_u
             mode: vi_normal
             event: { edit: redo }
+          }
+          {
+            name: delete_line
+            modifier: control
+            keycode: char_u
+            mode: vi_insert
+            event: { edit: clear }
+          }
+          {
+            name: delete_word
+            modifier: alt
+            keycode: backspace
+            mode: vi_insert
+            event: { edit: backspaceword }
           }
         ]
       '';
