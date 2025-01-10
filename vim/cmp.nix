@@ -3,13 +3,22 @@
     blink-cmp = {
       enable = true;
       settings.signature.enabled = true;
-      settings.completion.list.selection = "manual";
-      settings.sources.cmdline = [ ];
+      settings.sources.cmdline = null;
       settings.keymap = {
         preset = "enter";
         cmdline = {
           preset = "default";
         };
+        "<Tab>" = [
+          "select_next"
+          "snippet_forward"
+          "fallback"
+        ];
+        "<S-Tab>" = [
+          "select_prev"
+          "snippet_backward"
+          "fallback"
+        ];
       };
     };
   };

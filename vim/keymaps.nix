@@ -24,10 +24,6 @@ in
       (nmap undo "u")
       (nmap redo "<c-r>")
 
-      # save and quit
-      (nmap "<leader>w" ":w<cr>")
-      (nmap "<leader>q" ":q<cr>")
-
       # git
       (nmap "<leader>g" ":LazyGit<cr>")
       (nmap "<leader>B" ":Gitsigns toggle_current_line_blame<cr>")
