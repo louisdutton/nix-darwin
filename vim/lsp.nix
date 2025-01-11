@@ -30,26 +30,18 @@
         taplo.enable = true; # toml
         lemminx.enable = true; # xml
         marksman.enable = true;
-        tailwindcss.enable = true;
 
         # webdev
         ts_ls.enable = true;
-        # eslint.enable = true;
         biome.enable = true; # formatter & linter
         html.enable = true;
         cssls.enable = true;
+        tailwindcss.enable = true;
 
         # proper languages
         gopls.enable = true;
         clangd.enable = true; # c/c++
         ols.enable = true; # odin
-
-        # haskell
-        hls = {
-          enable = true;
-          installGhc = true;
-        };
-
 
         # nix
         nixd = {
