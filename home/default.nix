@@ -7,6 +7,7 @@
     ./wezterm.nix
     ./email.nix
     ./firefox
+    ./helix.nix
   ];
 
   home.stateVersion = "24.05";
