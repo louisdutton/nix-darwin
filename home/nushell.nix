@@ -1,5 +1,4 @@
-{ pkgs, lib, ... }:
-{
+{ pkgs, lib, ... }: {
   # automatically init nix shell when entering a relevant directory
   programs.direnv = {
     enable = true;
@@ -23,7 +22,7 @@
     shellAliases = {
       d = "nix develop --command nu";
       c = "clear";
-      e = "nvim";
+      e = "hx";
       g = "lazygit";
       gl = "glab";
       clean = "git clean -xdf";
@@ -37,9 +36,9 @@
 
     environmentVariables = {
       # default programs
-      MANPAGER = "nvim +Man!";
-      EDITOR = "nvim";
-      VISUAL = "nvim";
+      # MANPAGER = "nvim +Man!";
+      EDITOR = "hx";
+      VISUAL = "hx";
 
       # bin
       SHELL = lib.getExe pkgs.nushell;
@@ -63,8 +62,10 @@
       # NIX_USER_PROFILE_DIR = "/nix/var/nix/profiles/per-user/louis";
 
       #xdg
-      XDG_CONFIG_DIRS = "/Users/louis/.nix-profile/etc/xdg:/etc/profiles/per-user/louis/etc/xdg:/run/current-system/sw/etc/xdg:/nix/var/nix/profiles/default/etc/xdg";
-      XDG_DATA_DIRS = "/Users/louis/.nix-profile/share:/etc/profiles/per-user/louis/share:/run/current-system/sw/share:/nix/var/nix/profiles/default/share";
+      XDG_CONFIG_DIRS =
+        "/Users/louis/.nix-profile/etc/xdg:/etc/profiles/per-user/louis/etc/xdg:/run/current-system/sw/etc/xdg:/nix/var/nix/profiles/default/etc/xdg";
+      XDG_DATA_DIRS =
+        "/Users/louis/.nix-profile/share:/etc/profiles/per-user/louis/share:/run/current-system/sw/share:/nix/var/nix/profiles/default/share";
 
       # darwin
       __NIX_DARWIN_SET_ENVIRONMENT_DONE = "1";

@@ -1,26 +1,15 @@
-{
-  pkgs,
-  user,
-  inputs,
-  ...
-}:
-{
+{ pkgs, user, inputs, ... }: {
   # nix
   nixpkgs.config.allowUnfree = true;
   nix = {
     nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
-    settings.experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
+    settings.experimental-features = [ "nix-command" "flakes" ];
   };
 
   # users
   time.timeZone = "Europe/London";
   networking.hostName = "nixos";
-  users.users.${user.name} = {
-    description = user.displayName;
-  };
+  users.users.${user.name} = { description = user.displayName; };
 
   # theming
   stylix = {
@@ -34,14 +23,5 @@
       package = pkgs.nerd-fonts.jetbrains-mono;
       name = "JetBrainsMono Nerd Font";
     };
-
-    targets.nixvim.transparentBackground.main = true;
-    targets.nixvim.transparentBackground.signColumn = true;
-    targets.nixvim.plugin = "base16-nvim";
-  };
-
-  home-manager.users.louis.stylix.targets.nixvim.transparentBackground = {
-    main = true;
-    signColumn = true;
   };
 }

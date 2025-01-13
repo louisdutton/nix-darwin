@@ -7,8 +7,6 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    nixvim.url = "github:nix-community/nixvim";
-    nixvim.inputs.nixpkgs.follows = "nixpkgs";
     stylix.url = "github:danth/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
@@ -23,7 +21,6 @@
       home-manager,
       nix-darwin,
       nixpkgs,
-      nixvim,
       stylix,
       firefox-darwin,
       ...
@@ -40,7 +37,6 @@
       };
       modules = [
         ./configuration.nix
-        ./vim
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
@@ -57,7 +53,6 @@
         modules = modules ++ [
           ./linux
           home-manager.nixosModules.home-manager
-          nixvim.nixosModules.nixvim
           stylix.nixosModules.stylix
         ];
       };
@@ -68,7 +63,6 @@
         modules = modules ++ [
           ./darwin
           home-manager.darwinModules.home-manager
-          nixvim.nixDarwinModules.nixvim
           stylix.darwinModules.stylix
           {
             nixpkgs.overlays = [ firefox-darwin.overlay ];
