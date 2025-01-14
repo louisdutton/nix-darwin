@@ -6,7 +6,21 @@
     settings = {
       theme = "catppuccin_frappe";
       editor = {
+        mouse = false;
         cursor-shape.insert = "bar";
+        gutters = [
+          "diagnostics"
+          "diff"
+          "line-numbers"
+        ];
+        end-of-line-diagnostics = "hint";
+        inline-diagnostics = {
+          cursor-line = "warning";
+        };
+        completion-timeout = 5;
+      };
+      keys.insert = {
+        "C-space" = "completion";
       };
       keys.normal = {
         "K" = "goto_file_start";
@@ -20,10 +34,12 @@
     extraPackages = with pkgs; [
       nixd
       nodePackages.typescript-language-server
+      nodePackages.vscode-langservers-extracted
     ];
 
     languages = {
       language-server = {
+        # FIXME
         nixd.config.settings.options =
           let
             # system = ''''${builtins.currentSystem)}'';
@@ -38,24 +54,46 @@
           args = [ "lsp-proxy" ];
         };
       };
-      language = [
-        {
-          name = "nix";
-          formatter.command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
-          auto-format = true;
-        }
-        {
-          name = "typescript";
-          language-servers = [
+      language =
+        let
+          withBiome = name: [
             {
-              name = "typescript-language-server";
+              inherit name;
               except-features = [ "format" ];
             }
             "biome"
           ];
-          auto-format = true;
-        }
-      ];
+        in
+        [
+          {
+            name = "nix";
+            formatter.command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
+            auto-format = true;
+          }
+          {
+            name = "json";
+            language-servers = withBiome "vscode-json-language-server";
+            auto-format = true;
+          }
+          {
+            name = "css";
+            language-servers = withBiome "vscode-css-language-server";
+            auto-format = true;
+          }
+        ]
+        ++
+          map
+            (name: {
+              inherit name;
+              language-servers = withBiome "typescript-language-server";
+              auto-format = true;
+            })
+            [
+              "typescript"
+              "javascript"
+              "tsx"
+              "jsx"
+            ];
     };
   };
 }
