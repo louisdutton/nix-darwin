@@ -1,9 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, self, ... }:
 {
   programs.helix = {
     enable = true;
     package = pkgs.evil-helix;
     settings = {
+      theme = "catppuccin_frappe";
       editor = {
         cursor-shape.insert = "bar";
       };
@@ -16,10 +17,22 @@
       };
     };
 
-    extraPackages = with pkgs; [ nixd ];
+    extraPackages = with pkgs; [
+      nixd
+      nodePackages.typescript-language-server
+    ];
 
     languages = {
       language-server = {
+        nixd.config.settings.options =
+          let
+            # system = ''''${builtins.currentSystem)}'';
+            flake = ''(builtins.getFlake "${self}")'';
+          in
+          rec {
+            nixos.expr = "${flake}.darwinConfigurations.nixos.options";
+            home-manager.expr = "${nixos.expr}.home-manager.users.type.getSubOptions [ ]";
+          };
         biome = {
           command = "biome";
           args = [ "lsp-proxy" ];
