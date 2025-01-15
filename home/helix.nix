@@ -19,22 +19,34 @@
         };
         completion-timeout = 5;
       };
-      keys.insert = {
-        "C-space" = "completion";
-      };
-      keys.normal = {
-        "K" = "goto_file_start";
-        "J" = "goto_last_line";
-        "H" = "goto_line_start";
-        "L" = "goto_line_end";
-        ";" = "command_mode";
-      };
+      keys =
+        let
+          megaNav = {
+            "K" = "goto_file_start";
+            "J" = "goto_last_line";
+            "H" = "goto_line_start";
+            "L" = "goto_line_end";
+          };
+        in
+        {
+          insert = {
+            "C-space" = "completion";
+          };
+          normal = {
+            ";" = "command_mode";
+          } // megaNav;
+          select = {
+          } // megaNav;
+        };
     };
 
     extraPackages = with pkgs; [
       nixd
       nodePackages.typescript-language-server
       nodePackages.vscode-langservers-extracted
+      tailwindcss-language-server
+      gopls
+      golangci-lint-langserver
     ];
 
     languages = {
@@ -71,6 +83,14 @@
             auto-format = true;
           }
           {
+            name = "go";
+            language-servers = [
+              "gopls"
+              "golangci-lint-langserver"
+            ];
+            auto-format = true;
+          }
+          {
             name = "json";
             language-servers = withBiome "vscode-json-language-server";
             auto-format = true;
@@ -85,7 +105,7 @@
           map
             (name: {
               inherit name;
-              language-servers = withBiome "typescript-language-server";
+              language-servers = (withBiome "typescript-language-server") ++ [ "tailwindcss-ls" ];
               auto-format = true;
             })
             [
