@@ -22,10 +22,10 @@
       keys =
         let
           megaNav = {
-            "K" = "goto_file_start";
-            "J" = "goto_last_line";
-            "H" = "goto_line_start";
-            "L" = "goto_line_end";
+            K = "goto_file_start";
+            J = "goto_last_line";
+            H = "goto_line_start";
+            L = "goto_line_end";
           };
         in
         {
@@ -34,6 +34,8 @@
           };
           normal = {
             ";" = "command_mode";
+            space.f = "file_picker_in_current_directory";
+            space.F = "file_picker";
           } // megaNav;
           select = {
           } // megaNav;
