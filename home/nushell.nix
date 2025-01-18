@@ -1,4 +1,5 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, ... }:
+{
   # automatically init nix shell when entering a relevant directory
   programs.direnv = {
     enable = true;
@@ -62,10 +63,8 @@
       # NIX_USER_PROFILE_DIR = "/nix/var/nix/profiles/per-user/louis";
 
       #xdg
-      XDG_CONFIG_DIRS =
-        "/Users/louis/.nix-profile/etc/xdg:/etc/profiles/per-user/louis/etc/xdg:/run/current-system/sw/etc/xdg:/nix/var/nix/profiles/default/etc/xdg";
-      XDG_DATA_DIRS =
-        "/Users/louis/.nix-profile/share:/etc/profiles/per-user/louis/share:/run/current-system/sw/share:/nix/var/nix/profiles/default/share";
+      XDG_CONFIG_DIRS = "/Users/louis/.nix-profile/etc/xdg:/etc/profiles/per-user/louis/etc/xdg:/run/current-system/sw/etc/xdg:/nix/var/nix/profiles/default/etc/xdg";
+      XDG_DATA_DIRS = "/Users/louis/.nix-profile/share:/etc/profiles/per-user/louis/share:/run/current-system/sw/share:/nix/var/nix/profiles/default/share";
 
       # darwin
       __NIX_DARWIN_SET_ENVIRONMENT_DONE = "1";
@@ -171,6 +170,16 @@
         def "from png" [] { wezterm imgcat }
         def "from jpg" [] { wezterm imgcat }
         def "from nix" [] { nix eval --expr $in | from json }
+
+        def lunch [] {
+          http post -t application/json -H {Authorization: $"Bearer ($env.SLACK_TOKEN)"} https://slack.com/api/users.profile.set {
+            profile: {
+              status_test: "lunch",
+              status_emoji: ":ramen:",
+              status_expiration: (date now | into int)
+            }
+          }
+        }
       '';
   };
 }
