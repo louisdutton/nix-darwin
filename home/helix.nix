@@ -10,8 +10,8 @@
         cursor-shape.insert = "bar";
         gutters = [
           "diagnostics"
-          "diff"
           "line-numbers"
+          "diff"
         ];
         end-of-line-diagnostics = "hint";
         inline-diagnostics = {
@@ -36,8 +36,11 @@
             ";" = "command_mode";
             space.f = "file_picker_in_current_directory";
             space.F = "file_picker";
+            s = "surround_add";
           } // megaNav;
           select = {
+            u = "switch_to_lowercase";
+            U = "switch_to_uppercase";
           } // megaNav;
         };
     };
@@ -49,6 +52,7 @@
       tailwindcss-language-server
       gopls
       golangci-lint-langserver
+      emmet-ls
     ];
 
     languages = {
@@ -66,6 +70,10 @@
         biome = {
           command = "biome";
           args = [ "lsp-proxy" ];
+        };
+        emmet-ls = {
+          command = "emmet-ls";
+          args = [ "--stdio" ];
         };
       };
       language =
@@ -102,12 +110,20 @@
             language-servers = withBiome "vscode-css-language-server";
             auto-format = true;
           }
+          {
+            name = "html";
+            language-servers = withBiome "vscode-html-language-server" ++ [ "emmet-ls" ];
+            auto-format = true;
+          }
         ]
         ++
           map
             (name: {
               inherit name;
-              language-servers = (withBiome "typescript-language-server") ++ [ "tailwindcss-ls" ];
+              language-servers = (withBiome "typescript-language-server") ++ [
+                "tailwindcss-ls"
+                "emmet-ls"
+              ];
               auto-format = true;
             })
             [
