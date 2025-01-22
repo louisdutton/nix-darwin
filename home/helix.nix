@@ -107,7 +107,7 @@
           }
           {
             name = "css";
-            language-servers = withBiome "vscode-css-language-server";
+            language-servers = withBiome "vscode-css-language-server" ++ [ "emmet-ls" ];
             auto-format = true;
           }
           {
@@ -120,6 +120,17 @@
           map
             (name: {
               inherit name;
+              language-servers = (withBiome "typescript-language-server");
+              auto-format = true;
+            })
+            [
+              "typescript"
+              "javascript"
+            ]
+        ++
+          map
+            (name: {
+              inherit name;
               language-servers = (withBiome "typescript-language-server") ++ [
                 "tailwindcss-ls"
                 "emmet-ls"
@@ -127,8 +138,6 @@
               auto-format = true;
             })
             [
-              "typescript"
-              "javascript"
               "tsx"
               "jsx"
             ];
