@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 {
   # automatically init nix shell when entering a relevant directory
   programs.direnv = {
@@ -40,6 +45,9 @@
       # MANPAGER = "nvim +Man!";
       EDITOR = "hx";
       VISUAL = "hx";
+
+      # theme
+      LS_COLORS = (import ./lscolors.nix { inherit lib; }) config.lib.stylix.colors;
 
       # bin
       SHELL = lib.getExe pkgs.nushell;
@@ -124,6 +132,46 @@
               selected_match_text: { attr: ur }
             }
           }
+
+          # fzf
+          {
+            name: fzf_file_menu
+            only_buffer_difference: true
+            marker: "󰱽 "
+            type: {
+              layout: list
+              page_size: 10
+            }
+            style: {
+              text: green
+              selected_text: green_reverse
+              description_text: yellow
+            }
+            source: { |buffer, position|
+              fd --type f --full-path $env.PWD
+              | fzf -f $buffer | lines
+              | each { |v| { value: ($v | str trim) }}
+            }
+          }
+          {
+            name: fzf_dir_menu
+            only_buffer_difference: true
+            marker: "󰥩 "
+            type: {
+              layout: list
+              page_size: 10
+            }
+            style: {
+              text: green
+              selected_text: green_reverse
+              description_text: yellow
+            }
+            source: { |buffer, position|
+              fd --type d --full-path $env.PWD
+              | fzf -f $buffer | lines
+              | each { |v| { value: ($v | str trim) }}
+            }
+          }         
         ];
 
         $env.config.keybindings = [
@@ -161,6 +209,22 @@
             keycode: backspace
             mode: vi_insert
             event: { edit: backspaceword }
+          }
+
+          # fuzzy find
+          {
+            name: fzf_file_menu
+            modifier: control
+            keycode: char_t
+            mode: [vi_normal, vi_insert]
+            event: { send: menu name: fzf_file_menu }
+          }
+          {
+            name: fzf_dir_menu
+            modifier: control
+            keycode: char_g
+            mode: [vi_normal, vi_insert]
+            event: { send: menu name: fzf_dir_menu }
           }
         ]
       '';
