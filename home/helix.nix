@@ -53,6 +53,7 @@
       gopls
       golangci-lint-langserver
       emmet-ls
+      yaml-language-server
     ];
 
     languages = {
