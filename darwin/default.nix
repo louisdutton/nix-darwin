@@ -10,9 +10,6 @@
     ./jankyborders.nix
   ];
 
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
-
   # disable nix channels as we are using flakes
   nix.channel.enable = false;
 
@@ -20,7 +17,8 @@
   users.users.${user.name}.home = "/Users/louis";
 
   # sys-dependant rebuild command
-  home-manager.users.${user.name}.programs.nushell.shellAliases.rebuild = "darwin-rebuild switch --flake ~/.config/nix-darwin";
+  home-manager.users.${user.name}.programs.nushell.shellAliases.rebuild =
+    "darwin-rebuild switch --flake ~/.config/nix-darwin";
 
   environment = {
     systemPackages = with pkgs; [
@@ -29,7 +27,6 @@
   };
 
   system = {
-    checks.verifyNixChannels = false;
     startup.chime = false;
 
     keyboard = {
@@ -55,7 +52,7 @@
         _FXShowPosixPathInTitle = true;
       };
 
-      # disable desktop click 
+      # disable desktop click
       WindowManager.EnableStandardClickToShowDesktop = false;
 
       NSGlobalDomain = {
