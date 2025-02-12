@@ -1,5 +1,4 @@
 {
-  pkgs,
   user,
   ...
 }:
@@ -19,12 +18,6 @@
   # sys-dependant rebuild command
   home-manager.users.${user.name}.programs.nushell.shellAliases.rebuild =
     "darwin-rebuild switch --flake ~/.config/nix-darwin";
-
-  environment = {
-    systemPackages = with pkgs; [
-      slack
-    ];
-  };
 
   system = {
     startup.chime = false;
