@@ -38,7 +38,7 @@ in
 
     profiles = {
       default = {
-        extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
+        extensions.packages = with inputs.firefox-addons.packages.${pkgs.system}; [
           proton-pass
           tridactyl
         ];

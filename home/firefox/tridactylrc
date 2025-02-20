@@ -87,8 +87,3 @@ set hintdelay 100
 
 " disable autofocus
 set allowautofocus false
-
-" ----------- redirects ---------------
-
-" New reddit is bad
-" autocmd DocStart ^http(s?)://www.reddit.com js tri.excmds.urlmodify("-t", "www", "old")
