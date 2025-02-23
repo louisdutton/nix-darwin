@@ -3,8 +3,14 @@
   programs.helix = {
     enable = true;
     # package = pkgs.evil-helix;
+    themes.catppuccin = {
+      inherits = "catppuccin_frappe";
+      "ui.background" = {
+        bg = "transparent";
+      };
+    };
     settings = {
-      theme = "catppuccin_frappe";
+      theme = "catppuccin";
       editor = {
         mouse = false;
         cursor-shape.insert = "bar";
