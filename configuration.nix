@@ -1,20 +1,31 @@
-{ pkgs, user, inputs, ... }: {
+{
+  pkgs,
+  user,
+  inputs,
+  ...
+}:
+{
   # nix
   nixpkgs.config.allowUnfree = true;
   nix = {
     nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
   };
 
   # users
   time.timeZone = "Europe/London";
   networking.hostName = "nixos";
-  users.users.${user.name} = { description = user.displayName; };
+  users.users.${user.name} = {
+    description = user.displayName;
+  };
 
   # theming
   stylix = {
     enable = true;
-    image = ./wallpapers/catppuccin.png;
+    image = ./wallpapers/waves.jpg;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-frappe.yaml";
     opacity.terminal = 1.0;
     fonts.sizes.applications = 10;
