@@ -130,6 +130,7 @@ in
       	--base0D: #${base0D};
       	--base0E: #${base0E};
       	--base0F: #${base0F};
-      }\n''
+      }
+    ''
     + builtins.readFile ./tridactyl.css;
 }

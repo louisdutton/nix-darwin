@@ -30,7 +30,6 @@ bind --mode=normal K tabprev
 
 " make q take you to the left (I find it much less confusing)
 bind q composite tabprev; tabclose #
-bind Q
 unbind d
 unbind D
 
@@ -73,7 +72,6 @@ command hint_focus hint -;
 " ------------ security ---------------
 
 " Make Tridactyl work on more sites at the expense of some security.
-fixamo_quiet
 jsb browser.webRequest.onHeadersReceived.addListener(tri.request.clobberCSP,{urls:["<all_urls>"],types:["main_frame"]},["blocking","responseHeaders"])
 
 " -------------- misc -----------------
