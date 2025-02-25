@@ -40,9 +40,9 @@
           };
           normal = {
             ";" = "command_mode";
+            "'" = "collapse_selection";
             space.f = "file_picker_in_current_directory";
             space.F = "file_picker";
-            s = "surround_add";
           } // megaNav;
           select = {
             u = "switch_to_lowercase";
