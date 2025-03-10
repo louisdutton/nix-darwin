@@ -5,7 +5,7 @@
     ./starship.nix
     ./git.nix
     ./wezterm.nix
-    ./firefox
+    ./browser
     ./helix.nix
   ];
 

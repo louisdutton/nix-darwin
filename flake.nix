@@ -9,10 +9,6 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     stylix.url = "github:danth/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
-    firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
-    firefox-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-    firefox-addons.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -22,7 +18,6 @@
       nix-darwin,
       nixpkgs,
       stylix,
-      firefox-darwin,
       ...
     }:
     let
@@ -64,9 +59,6 @@
           ./darwin
           home-manager.darwinModules.home-manager
           stylix.darwinModules.stylix
-          {
-            nixpkgs.overlays = [ firefox-darwin.overlay ];
-          }
         ];
       };
     };
