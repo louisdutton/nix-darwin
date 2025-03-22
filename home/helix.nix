@@ -60,6 +60,7 @@
       golangci-lint-langserver
       emmet-ls
       yaml-language-server
+      sqls
     ];
 
     languages = {
@@ -82,6 +83,9 @@
           command = "emmet-ls";
           args = [ "--stdio" ];
         };
+        sqls = {
+          command = "sqls";
+        };
       };
       language =
         let
@@ -98,6 +102,13 @@
             name = "nix";
             formatter.command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
             auto-format = true;
+          }
+          {
+            name = "sql";
+            language-servers = [
+              "sqls"
+            ];
+            # auto-format = true;
           }
           {
             name = "go";
