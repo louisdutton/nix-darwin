@@ -61,6 +61,7 @@
       emmet-ls
       yaml-language-server
       sqls
+      lua-language-server
     ];
 
     languages = {
@@ -101,6 +102,10 @@
           {
             name = "nix";
             formatter.command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
+            auto-format = true;
+          }
+          {
+            name = "lua";
             auto-format = true;
           }
           {
