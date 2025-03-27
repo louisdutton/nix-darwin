@@ -6,6 +6,7 @@
     ./git.nix
     ./wezterm.nix
     ./helix.nix
+    ./process-compose.nix
   ];
 
   home.stateVersion = "24.05";
