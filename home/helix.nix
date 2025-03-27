@@ -57,7 +57,6 @@
       nodePackages.vscode-langservers-extracted
       tailwindcss-language-server
       gopls
-      golangci-lint-langserver
       emmet-ls
       yaml-language-server
       sqls
@@ -119,7 +118,6 @@
             name = "go";
             language-servers = [
               "gopls"
-              "golangci-lint-langserver"
             ];
             auto-format = true;
           }
