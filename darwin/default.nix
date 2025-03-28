@@ -16,8 +16,10 @@
   users.users.${user.name}.home = "/Users/louis";
 
   # sys-dependant rebuild command
-  home-manager.users.${user.name}.programs.nushell.shellAliases.rebuild =
-    "darwin-rebuild switch --flake ~/.config/nix-darwin";
+  environment.shellAliases = {
+    clip = "pbcopy";
+    rebuild = "darwin-rebuild switch --flake ~/.config/nix-darwin";
+  };
 
   system = {
     # check `man configuration.nix` before changing

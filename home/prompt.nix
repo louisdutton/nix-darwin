@@ -1,9 +1,7 @@
 { ... }:
 {
-  # better prompt
   programs.starship = {
     enable = true;
-    enableNushellIntegration = true;
     settings = {
       directory = {
         read_only = " 󰌾";

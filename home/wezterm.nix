@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ ... }:
 {
   programs.wezterm = {
     enable = true;
@@ -8,35 +8,32 @@
         local config = wezterm.config_builder()
         local action = wezterm.action
 
-        -- shell
-        config.default_prog = { '${lib.getExe pkgs.nushell}' }
+        return {
+          -- window
+          window_close_confirmation = "NeverPrompt",
+          window_background_opacity = 0.9,
+          macos_window_background_blur = 60,
+          window_decorations = 'RESIZE',
+          front_end = 'WebGpu',
+          enable_tab_bar = false,
 
-        -- window
-        config.window_close_confirmation = "NeverPrompt"
-        config.window_background_opacity = 0.9
-        config.macos_window_background_blur = 60
-        config.window_decorations = 'RESIZE'
-        config.front_end = 'WebGpu'
-        config.enable_tab_bar = false
+          -- fonts
+          line_height = 0.8,
+          freetype_load_flags = 'NO_HINTING',
 
-        -- fonts
-        config.line_height = 0.8
-        config.freetype_load_flags = 'NO_HINTING'
+          -- cursor
+          cursor_blink_rate = 0,
 
-        -- cursor
-        config.cursor_blink_rate = 0
+          -- keymaps
+          send_composed_key_when_left_alt_is_pressed = true,
+          send_composed_key_when_right_alt_is_pressed = false,
+          keys = {
+          	{ mods = "CMD", key = "Backspace", action = action.SendKey({ mods = "CTRL", key = "u" }) },
+          },
 
-        -- keymaps
-        config.send_composed_key_when_left_alt_is_pressed = true
-        config.send_composed_key_when_right_alt_is_pressed = false
-        config.keys = {
-        	{ mods = "CMD", key = "Backspace", action = action.SendKey({ mods = "CTRL", key = "u" }) },
+          -- misc
+          audible_bell = 'Disabled',
         }
-
-        -- misc
-        config.audible_bell = 'Disabled'
-
-        return config		
       '';
   };
 }

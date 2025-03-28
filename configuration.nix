@@ -21,6 +21,24 @@
     description = user.displayName;
   };
 
+  # aliases and custom utils
+  environment = {
+    variables = {
+      EDITOR = "hx";
+      VISUAL = "hx";
+    };
+
+    shellAliases = {
+      c = "clear";
+      e = "hx";
+      g = "lazygit";
+      clean = "git clean -xdf";
+      l = "ls";
+      la = "ls -a";
+      ll = "ls -l";
+    };
+  };
+
   # theming
   stylix = {
     enable = true;

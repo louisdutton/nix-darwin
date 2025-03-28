@@ -1,8 +1,8 @@
 { pkgs, ... }:
 {
   imports = [
-    ./nushell.nix
-    ./starship.nix
+    ./shell.nix
+    ./prompt.nix
     ./git.nix
     ./wezterm.nix
     ./helix.nix
@@ -14,6 +14,7 @@
     devbox
     sd
     fd
+    jq
   ];
 
   # allow helix to use its theme
