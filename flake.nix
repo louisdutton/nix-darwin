@@ -42,6 +42,15 @@
       ];
     in
     {
+      homeConfigurations.nixos = home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs { system = "aarch64-darwin"; };
+        extraSpecialArgs = specialArgs;
+        modules = [
+          stylix.homeManagerModules.stylix
+          ./home
+        ];
+      };
+
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         inherit specialArgs;
         system = "x86_64-linux";

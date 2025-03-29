@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   imports = [
     ./shell.nix
@@ -9,7 +9,14 @@
     ./process-compose.nix
   ];
 
+  # self-management
   home.stateVersion = "25.05";
+  programs.home-manager.enable = true;
+
+  # required for standalone
+  home.username = lib.mkDefault "louis";
+  home.homeDirectory = lib.mkDefault /Users/louis;
+
   home.packages = with pkgs; [
     devbox # nix abstraction layer
     sd # better sed

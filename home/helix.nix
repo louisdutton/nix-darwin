@@ -2,7 +2,6 @@
 {
   programs.helix = {
     enable = true;
-    # package = pkgs.evil-helix;
     themes.catppuccin = {
       inherits = "catppuccin_frappe";
       "ui.background" = {
@@ -66,14 +65,17 @@
     languages = {
       language-server = {
         # FIXME
-        nixd.config.settings.options =
+        nixd.config.nixd =
           let
-            # system = ''''${builtins.currentSystem)}'';
             flake = ''(builtins.getFlake "${self}")'';
+            host = "nixos";
           in
-          rec {
-            nixos.expr = "${flake}.darwinConfigurations.nixos.options";
-            home-manager.expr = "${nixos.expr}.home-manager.options.type.getSubOptions [ ]";
+          {
+            # nixpkgs.expr = "import <nixpkgs> {}";
+            options = {
+              nixos.expr = "${flake}.darwinConfigurations.${host}.options";
+              home-manager.expr = "${flake}.homeConfigurations.${host}.options";
+            };
           };
         biome = {
           command = "biome";
