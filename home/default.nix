@@ -9,7 +9,7 @@
     ./process-compose.nix
   ];
 
-  home.stateVersion = "24.05";
+  home.stateVersion = "25.05";
   home.packages = with pkgs; [
     devbox # nix abstraction layer
     sd # better sed

@@ -73,7 +73,7 @@
           in
           rec {
             nixos.expr = "${flake}.darwinConfigurations.nixos.options";
-            home-manager.expr = "${nixos.expr}.home-manager.users.type.getSubOptions [ ]";
+            home-manager.expr = "${nixos.expr}.home-manager.options.type.getSubOptions [ ]";
           };
         biome = {
           command = "biome";

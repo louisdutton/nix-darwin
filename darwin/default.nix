@@ -23,7 +23,7 @@
 
   system = {
     # check `man configuration.nix` before changing
-    stateVersion = 5;
+    stateVersion = 6;
 
     startup.chime = false;
 
