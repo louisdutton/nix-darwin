@@ -11,13 +11,13 @@
 
   home.stateVersion = "24.05";
   home.packages = with pkgs; [
-    devbox
-    sd
-    fd
-    jq
-    xh
+    devbox # nix abstraction layer
+    sd # better sed
+    fd # better find
+    xh # better curl
+    jq # json query
   ];
 
-  # allow helix to use its theme
+  # allow helix to use it's own theme
   stylix.targets.helix.enable = false;
 }
