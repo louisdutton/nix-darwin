@@ -119,9 +119,13 @@
   programs.fzf = {
     enable = true;
     colors.bg = lib.mkForce "-1"; # transparent
-    defaultOptions = [ "--style minimal" ];
     fileWidgetCommand = "fd --type f";
     changeDirWidgetCommand = "fd --type d";
+    defaultOptions = [
+      "--reverse"
+      "--style minimal"
+      "--bind tab:down,shift-tab:up"
+    ];
   };
 
   # data querying and manipulation
