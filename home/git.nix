@@ -1,12 +1,9 @@
 {
   user,
-  pkgs,
   keymap,
   ...
 }:
 {
-  home.packages = with pkgs; [ glab ];
-
   programs.lazygit = {
     enable = true;
     settings = {
@@ -75,7 +72,6 @@
         rebase = false;
       };
       credential = {
-        "https://gitlab.com".helper = "!glab auth git-credential";
         "https://github.com".helper = "!gh auth git-credential";
       };
     };
