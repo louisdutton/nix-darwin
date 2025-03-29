@@ -27,4 +27,13 @@
 
   # allow helix to use it's own theme
   stylix.targets.helix.enable = false;
+
+  programs.chromium = {
+    enable = true;
+    package = pkgs.brave;
+    extensions = [
+      { id = "ghmbeldphafepmbegfdlkpapadhbakde"; } # proton pass
+      { id = "gfbliohnnapiefjpjlpjnehglfpaknnc"; } # surfing keys
+    ];
+  };
 }
