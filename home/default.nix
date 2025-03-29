@@ -15,6 +15,7 @@
     sd
     fd
     jq
+    xh
   ];
 
   # allow helix to use its theme
