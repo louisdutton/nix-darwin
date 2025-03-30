@@ -29,7 +29,6 @@
     };
 
     shellAliases = {
-      c = "clear";
       e = "hx";
       g = "lazygit";
       clean = "git clean -xdf";
