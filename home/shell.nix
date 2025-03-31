@@ -3,9 +3,11 @@
   # shell
   home.shell.enableZshIntegration = true;
   home.shell.enableNushellIntegration = true;
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
+    autocd = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
