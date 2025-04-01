@@ -92,7 +92,6 @@
         setopt COMPLETE_IN_WORD
         setopt ALWAYS_TO_END
         setopt MENU_COMPLETE
-        setopt COMPLETE_IN_WORD
       '';
   };
 
