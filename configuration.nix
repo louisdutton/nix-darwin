@@ -2,6 +2,7 @@
   pkgs,
   user,
   inputs,
+  config,
   ...
 }:
 {
@@ -40,6 +41,28 @@
       ll = "ls -l";
     };
   };
+
+  # secret management
+  sops.defaultSopsFile = ./secrets.yml;
+  sops.age.keyFile = "${config.users.users.${user.name}.home}/.config/sops/age/keys.txt";
+  sops.age.generateKey = true;
+  sops.secrets.linear.owner = user.name;
+  environment.systemPackages =
+    let
+      query = # graphql
+        ''
+          { issues { nodes { id title } } }
+        '';
+      issues = pkgs.writeShellScriptBin "linear-issues" ''
+        TOKEN=$(cat ${config.sops.secrets.linear.path})
+        xh https://api.linear.app/graphql Authorization:$TOKEN query="${query}" |
+        jq '.data.issues.nodes | .[] | "\(.id)\t\(.title)"' -r |
+        fzf
+      '';
+    in
+    [
+      issues
+    ];
 
   # theming
   stylix = {

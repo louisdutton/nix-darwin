@@ -9,6 +9,8 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     stylix.url = "github:danth/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -18,7 +20,7 @@
       nix-darwin,
       nixpkgs,
       stylix,
-      ...
+      sops-nix,
     }:
     let
       user = {
@@ -68,6 +70,7 @@
           ./darwin
           home-manager.darwinModules.home-manager
           stylix.darwinModules.stylix
+          sops-nix.darwinModules.sops
         ];
       };
     };
