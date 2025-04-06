@@ -9,9 +9,6 @@
     ./jankyborders.nix
   ];
 
-  # disable nix channels as we are using flakes
-  nix.channel.enable = false;
-
   # homedir fix
   users.users.${user.name}.home = "/Users/louis";
 

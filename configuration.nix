@@ -8,6 +8,9 @@
   # nix
   nix = {
     nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
+    channel.enable = false; # flakes > channels
+    optimise.automatic = true;
+    gc.automatic = true;
     settings.experimental-features = [
       "nix-command"
       "flakes"
