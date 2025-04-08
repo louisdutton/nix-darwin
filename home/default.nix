@@ -12,6 +12,7 @@
   # self-management
   home.stateVersion = "25.05";
   programs.home-manager.enable = true;
+  xdg.enable = true;
 
   # required for standalone
   home.username = lib.mkDefault "louis";
