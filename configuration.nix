@@ -40,6 +40,33 @@
       la = "ls -a";
       ll = "ls -l";
     };
+
+    systemPackages =
+      let
+        linear =
+          key: query:
+          pkgs.writeShellScriptBin "linear-${key}" ''
+            TOKEN=$(cat ${config.sops.secrets.linear.path})
+            xh https://api.linear.app/graphql Authorization:$TOKEN query="${query}" |
+            jq '.data.issues.nodes | .[] | "\(.id)\t\(.title)"' -r |
+            fzf
+          '';
+
+        homelab = "192.168.1.231";
+      in
+      [
+        (linear "issues" "{ issues { nodes { id title } } }")
+
+        # re-deploy homelab nix configuration
+        (pkgs.writeShellScriptBin "lab-deploy" ''
+          nixos-rebuild switch \
+            --flake .#homelab \
+            --target-host ${homelab}  \
+            --build-host ${homelab} \
+            --use-remote-sudo \
+            --fast
+        '')
+      ];
   };
 
   # secret management
@@ -47,22 +74,6 @@
   sops.age.keyFile = "${config.users.users.${user.name}.home}/.config/sops/age/keys.txt";
   sops.age.generateKey = true;
   sops.secrets.linear.owner = user.name;
-  environment.systemPackages =
-    let
-      query = # graphql
-        ''
-          { issues { nodes { id title } } }
-        '';
-      issues = pkgs.writeShellScriptBin "linear-issues" ''
-        TOKEN=$(cat ${config.sops.secrets.linear.path})
-        xh https://api.linear.app/graphql Authorization:$TOKEN query="${query}" |
-        jq '.data.issues.nodes | .[] | "\(.id)\t\(.title)"' -r |
-        fzf
-      '';
-    in
-    [
-      issues
-    ];
 
   # theming
   stylix = {
