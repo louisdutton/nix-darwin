@@ -14,10 +14,10 @@
         showBottomLine = false;
         showRandomTip = false;
         showCommandLog = false;
-        showPannelJumps = false;
+        showPanelJumps = false;
         border = "rounded";
         filterMode = "fuzzy";
-        nerdFontsVersion = 3;
+        nerdFontsVersion = "3";
       };
 
       # reduce prompting
@@ -31,8 +31,8 @@
           prevBlock = left;
           # nextTab = farright;
           # prevTab = farleft;
-          nextMatchAlt = next;
-          prevMatchAlt = prev;
+          # nextMatchAlt = next;
+          # prevMatchAlt = prev;
           prevItem = up;
           nextItem = down;
           undo = undo;
