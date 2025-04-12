@@ -73,7 +73,8 @@
           {
             # nixpkgs.expr = "import <nixpkgs> {}";
             options = {
-              nixos.expr = "${flake}.darwinConfigurations.${host}.options";
+              nixos.expr = "${flake}.nixosConfigurations.${host}.options";
+              nix-darwin.expr = "${flake}.darwinConfigurations.${host}.options";
               home-manager.expr = "${flake}.homeConfigurations.${host}.options";
             };
           };
