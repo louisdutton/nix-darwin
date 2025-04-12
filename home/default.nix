@@ -7,6 +7,7 @@
     ./wezterm.nix
     ./helix.nix
     ./process-compose.nix
+    ./ssh.nix
   ];
 
   # self-management

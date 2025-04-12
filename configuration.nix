@@ -3,6 +3,7 @@
   user,
   inputs,
   config,
+  lib,
   ...
 }:
 {
@@ -51,18 +52,16 @@
             jq '.data.issues.nodes | .[] | "\(.id)\t\(.title)"' -r |
             fzf
           '';
-
-        homelab = "192.168.1.231";
       in
       [
         (linear "issues" "{ issues { nodes { id title } } }")
 
         # re-deploy homelab nix configuration
         (pkgs.writeShellScriptBin "lab-deploy" ''
-          nixos-rebuild switch \
+          ${lib.getExe pkgs.nixos-rebuild} switch \
             --flake .#homelab \
-            --target-host ${homelab}  \
-            --build-host ${homelab} \
+            --target-host homelab  \
+            --build-host homelab \
             --use-remote-sudo \
             --fast
         '')
