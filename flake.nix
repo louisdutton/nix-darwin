@@ -66,7 +66,7 @@
       nixosConfigurations.homelab = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./homelab/configuration.nix
+          ./lab
         ];
       };
 

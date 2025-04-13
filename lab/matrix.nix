@@ -30,7 +30,7 @@
     settings.listeners = [
       {
         port = 8008;
-        bind_addresses = [ "::1" ];
+        bind_addresses = [ "0.0.0.0" ];
         type = "http";
         tls = false;
         x_forwarded = true;
