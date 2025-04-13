@@ -8,7 +8,7 @@
       ''
         Host homelab
           HostName 192.168.1.231
-          User louis
+          User root
           IdentityFile ~/.ssh/homelab
           Port 22
           IdentitiesOnly yes

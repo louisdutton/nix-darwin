@@ -62,7 +62,6 @@
             --flake .#homelab \
             --target-host homelab  \
             --build-host homelab \
-            --use-remote-sudo \
             --fast
         '')
       ];

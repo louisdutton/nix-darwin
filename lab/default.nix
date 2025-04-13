@@ -14,11 +14,6 @@
 
   networking.hostName = "homelab";
 
-  users.users.louis = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
-  };
-
   environment.systemPackages = with pkgs; [
     vim
   ];
