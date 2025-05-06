@@ -23,7 +23,7 @@
       }
     ];
 
-    initExtra = # zsh
+    initContent = # zsh
       ''
         # vi mode
         bindkey -v
