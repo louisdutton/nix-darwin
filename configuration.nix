@@ -5,11 +5,10 @@
   config,
   lib,
   ...
-}:
-{
+}: {
   # nix
   nix = {
-    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
+    nixPath = ["nixpkgs=${inputs.nixpkgs}"];
     channel.enable = false; # flakes > channels
     optimise.automatic = true;
     gc.automatic = true;
@@ -29,12 +28,12 @@
   # aliases and custom utils
   environment = {
     variables = {
-      EDITOR = "hx";
-      VISUAL = "hx";
+      EDITOR = "nvim";
+      VISUAL = "nvim";
     };
 
     shellAliases = {
-      e = "hx";
+      e = "$EDITOR";
       g = "lazygit";
       clean = "git clean -xdf";
       l = "ls";
@@ -42,29 +41,26 @@
       ll = "ls -l";
     };
 
-    systemPackages =
-      let
-        linear =
-          key: query:
-          pkgs.writeShellScriptBin "linear-${key}" ''
-            TOKEN=$(cat ${config.sops.secrets.linear.path})
-            xh https://api.linear.app/graphql Authorization:$TOKEN query="${query}" |
-            jq '.data.issues.nodes | .[] | "\(.id)\t\(.title)"' -r |
-            fzf
-          '';
-      in
-      [
-        (linear "issues" "{ issues { nodes { id title } } }")
+    systemPackages = let
+      linear = key: query:
+        pkgs.writeShellScriptBin "linear-${key}" ''
+          TOKEN=$(cat ${config.sops.secrets.linear.path})
+          xh https://api.linear.app/graphql Authorization:$TOKEN query="${query}" |
+          jq '.data.issues.nodes | .[] | "\(.id)\t\(.title)"' -r |
+          fzf
+        '';
+    in [
+      (linear "issues" "{ issues { nodes { id title } } }")
 
-        # re-deploy homelab nix configuration
-        (pkgs.writeShellScriptBin "lab-deploy" ''
-          ${lib.getExe pkgs.nixos-rebuild} switch \
-            --flake .#homelab \
-            --target-host homelab  \
-            --build-host homelab \
-            --fast
-        '')
-      ];
+      # re-deploy homelab nix configuration
+      (pkgs.writeShellScriptBin "lab-deploy" ''
+        ${lib.getExe pkgs.nixos-rebuild} switch \
+          --flake .#homelab \
+          --target-host homelab  \
+          --build-host homelab \
+          --fast
+      '')
+    ];
   };
 
   # secret management

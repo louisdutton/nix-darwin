@@ -1,11 +1,14 @@
-{ pkgs, lib, ... }:
 {
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [
     ./shell.nix
     ./prompt.nix
     ./git.nix
     ./wezterm.nix
-    ./helix.nix
+    ./vim.nix
     ./process-compose.nix
     ./ssh.nix
   ];
@@ -27,15 +30,12 @@
     jq # json query
   ];
 
-  # allow helix to use it's own theme
-  stylix.targets.helix.enable = false;
-
   programs.chromium = {
     enable = true;
     package = pkgs.brave;
     extensions = [
-      { id = "ghmbeldphafepmbegfdlkpapadhbakde"; } # proton pass
-      { id = "gfbliohnnapiefjpjlpjnehglfpaknnc"; } # surfing keys
+      {id = "ghmbeldphafepmbegfdlkpapadhbakde";} # proton pass
+      {id = "gfbliohnnapiefjpjlpjnehglfpaknnc";} # surfing keys
     ];
   };
 }

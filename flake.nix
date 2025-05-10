@@ -11,74 +11,80 @@
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    nvf.url = "github:notashelf/nvf";
+    nvf.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs =
-    inputs@{
-      self,
-      home-manager,
-      nix-darwin,
-      nixpkgs,
-      stylix,
-      sops-nix,
-    }:
-    let
-      user = {
-        name = "louis";
-        displayName = "Louis Dutton";
-        email = "louis@dutton.digital";
-      };
-      specialArgs = {
-        inherit inputs user self;
-        keymap = import ./keys.nix;
-      };
+  outputs = inputs @ {
+    self,
+    home-manager,
+    nix-darwin,
+    nixpkgs,
+    stylix,
+    sops-nix,
+    nvf,
+  }: let
+    user = {
+      name = "louis";
+      displayName = "Louis Dutton";
+      email = "louis@dutton.digital";
+    };
+    specialArgs = {
+      inherit inputs user self;
+      keymap = import ./keys.nix;
+    };
+    modules = [
+      ./configuration.nix
+      {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.users.${user.name} = import ./home;
+        home-manager.backupFileExtension = "backup";
+        home-manager.extraSpecialArgs = specialArgs;
+        home-manager.sharedModules = [nvf.homeManagerModules.default];
+      }
+    ];
+  in {
+    homeConfigurations.nixos = home-manager.lib.homeManagerConfiguration {
+      pkgs = import nixpkgs {system = "aarch64-darwin";};
+      extraSpecialArgs = specialArgs;
       modules = [
-        ./configuration.nix
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.${user.name} = import ./home;
-          home-manager.backupFileExtension = "backup";
-          home-manager.extraSpecialArgs = specialArgs;
-        }
+        stylix.homeManagerModules.stylix
+        nvf.homeManagerModules.default
+        ./home
       ];
-    in
-    {
-      homeConfigurations.nixos = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs { system = "aarch64-darwin"; };
-        extraSpecialArgs = specialArgs;
-        modules = [
-          stylix.homeManagerModules.stylix
-          ./home
-        ];
-      };
+    };
 
-      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-        inherit specialArgs;
-        system = "x86_64-linux";
-        modules = modules ++ [
+    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      inherit specialArgs;
+      system = "x86_64-linux";
+      modules =
+        modules
+        ++ [
           ./linux
           home-manager.nixosModules.home-manager
           stylix.nixosModules.stylix
         ];
-      };
+    };
 
-      nixosConfigurations.homelab = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./lab
-        ];
-      };
+    nixosConfigurations.homelab = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        ./lab
+      ];
+    };
 
-      darwinConfigurations.nixos = nix-darwin.lib.darwinSystem {
-        inherit specialArgs;
-        system = "aarch64-darwin";
-        modules = modules ++ [
+    darwinConfigurations.nixos = nix-darwin.lib.darwinSystem {
+      inherit specialArgs;
+      system = "aarch64-darwin";
+      modules =
+        modules
+        ++ [
           ./darwin
           home-manager.darwinModules.home-manager
           stylix.darwinModules.stylix
           sops-nix.darwinModules.sops
         ];
-      };
     };
+  };
 }
