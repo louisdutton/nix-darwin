@@ -31,16 +31,27 @@
 
       binds.whichKey.enable = true;
       keymaps = let
-        nmap = key: action: desc: {
-          inherit key action desc;
-          mode = "n";
+        mkMap = mode: key: action: desc: {
+          inherit key action desc mode;
           silent = true;
         };
+        nmap = mkMap "n";
+        xmap = mkMap ["n" "x"];
       in [
-        (nmap ";" ":" "Command")
+        (xmap ";" ":" "Command")
+        (xmap "H" "^" "Line start")
+        (xmap "L" "$" "Line end")
+        (xmap "K" "gg" "Buffer start")
+        (xmap "J" "G" "Buffer end")
+
         (nmap "U" "<C-r>" "Redo")
         (nmap "<leader>f" ":FzfLua git_files<cr>" "Find files")
         (nmap "<leader>/" ":FzfLua live_grep_native<cr>" "Find text")
+        (nmap "gr" ":FzfLua lsp_references<cr>" "Find references")
+        (nmap "gd" ":FzfLua lsp_definitions<cr>" "Find definitions")
+        (nmap "gD" ":FzfLua lsp_declarations<cr>" "Find declarations")
+        (nmap "gt" ":FzfLua lsp_typedefs<cr>" "Find type definitions")
+        (nmap "gI" ":FzfLua lsp_implementations<cr>" "Find implementations")
       ];
 
       lsp = {
@@ -55,20 +66,14 @@
 
           codeAction = "<leader>a";
           renameSymbol = "<leader>r";
-
-          goToDeclaration = "gD";
-          goToDefinition = "gd";
-          goToType = "gt";
-          listImplementations = "gI";
-          listReferences = "gr";
         };
 
-        # servers = {
-        #   biome = {
-        #     filetypes = ["typescript" "typescriptreact" "css" "html" "json"];
-        #     cmd = ["biome" "lsp-proxy"];
-        #   };
-        # };
+        servers = {
+          biome = {
+            filetypes = ["typescript" "typescriptreact" "css" "html" "json"];
+            cmd = ["biome" "lsp-proxy"];
+          };
+        };
       };
 
       # debugger = {
@@ -93,7 +98,6 @@
             flake = ''(builtins.getFlake "${self}")'';
             host = "nixos";
           in {
-            # nixpkgs.expr = "import <nixpkgs> {}";
             nixos.expr = "${flake}.nixosConfigurations.${host}.options";
             nix-darwin.expr = "${flake}.darwinConfigurations.${host}.options";
             home-manager.expr = "${flake}.homeConfigurations.${host}.options";
@@ -130,13 +134,38 @@
       notes.todo-comments.enable = true;
       snippets.luasnip.enable = true;
       assistant.codecompanion-nvim.enable = false;
-      fzf-lua.enable = true;
+
       ui.noice.enable = true;
+
+      fzf-lua = {
+        enable = true;
+        profile = "fzf-native";
+      };
 
       git = {
         enable = true;
         gitsigns.enable = true;
         # gitsigns.codeActions.enable = false;
+      };
+
+      treesitter.textobjects = {
+        enable = true;
+        setupOpts = {
+          select = {
+            enable = true;
+            lookahead = true;
+          };
+
+          swap = {
+            enable = true;
+            swap_next = {
+              ma = "@parameter.inner";
+            };
+            swap_previous = {
+              mA = "@parameter.outer";
+            };
+          };
+        };
       };
 
       utility = {
@@ -145,7 +174,9 @@
           enable = true;
           setupOpts.keymaps = {
             normal = "s";
-            normal_curr_line = "ss";
+            normal_cur = "ss";
+            normal_line = "S";
+            normal_cur_line = "SS";
             visual = "s";
             visual_line = "S";
             change = "cs";
