@@ -129,12 +129,12 @@
         # highlight-undo.enable = true;
       };
 
-      autocomplete.blink-cmp.enable = true;
-      autopairs.nvim-autopairs.enable = true;
-      notes.todo-comments.enable = true;
-      snippets.luasnip.enable = true;
-      assistant.codecompanion-nvim.enable = false;
+      autocomplete.blink-cmp = {
+        enable = true;
+      };
 
+      autopairs.nvim-autopairs.enable = true;
+      snippets.luasnip.enable = true;
       ui.noice.enable = true;
 
       fzf-lua = {
