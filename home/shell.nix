@@ -125,6 +125,9 @@
     # better grep
     ripgrep.enable = true;
 
+    # better top
+    htop.enable = true;
+
     # fuzzy find
     fzf = {
       enable = true;
