@@ -74,9 +74,9 @@
             cmd = ["biome" "lsp-proxy"];
           };
 
-          tailwindcss = {
-            settings.tailwindCSS.classFunctions = ["cva" "cx"];
-          };
+          # tailwindcss = {
+          #   settings.tailwindCSS.classFunctions = ["cva" "cx"];
+          # };
         };
       };
 
@@ -109,10 +109,9 @@
           };
         };
 
-        # rust = {
-        #   enable = isMaximal;
-        #   crates.enable = isMaximal;
-        # };
+        rust = {
+          enable = true;
+        };
 
         # web
         css = {
