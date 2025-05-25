@@ -125,6 +125,8 @@
           '';
         };
 
+        kotlin.enable = true;
+
         # web
         css = {
           enable = true;
@@ -137,7 +139,10 @@
         html.enable = true;
         tailwind.enable = true;
         go.enable = true;
-        sql.enable = true;
+        sql = {
+          enable = true;
+          dialect = "postgres";
+        };
       };
 
       visuals = {
