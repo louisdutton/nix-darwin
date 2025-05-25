@@ -1,8 +1,8 @@
-{ ... }:
-{
+{...}: {
   programs.wezterm = {
     enable = true;
-    extraConfig = # lua
+    extraConfig =
+      # lua
       ''
         local wezterm = require 'wezterm'
         local config = wezterm.config_builder()
@@ -11,8 +11,8 @@
         return {
           -- window
           window_close_confirmation = "NeverPrompt",
-          window_background_opacity = 0.9,
-          macos_window_background_blur = 60,
+          -- window_background_opacity = 0.9,
+          -- macos_window_background_blur = 60,
           window_decorations = 'RESIZE',
           front_end = 'WebGpu',
           enable_tab_bar = false,

@@ -72,14 +72,15 @@
   # theming
   stylix = {
     enable = true;
-    image = ./wallpapers/waves.jpg;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-frappe.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/icy.yaml";
     opacity.terminal = 1.0;
-    fonts.sizes.applications = 10;
-    fonts.sizes.terminal = 14; # TODO make dynamic based on machine
-    fonts.monospace = {
-      package = pkgs.nerd-fonts.jetbrains-mono;
-      name = "JetBrainsMono Nerd Font";
+    fonts = {
+      sizes.applications = 10;
+      sizes.terminal = 14; # TODO make dynamic based on machine
+      monospace = {
+        package = pkgs.nerd-fonts.jetbrains-mono;
+        name = "JetBrainsMono Nerd Font";
+      };
     };
   };
 }

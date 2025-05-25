@@ -118,6 +118,7 @@
 
     # better cat
     bat.enable = true;
+    zsh.shellAliases.cat = "bat";
 
     # better ls
     eza.enable = true;
@@ -126,7 +127,13 @@
     ripgrep.enable = true;
 
     # better top
-    htop.enable = true;
+    btop = {
+      enable = true;
+      settings = {
+        vim_keys = true;
+      };
+    };
+    zsh.shellAliases.top = "btop";
 
     # fuzzy find
     fzf = {
@@ -140,8 +147,5 @@
         "--bind tab:down,shift-tab:up"
       ];
     };
-
-    # data querying and manipulation
-    nushell.enable = true;
   };
 }

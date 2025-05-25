@@ -1,5 +1,5 @@
 {self, ...}: {
-  stylix.targets.nvf.enable = false;
+  stylix.targets.nvf.transparentBackground = true;
 
   programs.nvf = {
     enable = true;
@@ -214,13 +214,6 @@
           lazygit.enable = true;
           lazygit.mappings.open = "<leader>g";
         };
-      };
-
-      theme = {
-        enable = true;
-        name = "catppuccin";
-        transparent = true;
-        style = "frappe";
       };
     };
   };
