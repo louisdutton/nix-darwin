@@ -105,7 +105,7 @@
             nixos.expr = "${flake}.nixosConfigurations.${host}.options";
             # nix-darwin.expr = "${flake}.darwinConfigurations.${host}.options";
             home-manager.expr = "${flake}.homeConfigurations.${host}.options";
-            # btcpay.expr = "(builtins.getFlake (builtins.toString ./.)).nixosConfigurations.btcpay.options";
+            btcpay.expr = "(builtins.getFlake (builtins.toString ./.)).nixosConfigurations.btcpay.options";
           };
         };
 

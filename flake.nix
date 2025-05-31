@@ -86,5 +86,13 @@
           sops-nix.darwinModules.sops
         ];
     };
+
+    devShells.aarch64-darwin.default = let
+      pkgs = import nixpkgs {system = "aarch64-darwin";};
+    in
+      with pkgs;
+        mkShell {
+          packages = [sops];
+        };
   };
 }

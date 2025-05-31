@@ -72,7 +72,7 @@
   # theming
   stylix = {
     enable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
     opacity.terminal = 1.0;
     fonts = {
       sizes.applications = 10;
