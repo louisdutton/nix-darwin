@@ -4,7 +4,6 @@
   programs.nvf = {
     enable = true;
     defaultEditor = true;
-    enableManpages = true;
 
     # https://notashelf.github.io/nvf/options.html
     settings.vim = {
@@ -105,7 +104,7 @@
             nixos.expr = "${flake}.nixosConfigurations.${host}.options";
             # nix-darwin.expr = "${flake}.darwinConfigurations.${host}.options";
             home-manager.expr = "${flake}.homeConfigurations.${host}.options";
-            btcpay.expr = "(builtins.getFlake (builtins.toString ./.)).nixosConfigurations.btcpay.options";
+            # btcpay.expr = "(builtins.getFlake (builtins.toString ./.)).nixosConfigurations.btcpay.options";
           };
         };
 
@@ -205,6 +204,18 @@
             delete = "ds";
             delete_line = "dS";
           };
+        };
+      };
+
+      mini.diff.enable = true;
+      assistant = {
+        copilot = {
+          enable = true;
+          setupOpts.suggestion.enabled = false;
+        };
+        codecompanion-nvim = {
+          enable = true;
+          setupOpts.display.diff.provider = "mini_diff";
         };
       };
 
