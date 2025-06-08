@@ -42,6 +42,7 @@
         (xmap "L" "$" "Line end")
         (xmap "K" "gg" "Buffer start")
         (xmap "J" "G" "Buffer end")
+        (xmap "<leader>A" ":CodeCompanion " "Ask AI")
 
         (nmap "U" "<C-r>" "Redo")
         (nmap "<leader>f" ":FzfLua git_files<cr>" "Find files")
