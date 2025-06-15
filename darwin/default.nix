@@ -1,8 +1,4 @@
-{
-  user,
-  ...
-}:
-{
+{user, ...}: {
   imports = [
     ./aerospace.nix
     ./sketchybar.nix
@@ -98,53 +94,6 @@
         type = "png";
       };
 
-      "com.apple.Safari.SandboxBroker" = {
-        ShowDevelopMenu = true;
-      };
-
-      "com.apple.Safari" = {
-        HomePage = "https://github.com";
-
-        # interface
-        ShowFullURLInSmartSearchField = true;
-        ShowFavoritesBar = false;
-        ShowStandaloneTabBar = 0;
-
-        # privacy
-        UniversalSearchEnabled = false; # don’t send search queries to Apple
-        SuppressSearchSuggestions = true;
-        HideIPAddressFromTrackers = true;
-        "PrivacySettings.crossSiteTracking" = false;
-
-        # security
-        AutoOpenSafeDownloads = false;
-        WarnAboutFraudulentWebsites = true;
-
-        # spellcheck
-        WebContinuousSpellCheckingEnabled = true;
-        WebAutomaticSpellingCorrectionEnabled = false;
-
-        # disable
-        AutoFillFromAddressBook = false;
-        AutoFillCreditCardData = false;
-        AutoFillMiscellaneousForms = false;
-
-        # dev
-        IncludeInternalDebugMenu = true;
-        IncludeDevelopMenu = true;
-        "WebKitPreferences.developerExtrasEnabled" = true;
-        WebKitTabToLinksPreferenceKey = true; # Press Tab to highlight each item on a web page
-        WebKitDeveloperExtrasEnabledPreferenceKey = true;
-        WebKitJavaEnabled = false;
-        WebKitJavaScriptCanOpenWindowsAutomatically = false;
-        "com.apple.Safari.ContentPageGroupIdentifier.WebKit2TabsToLinks" = true;
-        "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" = true;
-        "com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled" = false;
-        "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabled" = false;
-        "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabledForLocalFiles" = false;
-        "com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptCanOpenWindowsAutomatically" = false;
-      };
-
       "com.apple.SoftwareUpdate" = {
         AutomaticCheckEnabled = true;
         AutomaticDownload = 1;
@@ -158,7 +107,6 @@
         allowIdentifierForAdvertising = false;
       };
 
-      "com.apple.mail".DisableInlineAttachmentViewing = true;
       "com.apple.print.PrintingPrefs"."Quit When Finished" = true; # automatically quit printer app once the print jobs complete
       "com.apple.TimeMachine".DoNotOfferNewDisksForBackup = true;
       "com.apple.ImageCapture".disableHotPlug = true; # prevent auto-opening photos when device plugged in
@@ -178,5 +126,4 @@
       '';
     };
   };
-
 }
