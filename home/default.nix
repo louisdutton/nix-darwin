@@ -28,6 +28,7 @@
     fd # better find
     xh # better curl
     jq # json query
+    claude-code # agentic coding
   ];
 
   programs.chromium = {

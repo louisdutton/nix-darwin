@@ -41,17 +41,7 @@
       ll = "ls -l";
     };
 
-    systemPackages = let
-      linear = key: query:
-        pkgs.writeShellScriptBin "linear-${key}" ''
-          TOKEN=$(cat ${config.sops.secrets.linear.path})
-          xh https://api.linear.app/graphql Authorization:$TOKEN query="${query}" |
-          jq '.data.issues.nodes | .[] | "\(.id)\t\(.title)"' -r |
-          fzf
-        '';
-    in [
-      (linear "issues" "{ issues { nodes { id title } } }")
-
+    systemPackages = [
       # re-deploy homelab nix configuration
       (pkgs.writeShellScriptBin "lab-deploy" ''
         ${lib.getExe pkgs.nixos-rebuild} switch \
@@ -62,6 +52,12 @@
       '')
     ];
   };
+
+  # whitelist claude-code
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "claude-code"
+    ];
 
   # secret management
   sops.defaultSopsFile = ./secrets.yml;
