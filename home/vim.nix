@@ -10,8 +10,12 @@
       viAlias = true;
       vimAlias = true;
 
-      options = {
-        shiftwidth = 4;
+      options = let
+        indent = 2;
+      in {
+        shiftwidth = indent;
+        tabstop = indent;
+        expandtab = true;
         wrap = false; # don't wrap lines
         clipboard = "unnamedplus"; # system clipboard
         scrolloff = 10; # vertical scroll padding
@@ -72,6 +76,11 @@
           biome = {
             filetypes = ["typescript" "typescriptreact" "css" "html" "json"];
             cmd = ["biome" "lsp-proxy"];
+          };
+
+          jsonls = {
+            filetypes = ["json" "jsonc"];
+            cmd = ["vscode-json-language-server" "--stdio"];
           };
 
           # tailwindcss = {
