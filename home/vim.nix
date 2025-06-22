@@ -118,6 +118,7 @@
           };
         };
 
+        clang.enable = true;
         rust = {
           enable = true;
           lsp.opts = ''
