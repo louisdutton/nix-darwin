@@ -41,36 +41,32 @@
         nmap = mkMap "n";
         xmap = mkMap ["n" "x"];
       in [
-        (xmap ";" ":" "Command")
-        (xmap "H" "^" "Line start")
-        (xmap "L" "$" "Line end")
-        (xmap "K" "gg" "Buffer start")
-        (xmap "J" "G" "Buffer end")
-        (xmap "<leader>A" ":CodeCompanion " "Ask AI")
+        (xmap ";"         ":"               "Command"      )
+        (xmap "H"         "^"               "Line start"   )
+        (xmap "L"         "$"               "Line end"     )
+        (xmap "K"         "gg"              "Buffer start" )
+        (xmap "J"         "G"               "Buffer end"   )
+        (xmap "<leader>A" ":CodeCompanion " "Ask AI"       )
 
         (nmap "U" "<C-r>" "Redo")
-        (nmap "<leader>f" ":FzfLua git_files<cr>" "Find files")
-        (nmap "<leader>/" ":FzfLua live_grep_native<cr>" "Find text")
-        (nmap "gr" ":FzfLua lsp_references<cr>" "Find references")
-        (nmap "gd" ":FzfLua lsp_definitions<cr>" "Find definitions")
-        (nmap "gD" ":FzfLua lsp_declarations<cr>" "Find declarations")
-        (nmap "gt" ":FzfLua lsp_typedefs<cr>" "Find type definitions")
-        (nmap "gI" ":FzfLua lsp_implementations<cr>" "Find implementations")
+        (nmap "<leader>f" ":FzfLua git_files<cr>"              "Find files" )
+        (nmap "<leader>/" ":FzfLua live_grep_native<cr>"       "Find text"  )
+        (nmap "<leader>k" ":lua vim.lsp.buf.hover<cr>"         "Hover"      )
+        (nmap "<leader>a" ":lua vim.lsp.buf.code_action<cr>"   "Action"     )
+        (nmap "<leader>r" ":lua vim.lsp.buf.rename<cr>"        "Rename"     )
+        (nmap "<leader>d" ":lua vim.diagnostic.open_float<cr>" "Diagnostic" )
+        (nmap "gr" ":FzfLua lsp_references<cr>" "Find references"           )
+        (nmap "gd" ":FzfLua lsp_definitions<cr>" "Find definitions"         )
+        (nmap "gD" ":FzfLua lsp_declarations<cr>" "Find declarations"       )
+        (nmap "gt" ":FzfLua lsp_typedefs<cr>" "Find type definitions"       )
+        (nmap "gI" ":FzfLua lsp_implementations<cr>" "Find implementations" )
       ];
 
       lsp = {
         enable = true;
         formatOnSave = true;
         lspkind.enable = true;
-        # otter-nvim.enable = isMaximal;
-
-        mappings = {
-          hover = "<leader>k";
-          openDiagnosticFloat = "<leader>d";
-
-          codeAction = "<leader>a";
-          renameSymbol = "<leader>r";
-        };
+        # otter-nvim.enable = isMaximal; 
 
         servers = {
           biome = {
@@ -215,18 +211,6 @@
             delete = "ds";
             delete_line = "dS";
           };
-        };
-      };
-
-      mini.diff.enable = true;
-      assistant = {
-        copilot = {
-          enable = true;
-          setupOpts.suggestion.enabled = false;
-        };
-        codecompanion-nvim = {
-          enable = true;
-          setupOpts.display.diff.provider = "mini_diff";
         };
       };
 

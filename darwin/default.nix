@@ -11,10 +11,11 @@
   # sys-dependant rebuild command
   environment.shellAliases = {
     clip = "pbcopy";
-    rebuild = "darwin-rebuild switch --flake ~/.config/nix-darwin";
+    rebuild = "sudo darwin-rebuild switch --flake ~/.config/nix-darwin";
   };
 
   system = {
+    primaryUser = "louis";
     # check `man configuration.nix` before changing
     stateVersion = 6;
 
@@ -112,18 +113,6 @@
       "com.apple.ImageCapture".disableHotPlug = true; # prevent auto-opening photos when device plugged in
       "com.apple.commerce".AutoUpdate = true; # auto-update apps
       "com.apple.WindowManager".EnableStandardClickToShowDesktop = false; # disable desktop click
-    };
-
-    activationScripts = {
-      # set wallpaper on all displays
-      wallpaper.text = ''
-        osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"/Users/louis/.config/nix-darwin/wallpapers/waves.jpg\" as POSIX file"
-      '';
-
-      # apply nix-darwin configuration without restart
-      postUserActivation.text = ''
-        /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
-      '';
     };
   };
 }
