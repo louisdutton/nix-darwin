@@ -2,8 +2,7 @@
   user,
   keymap,
   ...
-}:
-{
+}: {
   programs.lazygit = {
     enable = true;
     settings = {

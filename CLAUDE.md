@@ -64,19 +64,6 @@ The configuration uses several Nix features:
 
 ## Noteworthy Subsystems
 
-### Neovim Configuration
-
-The repository uses the `nvf` flake to configure Neovim with LSP support,
-plugins, and custom keybindings. The configuration is modular and feature-rich,
-enabling language support for:
-
-- Nix
-- Rust
-- TypeScript/JavaScript
-- HTML/CSS
-- Markdown
-- And more
-
 ### Matrix Server (Homelab)
 
 The homelab configuration includes a Matrix Synapse server setup with PostgreSQL

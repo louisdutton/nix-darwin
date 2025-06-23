@@ -6,7 +6,12 @@
       "Bash(git commit:*)",
       "Bash(gh repo list:*)",
       "Bash(open:*)",
-      "WebFetch(domain:docs.anthropic.com)"
+      "WebFetch(domain:docs.anthropic.com)",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)",
+      "Bash(rmdir:*)",
+      "Bash(nix log:*)",
+      "Bash(rebuild)"
     ],
     "deny": []
   }

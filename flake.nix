@@ -11,8 +11,6 @@
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-    nvf.url = "github:notashelf/nvf";
-    nvf.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs @ {
@@ -22,7 +20,6 @@
     nixpkgs,
     stylix,
     sops-nix,
-    nvf,
   }: let
     user = {
       name = "louis";
@@ -41,7 +38,6 @@
         home-manager.users.${user.name} = import ./home;
         home-manager.backupFileExtension = "backup";
         home-manager.extraSpecialArgs = specialArgs;
-        home-manager.sharedModules = [nvf.homeManagerModules.default];
       }
     ];
   in {
@@ -50,7 +46,6 @@
       extraSpecialArgs = specialArgs;
       modules = [
         stylix.homeManagerModules.stylix
-        nvf.homeManagerModules.default
         ./home
       ];
     };
@@ -92,7 +87,7 @@
     in
       with pkgs;
         mkShell {
-          packages = [sops];
+          packages = [sops nixd lua-language-server alejandra];
         };
   };
 }

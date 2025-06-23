@@ -1,8 +1,4 @@
-{
-  pkgs,
-  ...
-}:
-{
+{pkgs, ...}: {
   imports = [
     ./hardware-configuration.nix
     ./matrix.nix
@@ -19,7 +15,7 @@
   ];
 
   # ssh
-  networking.firewall.allowedTCPPorts = [ 22 ];
+  networking.firewall.allowedTCPPorts = [22];
   services.openssh = {
     enable = true;
     settings.PasswordAuthentication = false;
@@ -27,5 +23,4 @@
   };
 
   system.stateVersion = "24.11";
-
 }

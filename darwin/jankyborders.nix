@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{config, ...}: {
   services.jankyborders = {
     enable = true;
     width = 3.0;

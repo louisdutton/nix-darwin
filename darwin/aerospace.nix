@@ -3,16 +3,14 @@
   keymap,
   lib,
   ...
-}:
-let
+}: let
   padding = 10;
-in
-{
+in {
   # https://nikitabobko.github.io/AeroSpace
   services.aerospace = {
     enable = true;
     settings = {
-      after-startup-command = [ ];
+      after-startup-command = [];
 
       exec-on-workspace-change = [
         (lib.getExe pkgs.zsh)
@@ -29,7 +27,7 @@ in
       default-root-container-orientation = "auto";
 
       # mouse
-      on-focused-monitor-changed = [ "move-mouse monitor-lazy-center" ];
+      on-focused-monitor-changed = ["move-mouse monitor-lazy-center"];
 
       # gaps
       accordion-padding = padding;
@@ -43,7 +41,7 @@ in
           bottom = padding;
           right = padding;
           top = [
-            { monitor."built-in" = 20; }
+            {monitor."built-in" = 20;}
             50 # any external monitor
           ];
         };

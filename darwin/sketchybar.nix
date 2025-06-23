@@ -3,8 +3,7 @@
   config,
   lib,
   ...
-}:
-let
+}: let
   font = config.stylix.fonts.monospace.name;
   configDir = ".config/sketchybar";
   pluginDir = "${configDir}/plugins";
@@ -13,19 +12,15 @@ let
   mkArgs = opts: builtins.concatStringsSep " " (builtins.attrValues (builtins.mapAttrs kv opts));
   mkCmd = cmd: opts: "${cmd} ${mkArgs opts}";
 
-  mkAdd =
-    type: name: opts: position:
+  mkAdd = type: name: opts: position:
     mkCmd "--add ${type} ${name} ${position} --set ${name}" opts;
 
-  mkItem =
-    name: opts: position:
+  mkItem = name: opts: position:
     mkAdd "item" name opts position;
 
-  mkSpace =
-    numericId:
-    let
-      id = toString numericId;
-    in
+  mkSpace = numericId: let
+    id = toString numericId;
+  in
     mkAdd "space" "space.${id}" {
       space = "1 2 3"; # FIXME: can't omit it nothing shows
       icon = id;
@@ -112,31 +107,32 @@ let
       };
     };
 
-    subscriptions =
-      let
-        sub = from: to: { inherit from to; };
-      in
+    subscriptions = let
+      sub = from: to: {inherit from to;};
+    in
       [
-        (sub "front_app" [ "front_app_switched" ])
-        (sub "volume" [ "volume_change" ])
+        (sub "front_app" ["front_app_switched"])
+        (sub "volume" ["volume_change"])
         (sub "battery" [
           "system_woke"
           "power_source_change"
         ])
       ]
       ++ [
-        (sub "space.1" [ "aerospace_workspace_change" ])
-        (sub "space.2" [ "aerospace_workspace_change" ])
-        (sub "space.3" [ "aerospace_workspace_change" ])
+        (sub "space.1" ["aerospace_workspace_change"])
+        (sub "space.2" ["aerospace_workspace_change"])
+        (sub "space.3" ["aerospace_workspace_change"])
       ];
 
     plugins = {
-      clock = # sh
+      clock =
+        # sh
         ''
           sketchybar --set "$NAME" label="$(date '+%d/%m %H:%M')"
         '';
 
-      battery = # sh
+      battery =
+        # sh
         ''
           PERCENTAGE="$(pmset -g batt | grep -Eo "\d+%" | cut -d% -f1)"
           CHARGING="$(pmset -g batt | grep 'AC Power')"
@@ -164,14 +160,16 @@ let
           sketchybar --set "$NAME" icon="$ICON" label="''${PERCENTAGE}%"
         '';
 
-      front_app = # sh
+      front_app =
+        # sh
         ''
           if [ "$SENDER" = "front_app_switched" ]; then
             sketchybar --set "$NAME" label="$INFO"
           fi
         '';
 
-      space = # sh
+      space =
+        # sh
         ''
           if [ "$1" = "$AEROSPACE_FOCUSED_WORKSPACE" ]; then
               sketchybar                                                              \
@@ -184,7 +182,8 @@ let
           fi
         '';
 
-      volume = # sh
+      volume =
+        # sh
         ''
           if [ "$SENDER" = "volume_change" ]; then
             VOLUME="$INFO"
@@ -204,9 +203,7 @@ let
         '';
     };
   };
-
-in
-{
+in {
   services.sketchybar.enable = true;
 
   # https://felixkratz.github.io/SketchyBar/config
