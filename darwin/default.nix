@@ -68,11 +68,7 @@
         QuitMenuItem = true;
         AppleShowAllFiles = true;
         AppleShowAllExtensions = true;
-        ShowPathbar = true;
-        ShowExternalHardDrivesOnDesktop = true;
-        ShowHardDrivesOnDesktop = true;
-        ShowMountedServersOnDesktop = true;
-        ShowRemovableMediaOnDesktop = true;
+        ShowPathbar = true; 
         FXDefaultSearchScope = "SCcf"; # current folder
         _FXSortFoldersFirst = true;
         _FXShowPosixPathInTitle = true;
