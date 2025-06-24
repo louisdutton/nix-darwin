@@ -48,8 +48,13 @@ local servers = {
   },
 
   -- TypeScript/JavaScript
+  tsserver = {
+    filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+    cmd = { "typescript-language-server", "--stdio" },
+  },
+
   biome = {
-    filetypes = { "typescript", "typescriptreact", "css", "html", "json" },
+    filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "css", "html", "json" },
     cmd = { "biome", "lsp-proxy" },
   },
 

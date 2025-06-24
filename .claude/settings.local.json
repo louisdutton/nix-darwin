@@ -11,7 +11,8 @@
       "Bash(mv:*)",
       "Bash(rmdir:*)",
       "Bash(nix log:*)",
-      "Bash(rebuild)"
+      "Bash(rebuild)",
+      "Bash(rg:*)"
     ],
     "deny": []
   }
