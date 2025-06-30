@@ -11,6 +11,7 @@
     ./vim.nix
     ./process-compose.nix
     ./ssh.nix
+    ./dictation.nix
   ];
 
   # self-management
