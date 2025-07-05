@@ -41,10 +41,10 @@
       ll = "ls -l";
     };
 
-    systemPackages = [
+    systemPackages = with pkgs; [
       # re-deploy homelab nix configuration
-      (pkgs.writeShellScriptBin "lab-deploy" ''
-        ${lib.getExe pkgs.nixos-rebuild} switch \
+      (writeShellScriptBin "lab-deploy" ''
+        ${lib.getExe nixos-rebuild} switch \
           --flake .#homelab \
           --target-host homelab  \
           --build-host homelab \
