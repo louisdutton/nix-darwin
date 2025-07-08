@@ -107,6 +107,12 @@ local servers = {
       },
     },
   },
+
+  -- WGSL
+  wgsl_analyzer = {
+    filetypes = { "wgsl" },
+    cmd = { "wgsl-analyzer" },
+  },
 }
 
 -- Setup each server

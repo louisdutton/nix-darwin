@@ -164,7 +164,7 @@ require("lazy").setup({
       require("nvim-treesitter.configs").setup({
         ensure_installed = {
           "lua", "nix", "rust", "typescript", "javascript", "html", "css",
-          "json", "markdown", "bash", "c", "kotlin", "go", "sql"
+          "json", "markdown", "bash", "c", "kotlin", "go", "sql", "wgsl"
         },
         highlight = { enable = true },
         indent = { enable = true },
