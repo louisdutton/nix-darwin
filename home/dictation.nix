@@ -33,12 +33,15 @@
         exit 1
       fi
 
-      # transcribe (piped through xargs to trim whitespace)
-      whisper-cli \
+      # transcribe and type the output
+      transcribed_text=$(whisper-cli \
         -m "$MODEL_DIR/$MODEL_NAME" \
         -f "$AUDIO_FILE"            \
         --no-timestamps             \
-        2>/dev/null | xargs -0
+        2>/dev/null \
+      | xargs -0)
+
+      osascript -e "tell application \"System Events\" to keystroke \"$transcribed_text\""
 
       # clean up
       rm -f "$AUDIO_FILE" 
