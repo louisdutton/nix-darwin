@@ -21,6 +21,9 @@ local servers = {
     cmd = { "nixd" },
     settings = {
       nixd = {
+        formatting = {
+          command = { "alejandra" },
+        },
         options = {
           nixos = {
             expr = "(builtins.getFlake \"/Users/louis/.config/nix-darwin\").nixosConfigurations.nixos.options",
