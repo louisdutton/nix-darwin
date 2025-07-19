@@ -59,6 +59,7 @@
           ./linux
           home-manager.nixosModules.home-manager
           stylix.nixosModules.stylix
+          sops-nix.nixosModules.sops
         ];
     };
 
@@ -87,7 +88,25 @@
     in
       with pkgs;
         mkShell {
-          packages = [sops nixd lua-language-server alejandra];
+          packages = [
+            sops
+            nixd
+            lua-language-server
+            alejandra
+          ];
+        };
+
+    devShells.x86_64-linux.default = let
+      pkgs = import nixpkgs {system = "x86_64-linux";};
+    in
+      with pkgs;
+        mkShell {
+          packages = [
+            sops
+            nixd
+            lua-language-server
+            alejandra
+          ];
         };
   };
 }

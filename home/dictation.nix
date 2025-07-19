@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   # Whisper-cpp dictation setup
   home.packages = with pkgs; [
     whisper-cpp
@@ -44,7 +41,7 @@
       osascript -e "tell application \"System Events\" to keystroke \"$transcribed_text\""
 
       # clean up
-      rm -f "$AUDIO_FILE" 
+      rm -f "$AUDIO_FILE"
     '')
   ];
 }

@@ -12,6 +12,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # users
+  programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
   users.users.${user.name} = {
     isNormalUser = true;
@@ -62,6 +63,7 @@
 
       # apps
       brave
+      wofi
 
       # desktop
       waybar

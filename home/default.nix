@@ -31,7 +31,7 @@
     jq # json query
 
     # agentic tools
-    claude-code 
+    claude-code
     glow
   ];
 

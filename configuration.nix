@@ -63,7 +63,6 @@
   sops.defaultSopsFile = ./secrets.yml;
   sops.age.keyFile = "${config.users.users.${user.name}.home}/.config/sops/age/keys.txt";
   sops.age.generateKey = true;
-  sops.secrets.linear.owner = user.name;
 
   # theming
   stylix = {

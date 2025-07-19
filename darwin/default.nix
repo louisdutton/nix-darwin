@@ -68,7 +68,7 @@
         QuitMenuItem = true;
         AppleShowAllFiles = true;
         AppleShowAllExtensions = true;
-        ShowPathbar = true; 
+        ShowPathbar = true;
         FXDefaultSearchScope = "SCcf"; # current folder
         _FXSortFoldersFirst = true;
         _FXShowPosixPathInTitle = true;
