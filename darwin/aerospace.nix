@@ -53,7 +53,6 @@ in {
         main.binding = with keymap; {
           # misc
           "${mod}-r" = "reload-config";
-          "${mod}-shift-d" = "exec-and-forget dictate";
 
           # apps
           "${mod}-enter" = "exec-and-forget open -a wezterm";
