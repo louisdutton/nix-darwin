@@ -39,6 +39,7 @@
       l = "ls";
       la = "ls -a";
       ll = "ls -l";
+      vibe = "claude --dangerously-skip-permissions";
     };
 
     systemPackages = with pkgs; [
