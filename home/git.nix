@@ -68,7 +68,7 @@
     userEmail = user.email;
     extraConfig = {
       pull = {
-        rebase = false;
+        rebase = true;
       };
       credential = {
         "https://github.com".helper = "!gh auth git-credential";
