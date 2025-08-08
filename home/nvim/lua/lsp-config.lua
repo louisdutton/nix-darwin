@@ -26,10 +26,10 @@ local servers = {
         },
         options = {
           nixos = {
-            expr = "(builtins.getFlake \"/Users/louis/.config/nix-darwin\").nixosConfigurations.nixos.options",
+            expr = "(builtins.getFlake \"/Users/louis/.config/nixos\").nixosConfigurations.nixos.options",
           },
           ["home-manager"] = {
-            expr = "(builtins.getFlake \"/Users/louis/.config/nix-darwin\").homeConfigurations.nixos.options",
+            expr = "(builtins.getFlake \"/Users/louis/.config/nixos\").homeConfigurations.nixos.options",
           },
         },
       },

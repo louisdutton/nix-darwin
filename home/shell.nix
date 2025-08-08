@@ -27,6 +27,10 @@
         }
       ];
 
+      envExtra = ''
+        ZSH_SYSTEM_CLIPBOARD_USE_WL_CLIPBOARD=1
+      '';
+
       initContent =
         # zsh
         ''

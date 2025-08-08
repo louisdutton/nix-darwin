@@ -39,7 +39,7 @@
       l = "ls";
       la = "ls -a";
       ll = "ls -l";
-      vibe = "caffeinate -d claude --dangerously-skip-permissions";
+      vibe = "claude --dangerously-skip-permissions";
     };
 
     systemPackages = with pkgs; [
@@ -72,7 +72,7 @@
     opacity.terminal = 1.0;
     fonts = {
       sizes.applications = 10;
-      sizes.terminal = 14; # TODO make dynamic based on machine
+      sizes.terminal = 12; # TODO make dynamic based on machine
       monospace = {
         package = pkgs.nerd-fonts.jetbrains-mono;
         name = "JetBrainsMono Nerd Font";

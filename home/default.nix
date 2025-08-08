@@ -7,11 +7,12 @@
     ./shell.nix
     ./prompt.nix
     ./git.nix
-    ./wezterm.nix
+    ./terminal.nix
     ./vim.nix
     ./process-compose.nix
     ./ssh.nix
     ./dictation.nix
+    ./desktop
   ];
 
   # self-management
