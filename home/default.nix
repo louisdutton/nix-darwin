@@ -31,6 +31,10 @@
     xh # better curl
     jq # json query
 
+    # web
+    ddgr
+    w3m
+
     # agentic tools
     claude-code
     glow
