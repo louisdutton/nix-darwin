@@ -3,8 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     stylix.url = "github:danth/stylix";
@@ -16,7 +14,6 @@
   outputs = inputs @ {
     self,
     home-manager,
-    nix-darwin,
     nixpkgs,
     stylix,
     sops-nix,
@@ -41,15 +38,6 @@
       }
     ];
   in {
-    homeConfigurations.nixos = home-manager.lib.homeManagerConfiguration {
-      pkgs = import nixpkgs {system = "aarch64-darwin";};
-      extraSpecialArgs = specialArgs;
-      modules = [
-        stylix.homeManagerModules.stylix
-        ./home
-      ];
-    };
-
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       inherit specialArgs;
       system = "x86_64-linux";
@@ -69,32 +57,6 @@
         ./lab
       ];
     };
-
-    darwinConfigurations.nixos = nix-darwin.lib.darwinSystem {
-      inherit specialArgs;
-      system = "aarch64-darwin";
-      modules =
-        modules
-        ++ [
-          ./darwin
-          home-manager.darwinModules.home-manager
-          stylix.darwinModules.stylix
-          sops-nix.darwinModules.sops
-        ];
-    };
-
-    devShells.aarch64-darwin.default = let
-      pkgs = import nixpkgs {system = "aarch64-darwin";};
-    in
-      with pkgs;
-        mkShell {
-          packages = [
-            sops
-            nixd
-            lua-language-server
-            alejandra
-          ];
-        };
 
     devShells.x86_64-linux.default = let
       pkgs = import nixpkgs {system = "x86_64-linux";};
