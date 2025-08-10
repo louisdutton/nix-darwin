@@ -1,7 +1,7 @@
 {
   imports = [
     ./hyprland.nix
-    ./waybar.nix
+    ./quickshell.nix
     ./wofi.nix
     ./hyprpaper.nix
   ];
