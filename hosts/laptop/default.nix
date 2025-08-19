@@ -21,6 +21,13 @@
       "wheel"
     ];
   };
+  i18n.defaultLocale = "en_GB.UTF-8";
+  # keymap
+  console.keyMap = "uk";
+  services.xserver.xkb = {
+    layout = "gb";
+    variant = "";
+  };
 
   # networking
   networking.networkmanager.enable = true;
@@ -59,10 +66,10 @@
     systemPackages = with pkgs; [
       # misc
       git
+      neovim
       wl-clipboard
 
       # apps
-      brave
       wofi
 
       # desktop
@@ -83,17 +90,8 @@
     xwayland.enable = true;
   };
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # services
   services.getty.autologinUser = user.name;
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # audio
   security.rtkit.enable = true;

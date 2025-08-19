@@ -1,12 +1,12 @@
 _: {
-  stylix.targets.neovim = {
-    enable = true;
-    transparentBackground = {
-      main = true;
-      numberLine = true;
-      signColumn = true;
-    };
-  };
+  # stylix.targets.neovim = {
+  #   enable = true;
+  #   transparentBackground = {
+  #     main = true;
+  #     numberLine = true;
+  #     signColumn = true;
+  #   };
+  # };
 
   programs.neovim = {
     enable = true;

@@ -1,15 +1,10 @@
-{
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./shell.nix
     ./prompt.nix
     ./git.nix
     ./terminal.nix
     ./vim.nix
-    ./process-compose.nix
     ./ssh.nix
     ./dictation.nix
     ./desktop
@@ -20,12 +15,7 @@
   programs.home-manager.enable = true;
   xdg.enable = true;
 
-  # required for standalone
-  home.username = lib.mkDefault "louis";
-  home.homeDirectory = lib.mkDefault /Users/louis;
-
   home.packages = with pkgs; [
-    devbox # nix abstraction layer
     sd # better sed
     fd # better find
     xh # better curl
@@ -34,18 +24,5 @@
     # web
     ddgr
     w3m
-
-    # agentic tools
-    claude-code
-    glow
   ];
-
-  programs.chromium = {
-    enable = true;
-    package = pkgs.brave;
-    extensions = [
-      {id = "ghmbeldphafepmbegfdlkpapadhbakde";} # proton pass
-      {id = "gfbliohnnapiefjpjlpjnehglfpaknnc";} # surfing keys
-    ];
-  };
 }

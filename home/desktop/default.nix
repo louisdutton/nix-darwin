@@ -4,5 +4,6 @@
     ./quickshell.nix
     ./wofi.nix
     ./hyprpaper.nix
+    ./browser.nix
   ];
 }

@@ -26,11 +26,11 @@ local servers = {
         },
         options = {
           nixos = {
-            expr = "(builtins.getFlake \"/home/louis/.config/nixos\").nixosConfigurations.nixos.options",
+            expr = "(builtins.getFlake \"/home/louis/projects/nixos\").nixosConfigurations.mini.options",
           },
           ["home-manager"] = {
             expr =
-            "(builtins.getFlake \"/home/louis/.config/nixos\").nixosConfigurations.nixos.options.home-manager.users.type.getSubOptions []",
+            "(builtins.getFlake \"/home/louis/projects/nixos\").nixosConfigurations.mini.options.home-manager.users.type.getSubOptions []",
           },
         },
       },

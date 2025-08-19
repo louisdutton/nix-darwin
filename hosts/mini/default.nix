@@ -1,0 +1,33 @@
+{...}: {
+  imports = [
+    ./hardware-configuration.nix
+    ../../modules/configuration.nix
+    ../../modules/asahi.nix
+    ../../modules/desktop.nix
+  ];
+
+  networking.hostName = "mini";
+  services.openssh.enable = true;
+
+  # bluetooth
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings.General.Experimental = true; # enable device battery status
+  };
+
+  # keymap
+  console.keyMap = "uk";
+  services.xserver.xkb = {
+    layout = "gb";
+    variant = "";
+  };
+
+  environment = {
+    shellAliases = {
+      rebuild = "sudo nixos-rebuild switch --impure --flake ~/projects/nixos";
+    };
+  };
+
+  system.stateVersion = "25.11";
+}

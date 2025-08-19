@@ -3,7 +3,7 @@
   home.packages = with pkgs; [
     whisper-cpp
     sox
-    
+
     (writeShellScriptBin "dictate" (builtins.readFile ../dictate.sh))
   ];
 }

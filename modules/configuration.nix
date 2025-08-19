@@ -2,7 +2,6 @@
   pkgs,
   user,
   inputs,
-  config,
   lib,
   ...
 }: {
@@ -19,11 +18,20 @@
   };
 
   # users
-  time.timeZone = "Europe/London";
-  networking.hostName = "nixos";
+  programs.zsh.enable = true;
+  users.defaultUserShell = pkgs.zsh;
   users.users.${user.name} = {
+    isNormalUser = true;
     description = user.displayName;
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
   };
+
+  # locale
+  time.timeZone = "Europe/London";
+  i18n.defaultLocale = "en_GB.UTF-8";
 
   # aliases and custom utils
   environment = {
@@ -35,14 +43,14 @@
     shellAliases = {
       e = "$EDITOR";
       g = "lazygit";
-      clean = "git clean -xdf";
-      l = "ls";
-      la = "ls -a";
-      ll = "ls -l";
-      vibe = "claude --dangerously-skip-permissions";
     };
 
     systemPackages = with pkgs; [
+      git
+      neovim
+      gcc # required by neovim
+      wl-clipboard
+
       # re-deploy homelab nix configuration
       (writeShellScriptBin "lab-deploy" ''
         ${lib.getExe nixos-rebuild} switch \
@@ -54,16 +62,10 @@
     ];
   };
 
-  # whitelist claude-code
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
-      "claude-code"
-    ];
-
   # secret management
-  sops.defaultSopsFile = ./secrets.yml;
-  sops.age.keyFile = "${config.users.users.${user.name}.home}/.config/sops/age/keys.txt";
-  sops.age.generateKey = true;
+  # sops.defaultSopsFile = ./secrets.yml;
+  # sops.age.keyFile = "${config.users.users.${user.name}.home}/.config/sops/age/keys.txt";
+  # sops.age.generateKey = true;
 
   # theming
   stylix = {
@@ -72,7 +74,7 @@
     opacity.terminal = 1.0;
     fonts = {
       sizes.applications = 10;
-      sizes.terminal = 12; # TODO make dynamic based on machine
+      sizes.terminal = 12;
       monospace = {
         package = pkgs.nerd-fonts.jetbrains-mono;
         name = "JetBrainsMono Nerd Font";

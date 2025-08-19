@@ -9,6 +9,8 @@
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
+    apple-silicon.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs @ {
@@ -17,6 +19,7 @@
     nixpkgs,
     stylix,
     sops-nix,
+    ...
   }: let
     user = {
       name = "louis";
@@ -28,7 +31,9 @@
       keymap = import ./keys.nix;
     };
     modules = [
-      ./configuration.nix
+      home-manager.nixosModules.home-manager
+      stylix.nixosModules.stylix
+      sops-nix.nixosModules.sops
       {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
@@ -38,28 +43,25 @@
       }
     ];
   in {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.mini = nixpkgs.lib.nixosSystem {
       inherit specialArgs;
-      system = "x86_64-linux";
-      modules =
-        modules
-        ++ [
-          ./linux
-          home-manager.nixosModules.home-manager
-          stylix.nixosModules.stylix
-          sops-nix.nixosModules.sops
-        ];
+      system = "aarch64-linux";
+      modules = modules ++ [./hosts/mini];
     };
 
-    nixosConfigurations.homelab = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./lab
-      ];
-    };
+    # nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
+    #   inherit specialArgs;
+    #   system = "x86_64-linux";
+    #   modules = modules ++ [ ./hosts/laptop ];
+    # };
+    #
+    # nixosConfigurations.homelab = nixpkgs.lib.nixosSystem {
+    #   system = "x86_64-linux";
+    #   modules = [ ./lab ];
+    # };
 
-    devShells.x86_64-linux.default = let
-      pkgs = import nixpkgs {system = "x86_64-linux";};
+    devShells.aarch64-linux.default = let
+      pkgs = import nixpkgs {system = "aarch64-linux";};
     in
       with pkgs;
         mkShell {
