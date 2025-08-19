@@ -9,9 +9,7 @@
     ./git.nix
     ./wezterm.nix
     ./vim.nix
-    ./process-compose.nix
     ./ssh.nix
-    ./dictation.nix
   ];
 
   # self-management
@@ -24,7 +22,6 @@
   home.homeDirectory = lib.mkDefault /Users/louis;
 
   home.packages = with pkgs; [
-    devbox # nix abstraction layer
     sd # better sed
     fd # better find
     xh # better curl
