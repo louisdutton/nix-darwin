@@ -83,9 +83,6 @@ local servers = {
   -- Clang
   clangd = {},
 
-  -- Kotlin
-  kotlin_language_server = {},
-
   -- Bash
   bashls = {},
 
