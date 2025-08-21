@@ -9,6 +9,7 @@
   };
 
   services.getty.autologinUser = user.name;
+  programs.zsh.loginShellInit = "hyprland";
 
   # audio
   # security.rtkit.enable = true;
