@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     stylix.url = "github:danth/stylix";
@@ -15,8 +16,9 @@
 
   outputs = inputs @ {
     self,
-    home-manager,
     nixpkgs,
+    flake-utils,
+    home-manager,
     stylix,
     sops-nix,
     ...
@@ -42,28 +44,29 @@
         home-manager.extraSpecialArgs = specialArgs;
       }
     ];
-  in {
-    nixosConfigurations.mini = nixpkgs.lib.nixosSystem {
-      inherit specialArgs;
-      system = "aarch64-linux";
-      modules = modules ++ [./hosts/mini];
-    };
+  in
+    {
+      nixosConfigurations.mini = nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
+        system = "aarch64-linux";
+        modules = modules ++ [./hosts/mini];
+      };
 
-    # nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
-    #   inherit specialArgs;
-    #   system = "x86_64-linux";
-    #   modules = modules ++ [ ./hosts/laptop ];
-    # };
-    #
-    # nixosConfigurations.homelab = nixpkgs.lib.nixosSystem {
-    #   system = "x86_64-linux";
-    #   modules = [ ./lab ];
-    # };
+      nixosConfigurations.ideapad = nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
+        system = "x86_64-linux";
+        modules = modules ++ [./hosts/ideapad];
+      };
 
-    devShells.aarch64-linux.default = let
-      pkgs = import nixpkgs {system = "aarch64-linux";};
-    in
-      with pkgs;
+      # nixosConfigurations.homelab = nixpkgs.lib.nixosSystem {
+      #   system = "x86_64-linux";
+      #   modules = [ ./lab ];
+      # };
+    }
+    // flake-utils.lib.eachDefaultSystem (system: let
+      pkgs = import nixpkgs {inherit system;};
+    in {
+      devShells.default = with pkgs;
         mkShell {
           packages = [
             sops
@@ -72,5 +75,5 @@
             alejandra
           ];
         };
-  };
+    });
 }

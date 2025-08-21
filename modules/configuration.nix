@@ -17,6 +17,9 @@
     ];
   };
 
+  # networking
+  networking.networkmanager.enable = true;
+
   # users
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
@@ -32,6 +35,13 @@
   # locale
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_GB.UTF-8";
+
+  # keymap
+  console.keyMap = "uk";
+  services.xserver.xkb = {
+    layout = "gb";
+    variant = "";
+  };
 
   # aliases and custom utils
   environment = {

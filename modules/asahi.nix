@@ -1,4 +1,8 @@
-{inputs, lib, ...}: {
+{
+  inputs,
+  lib,
+  ...
+}: {
   imports = [
     inputs.apple-silicon.nixosModules.apple-silicon-support
   ];
@@ -9,6 +13,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
 
-  networking.networkmanager.enable = true;
-  networking.networkmanager.wifi.backend = "iwd"; # wpa_supplicant doesn't work on asahi
+  # wpa_supplicant doesn't work on asahi
+  networking.networkmanager.wifi.backend = lib.libForce "iwd";
 }

@@ -16,13 +16,6 @@
     settings.General.Experimental = true; # enable device battery status
   };
 
-  # keymap
-  console.keyMap = "uk";
-  services.xserver.xkb = {
-    layout = "gb";
-    variant = "";
-  };
-
   environment = {
     shellAliases = {
       rebuild = "sudo nixos-rebuild switch --impure --flake ~/projects/nixos";
