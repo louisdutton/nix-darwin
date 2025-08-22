@@ -19,23 +19,22 @@ Variants {
       right: true
     }
     
-    implicitHeight: 40
+    implicitHeight: 30
     margins {
+      top: 10
       left: 10
       right: 10
-      top: 10
     }
     
     Rectangle {
       anchors.fill: parent
       color: "transparent"
-      radius: 10
       
       Item {
         anchors {
           fill: parent
-          leftMargin: 15
-          rightMargin: 15
+          leftMargin: 2
+          rightMargin: 2
         }
         
         // Left section - workspaces
@@ -44,13 +43,13 @@ Variants {
             left: parent.left
             verticalCenter: parent.verticalCenter
           }
-          spacing: 10
+          spacing: 5
           
           Repeater {
             model: Hyprland.workspaces
             delegate: Rectangle {
-              width: 30
-              height: 30
+              width: 26
+              height: 26
               radius: 4
               color: modelData.active ? "#89b4fa" : "#45475a"
               
@@ -97,13 +96,8 @@ Variants {
           
           // Volume
           Text {
-            property var audioNode: {
-              console.log(JSON.stringify(Pipewire, null, 2))
-              // console.log(Pipewire.defaultAudioSource.audioNode)
-              Pipewire.defaultAudioSink.audio
-            }
-            text: " " + audioNode.volume + "%"
-            color: audioNode && audioNode.muted ? "#f38ba8" : "#cdd6f4"
+            text: '   (not working)'
+            color: "#f38ba8"
             font.pixelSize: 14
           }
           
@@ -169,21 +163,19 @@ Variants {
           
           // Clock
           Text {
-            text: {
-              try {
-                return Qt.formatDateTime(new Date(), "HH:mm")
-              } catch (e) {
-                return new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
-              }
+            function getTime() {
+              return Qt.formatDateTime(new Date(), "󱑂  HH:mm ~   dd/MM/yyyy")
             }
+
+            text: getTime()
             color: "#cdd6f4"
             font.pixelSize: 14
-            
+
             Timer {
               interval: 1000
               running: true
               repeat: true
-              onTriggered: parent.text = Qt.formatDateTime(new Date(), "HH:mm")
+              onTriggered: parent.text = getTime()
             }
           }
         }
