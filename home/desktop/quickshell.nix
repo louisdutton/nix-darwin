@@ -1,11 +1,11 @@
-{pkgs, ...}: {
+{...}: {
+  qt.enable = true; # for qmlls
   programs.quickshell = {
+    systemd.enable = true;
+    systemd.target = "hyprland-session.target";
     enable = true;
-
-    # activeConfig = "default";
-    # configs.default = "~/.config/quickshell/default/shell.qml";
   };
 
   # Create .qmlls.ini for language server support
-  xdg.configFile."quickshell/.qmlls.ini".text = "";
+  # xdg.configFile."quickshell/.qmlls.ini".text = "";
 }

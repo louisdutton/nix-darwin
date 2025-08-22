@@ -89,6 +89,11 @@ local servers = {
   -- SQL
   sqlls = {},
 
+  -- QML
+  qmlls = {
+    cmd = { "qmlls", "-E" }
+  },
+
   -- Lua
   lua_ls = {
     settings = {

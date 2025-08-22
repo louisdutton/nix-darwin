@@ -11,6 +11,7 @@ Variants {
   PanelWindow {
     required property var modelData
     screen: modelData
+    color: "transparent"
     
     anchors {
       top: true
@@ -25,13 +26,10 @@ Variants {
       top: 10
     }
     
-    color: "transparent"
-    
     Rectangle {
       anchors.fill: parent
       color: "transparent"
       radius: 10
-      opacity: 0.9
       
       Item {
         anchors {
@@ -77,8 +75,8 @@ Variants {
         Text {
           anchors.centerIn: parent
           text: {
-            if (Hyprland.focusedWindow) {
-              let title = Hyprland.focusedWindow.title
+            if (Hyprland.activeTopLevel) {
+              let title = Hyprland.activeTopLevel.title
               return title.length > 50 ? title.substring(0, 47) + "..." : title
             }
             return "Desktop"
@@ -99,51 +97,46 @@ Variants {
           
           // Volume
           Text {
-            property var audioNode: Pipewire.linkGroups.speakers ? Pipewire.linkGroups.speakers.audio : null
-            text: " " + Math.round(audioNode && audioNode.volume ? audioNode.volume * 100 : 0) + "%"
+            property var audioNode: {
+              console.log(JSON.stringify(Pipewire, null, 2))
+              // console.log(Pipewire.defaultAudioSource.audioNode)
+              Pipewire.defaultAudioSink.audio
+            }
+            text: " " + audioNode.volume + "%"
             color: audioNode && audioNode.muted ? "#f38ba8" : "#cdd6f4"
             font.pixelSize: 14
           }
           
           // Network
           Text {
-            property string networkStatus: "Checking..."
+            id: network
+            property string networkStatus: "disconnected"
             property string networkIcon: {
-              if (networkStatus === "connected") return "󰤨"
-              if (networkStatus === "connecting") return "󰤪"
-              return "󰤭"
-            }
-            text: networkIcon + "  " + (networkStatus === "connected" ? "Connected" : "Disconnected")
-            color: networkStatus === "connected" ? "#cdd6f4" : "#f38ba8"
-            font.pixelSize: 14
-            
-            Process {
-              id: networkCheck
-              command: ["nmcli", "-t", "-f", "STATE", "general"]
-              running: true
-              onExited: {
-                if (exitCode === 0) {
-                  parent.networkStatus = stdout.trim()
-                } else {
-                  parent.networkStatus = "disconnected"
-                }
+              switch (networkStatus) {
+                case "connected": return "󰤨"
+                case "connecting": return "󰤪"
+                default: return "󰤭"
               }
             }
-            
-            Timer {
-              interval: 5000
+            text: networkIcon
+            color: networkStatus === "connected" ? "#cdd6f4" : "#f38ba8"
+            font.pixelSize: 14
+
+            Process {
               running: true
-              repeat: true
-              onTriggered: networkCheck.start()
+              onRunningChanged: if (!running) running = true
+              command: ["nmcli", "-t", "-f", "STATE", "general"]
+              stdout: StdioCollector {
+                onStreamFinished: network.networkStatus = this.text.trim()
+              }
             }
-            
-            Component.onCompleted: networkCheck.start()
           }
           
           // Battery
           Text {
-            property var battery: UPower ? UPower.displayDevice : null
-            property bool hasBattery: battery !== null && battery !== undefined
+            id: battery
+            property int percentage: -1
+            property bool hasBattery: percentage !== -1
             property string batteryIcon: {
               if (!hasBattery) return "󰚥"
               if (battery.charging) return "󰂄"
@@ -163,6 +156,15 @@ Variants {
             color: hasBattery && battery.percentage < 20 ? "#f38ba8" : "#cdd6f4"
             font.pixelSize: 14
             visible: true
+
+            Process {
+              running: true
+              onRunningChanged: if (!running) running = true // loop
+              command: ["cat", "/sys/class/power_supply/BAT1/capacity"]
+              stdout: StdioCollector {
+                onStreamFinished: battery.percentage = Number.parseInt(this.text.trim())
+              }
+            }
           }
           
           // Clock
