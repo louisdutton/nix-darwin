@@ -1,13 +1,11 @@
-{
-  pkgs,
-  user,
-  ...
-}: {
+{...}: {
   imports = [
     ./hardware-configuration.nix
     ../../modules/configuration.nix
     ../../modules/desktop.nix
   ];
+
+  users.users.hollie.isNormalUser = true;
 
   networking.hostName = "ideapad";
 
