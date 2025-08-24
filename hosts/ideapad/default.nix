@@ -18,5 +18,8 @@
     };
   };
 
+  # performance optimisation
+  powerManagement.cpuFreqGovernor = "performance";
+
   system.stateVersion = "24.05";
 }
