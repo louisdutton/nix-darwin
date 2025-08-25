@@ -4,7 +4,6 @@
     ./prompt.nix
     ./git.nix
     ./terminal.nix
-    ./vim.nix
     ./ssh.nix
     ./dictation.nix
     ./desktop

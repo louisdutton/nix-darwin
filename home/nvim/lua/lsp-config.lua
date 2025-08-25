@@ -89,6 +89,9 @@ local servers = {
   -- SQL
   sqlls = {},
 
+  -- Odin
+  ols = {},
+
   -- QML
   qmlls = {
     cmd = { "qmlls", "-E" }
