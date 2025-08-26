@@ -163,20 +163,19 @@ Variants {
           
           // Clock
           Text {
-            function getTime() {
-              return Qt.formatDateTime(new Date(), "󱑂  HH:mm ~   dd/MM/yyyy")
-            }
-
-            text: getTime()
+            id: clock
             color: "#cdd6f4"
             font.pixelSize: 14
 
-            Timer {
-              interval: 1000
+            Process {
               running: true
-              repeat: true
-              onTriggered: parent.text = getTime()
+              onRunningChanged: if (!running) running = true // loop
+              command: ["date"]
+              stdout: StdioCollector {
+                onStreamFinished: clock.text = `󱑂  ${this.text.trim()}` 
+              }
             }
+
           }
         }
       }
