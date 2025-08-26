@@ -20,6 +20,8 @@
 
   # performance optimisation
   powerManagement.cpuFreqGovernor = "performance";
+  hardware.graphics.enable = true;
+  hardware.graphics.enable32Bit = true;
 
   system.stateVersion = "24.05";
 }
