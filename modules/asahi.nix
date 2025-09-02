@@ -14,5 +14,5 @@
   boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
 
   # wpa_supplicant doesn't work on asahi
-  networking.networkmanager.wifi.backend = lib.libForce "iwd";
+  networking.networkmanager.wifi.backend = lib.mkForce "iwd";
 }
