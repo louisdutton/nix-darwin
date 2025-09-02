@@ -74,6 +74,11 @@
             lua-language-server
             alejandra
           ];
+
+          shellHook = ''
+            rm -r ~/.config/nvim ~/.config/quickshell
+            ln -s $PWD/config/* ~/.config
+          '';
         };
     });
 }
