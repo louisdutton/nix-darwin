@@ -1,18 +1,19 @@
-{
+return {
   {
     "seblyng/roslyn.nvim",
     ft = { "cs", "razor" },
     dependencies = {
-      {
-        -- By loading as a dependencies, we ensure that we are available to set
-        -- the handlers for Roslyn.
-        "tris203/rzls.nvim",
-        config = true,
-      },
+      { "tris203/rzls.nvim", config = true },
     },
     config = function()
-      -- Use one of the methods in the Integration section to compose the command.
-      local cmd = {}
+      local cmd = {
+        "Microsoft.CodeAnalysis.LanguageServer",
+        "--stdio",
+        "--logLevel=Information",
+        "--extensionLogDirectory=" .. vim.fs.dirname(vim.lsp.get_log_path()),
+        "--razorSourceGenerator=rzls",
+        "--razorDesignTimePath=" .. os.getenv("RZLS_TARGETS"),
+      }
 
       vim.lsp.config("roslyn", {
         cmd = cmd,
@@ -39,6 +40,8 @@
         },
       })
       vim.lsp.enable("roslyn")
+
+      require('rzls').setup({ path = 'rzls' })
     end,
     init = function()
       -- We add the Razor file types before the plugin loads.

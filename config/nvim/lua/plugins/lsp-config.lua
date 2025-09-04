@@ -1,12 +1,7 @@
--- ~/.config/nvim/lua/plugins/lsp.lua
 return {
   {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      { "antosha417/nvim-lsp-file-operations", config = true },
-    },
     config = function()
       -- LSP configuration
       local lspconfig = require("lspconfig")
@@ -62,7 +57,7 @@ return {
         },
 
         -- TypeScript/JavaScript
-        tsserver = {
+        ts_ls = {
           filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
           cmd = { "typescript-language-server", "--stdio" },
         },
@@ -123,9 +118,6 @@ return {
             },
           },
         },
-
-        -- .NET
-        rosyln_ls = {}
       }
 
       -- Setup each server
@@ -136,4 +128,3 @@ return {
     end,
   },
 }
-
