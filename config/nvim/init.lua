@@ -27,7 +27,6 @@ vim.opt.termguicolors = false
 vim.cmd('colorscheme default')
 
 -- Load plugin configuration
-require('plugins')
+require('manager')
 require('keymaps')
-require('lsp-config')
 require('autocmds')
