@@ -58,10 +58,10 @@
         modules = modules ++ [./hosts/ideapad];
       };
 
-      # nixosConfigurations.homelab = nixpkgs.lib.nixosSystem {
-      #   system = "x86_64-linux";
-      #   modules = [ ./lab ];
-      # };
+      nixosConfigurations.homelab = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [./hosts/lab];
+      };
     }
     // flake-utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {inherit system;};
