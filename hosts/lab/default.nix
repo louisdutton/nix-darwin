@@ -6,11 +6,11 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "homelab";
-
   environment.systemPackages = with pkgs; [
     vim
   ];
+
+  networking.hostName = "homelab";
   networking.firewall.allowedTCPPorts = [22];
   services.openssh = {
     enable = true;
@@ -18,5 +18,9 @@
     settings.KbdInteractiveAuthentication = false;
   };
 
+  documentation.enable = false;
   system.stateVersion = "24.11";
+
+  services.jellyfin.enable = true;
+  services.jellyfin.openFirewall = true;
 }
