@@ -2,7 +2,7 @@
   pkgs,
   user,
   inputs,
-  lib,
+  config,
   ...
 }: {
   # nix
@@ -63,7 +63,7 @@
 
       # re-deploy homelab nix configuration
       (writeShellScriptBin "lab-deploy" ''
-        ${lib.getExe nixos-rebuild} switch \
+        nixos-rebuild switch \
           --flake .#homelab \
           --target-host homelab  \
           --build-host homelab \
@@ -72,10 +72,36 @@
     ];
   };
 
-  # secret management
-  # sops.defaultSopsFile = ./secrets.yml;
-  # sops.age.keyFile = "${config.users.users.${user.name}.home}/.config/sops/age/keys.txt";
-  # sops.age.generateKey = true;
+  # ssh
+  sops.secrets."ssh/homelab".owner = "louis";
+  sops.secrets."ssh/mini".owner = "louis";
+  programs.ssh = let
+    homelab = "192.168.1.231";
+    mini = "192.168.1.157";
+  in {
+    knownHosts = {
+      homelab = {
+        extraHostNames = ["homelab" homelab];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILzuc9CKsYm/sICfjH1Y8UYsEeX9zA8muWMQYRlS/Mbp";
+      };
+    };
+
+    extraConfig = ''
+      Host homelab
+        HostName ${homelab}
+        User root
+        IdentityFile ${config.sops.secrets."ssh/homelab".path}
+        Port 22
+        IdentitiesOnly yes
+
+      Host mini
+        HostName ${mini}
+        User root
+        IdentityFile ${config.sops.secrets."ssh/mini".path}
+        Port 22
+        IdentitiesOnly yes
+    '';
+  };
 
   # theming
   stylix = {

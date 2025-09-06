@@ -1,8 +1,9 @@
 keys:
-  - &primary age14u25u8nsh2mwapu4xxa43az6yatg25sjug0qkyqyeuk4sy9v3suqt3r7fu
+  - &master age18u0enq67fx8m2m5e4nelteyhd8kg4ng3qgpvwsyqlrj32fr0w49sydz8r0
+  - &mini age1cqcjqjdws25pcdj8dh93ppl8cghhnh236tg3c6rawpqnq85ze4rqkmpj3w
+  - &homelab age1su9ue59ured7v4k3zqjjjca2jgtws4ams3rw3slnl76zfwzjspaq86janx
 
 creation_rules:
   - path_regex: secrets.yml$
     key_groups:
-      - age: [*primary]
-          
+      - age: [*mini, *master, *mini] 

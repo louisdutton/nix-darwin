@@ -4,6 +4,7 @@
     ../../modules/configuration.nix
     ../../modules/asahi.nix
     ../../modules/desktop.nix
+    ../../modules/sops.nix
   ];
 
   networking.hostName = "mini";
