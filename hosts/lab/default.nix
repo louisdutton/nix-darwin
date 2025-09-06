@@ -1,7 +1,8 @@
 {pkgs, ...}: {
   imports = [
     ./hardware-configuration.nix
-    # ./matrix.nix
+    ./matrix.nix
+    ../../modules/sops.nix
   ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

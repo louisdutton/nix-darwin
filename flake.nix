@@ -60,7 +60,10 @@
 
       nixosConfigurations.homelab = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [./hosts/lab];
+        modules = [
+          ./hosts/lab
+          sops-nix.nixosModules.sops
+        ];
       };
     }
     // flake-utils.lib.eachDefaultSystem (system: let
