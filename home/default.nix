@@ -9,7 +9,6 @@
     ./git.nix
     ./wezterm.nix
     ./vim.nix
-    ./ssh.nix
   ];
 
   # self-management
