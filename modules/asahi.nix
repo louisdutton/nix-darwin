@@ -8,7 +8,6 @@
   ];
 
   nixpkgs.overlays = [inputs.apple-silicon.overlays.apple-silicon-overlay];
-  hardware.asahi.useExperimentalGPUDriver = true;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
