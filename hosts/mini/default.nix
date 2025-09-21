@@ -1,4 +1,8 @@
-{...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
     ../../modules/configuration.nix
@@ -24,5 +28,6 @@
     };
   };
 
+  services.tailscale.enable = true;
   system.stateVersion = "25.11";
 }
