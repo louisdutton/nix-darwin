@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  lib,
+  ...
+}: let
   # example:
   # ------
   # x86-game ./games/silksong/'Hollow Knight Silksong'
@@ -48,7 +52,23 @@
         ];
     };
 in {
-  environment.systemPackages = [
+  # nintendo pro controller
+  boot.kernelModules = ["hid-nintendo"];
+  services.udev.packages = with pkgs; [
+    game-devices-udev-rules
+    dolphin-emu # gamecube/wii emulation
+  ];
+  hardware.uinput.enable = true;
+
+  nixpkgs.config.allowUnfree = true;
+  environment.systemPackages = with pkgs; [
     runner
+    (
+      retroarch.withCores (cores:
+        with cores; [
+          dolphin
+          genesis-plus-gx
+        ])
+    )
   ];
 }
