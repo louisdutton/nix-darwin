@@ -96,7 +96,7 @@
 
       Host mini
         HostName ${mini}
-        User root
+        User louis
         IdentityFile ${config.sops.secrets."ssh/mini".path}
         Port 22
         IdentitiesOnly yes
