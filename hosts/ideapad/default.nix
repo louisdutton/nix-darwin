@@ -3,6 +3,7 @@
     ./hardware-configuration.nix
     ../../modules/configuration.nix
     ../../modules/desktop.nix
+    ../../modules/sops.nix
   ];
 
   users.users.hollie.isNormalUser = true;
@@ -22,6 +23,9 @@
   powerManagement.cpuFreqGovernor = "performance";
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
+
+  # this machine doesn't have ssh setup
+  sops.age.keyFile = "/home/louis/.config/sops/age/keys.txt";
 
   system.stateVersion = "24.05";
 }
