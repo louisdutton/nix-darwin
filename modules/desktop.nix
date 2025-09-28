@@ -9,7 +9,7 @@
   };
 
   services.getty.autologinUser = user.name;
-  programs.zsh.loginShellInit = "hyprland";
+  # programs.zsh.loginShellInit = "hyprland"; // breaks headless sessions like ssh
 
   # audio
   security.rtkit.enable = true;
