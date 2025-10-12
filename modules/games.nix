@@ -12,7 +12,9 @@
       runScript = "box64 \"$@\" -force-opengl";
 
       profile = ''
-        export BOX64_LD_LIBRARY_PATH="${lib.makeLibraryPath [pkgsCross.gnu64.stdenv.cc.cc.lib]}"
+        export BOX64_LD_LIBRARY_PATH="${lib.makeLibraryPath (with pkgsCross.gnu64; [
+          stdenv.cc.cc.lib
+        ])}"
       '';
 
       targetPkgs = pkgs:
@@ -21,8 +23,8 @@
 
           # system
           dbus
-          udev
           zlib
+          udev
 
           # graphics
           libGL
@@ -49,6 +51,9 @@
           # audio
           alsa-lib
           pulseaudio
+
+          # debug
+          gdb
         ];
     };
 in {
@@ -59,6 +64,7 @@ in {
     dolphin-emu # gamecube/wii emulation
   ];
   hardware.uinput.enable = true;
+  hardware.xone.enable = true;
 
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
