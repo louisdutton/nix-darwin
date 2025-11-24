@@ -50,26 +50,6 @@
       ];
     };
 
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      inherit specialArgs;
-      system = "x86_64-linux";
-      modules =
-        modules
-        ++ [
-          ./linux
-          home-manager.nixosModules.home-manager
-          stylix.nixosModules.stylix
-          sops-nix.nixosModules.sops
-        ];
-    };
-
-    nixosConfigurations.homelab = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./lab
-      ];
-    };
-
     darwinConfigurations.nixos = nix-darwin.lib.darwinSystem {
       inherit specialArgs;
       system = "aarch64-darwin";
@@ -85,19 +65,6 @@
 
     devShells.aarch64-darwin.default = let
       pkgs = import nixpkgs {system = "aarch64-darwin";};
-    in
-      with pkgs;
-        mkShell {
-          packages = [
-            sops
-            nixd
-            lua-language-server
-            alejandra
-          ];
-        };
-
-    devShells.x86_64-linux.default = let
-      pkgs = import nixpkgs {system = "x86_64-linux";};
     in
       with pkgs;
         mkShell {

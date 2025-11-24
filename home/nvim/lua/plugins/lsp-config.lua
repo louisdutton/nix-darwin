@@ -31,11 +31,11 @@ return {
               },
               options = {
                 nixos = {
-                  expr = "(builtins.getFlake \"/home/louis/projects/nixos\").nixosConfigurations.mini.options",
+                  expr =
+                  "(builtins.getFlake \"/Users/louis/projects/evergive/evergive\").nixosConfigurations.eg-api-00.options",
                 },
                 ["home-manager"] = {
-                  expr =
-                  "(builtins.getFlake \"/home/louis/projects/nixos\").nixosConfigurations.mini.options.home-manager.users.type.getSubOptions []",
+                  expr = "(builtins.getFlake \"/Users/louis/.config/nix-darwin\").homeConfigurations.nixos.options",
                 },
               },
             },
