@@ -30,13 +30,13 @@ return {
                 command = { "alejandra" },
               },
               options = {
-                nixos = {
-                  expr =
-                  "(builtins.getFlake \"/Users/louis/projects/evergive/evergive\").nixosConfigurations.eg-api-00.options",
-                },
-                ["home-manager"] = {
-                  expr = "(builtins.getFlake \"/Users/louis/.config/nix-darwin\").homeConfigurations.nixos.options",
-                },
+                -- nixos = {
+                --   expr =
+                --   "(builtins.getFlake \"/Users/louis/projects/evergive/evergive\").nixosConfigurations.eg-api-00.options",
+                -- },
+                -- ["home-manager"] = {
+                --   expr = "(builtins.getFlake \"/Users/louis/.config/nix-darwin\").homeConfigurations.nixos.options",
+                -- },
               },
             },
           },
