@@ -30,10 +30,10 @@ return {
                 command = { "alejandra" },
               },
               options = {
-                -- nixos = {
-                --   expr =
-                --   "(builtins.getFlake \"/Users/louis/projects/evergive/evergive\").nixosConfigurations.eg-api-00.options",
-                -- },
+                nixos = {
+                  expr =
+                  "(builtins.getFlake \"/Users/louis/projects/evergive/evergive\").nixosConfigurations.eg-api-00.options",
+                },
                 -- ["home-manager"] = {
                 --   expr = "(builtins.getFlake \"/Users/louis/.config/nix-darwin\").homeConfigurations.nixos.options",
                 -- },
@@ -60,10 +60,14 @@ return {
         ts_ls = {
           filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
           cmd = { "typescript-language-server", "--stdio" },
+          on_attach = function(client, bufnr)
+            client.server_capabilities.documentFormattingProvider = false
+            client.server_capabilities.documentRangeFormattingProvider = false
+          end,
         },
 
         biome = {
-          filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "css", "html", "json" },
+          filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "css", "html", "json", "jsonc", "grit" },
           cmd = { "biome", "lsp-proxy" },
         },
 
@@ -71,6 +75,10 @@ return {
         jsonls = {
           filetypes = { "json", "jsonc" },
           cmd = { "vscode-json-language-server", "--stdio" },
+          on_attach = function(client, bufnr)
+            client.server_capabilities.documentFormattingProvider = false
+            client.server_capabilities.documentRangeFormattingProvider = false
+          end,
         },
 
         -- HTML
