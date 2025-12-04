@@ -7,3 +7,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank({ timeout = 200 })
   end,
 })
+
+-- Filetype detection for grit files
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = '*.grit',
+  callback = function()
+    vim.bo.filetype = 'grit'
+    vim.bo.commentstring = '// %s'
+  end,
+})
