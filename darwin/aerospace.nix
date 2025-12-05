@@ -55,7 +55,7 @@ in {
           "${mod}-r" = "reload-config";
 
           # apps
-          "${mod}-enter" = "exec-and-forget open -a wezterm";
+          "${mod}-enter" = "exec-and-forget open -a ghostty";
 
           # layout
           "${mod}-slash" = "layout tiles horizontal vertical";

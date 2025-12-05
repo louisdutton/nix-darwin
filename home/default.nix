@@ -7,7 +7,7 @@
     ./shell.nix
     ./prompt.nix
     ./git.nix
-    ./wezterm.nix
+    ./terminal.nix
     ./vim.nix
   ];
 
