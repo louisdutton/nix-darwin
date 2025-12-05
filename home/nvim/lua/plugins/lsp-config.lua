@@ -1,7 +1,7 @@
 return {
   {
     "neovim/nvim-lspconfig",
-    event = { "BufReadPre", "BufNewFile" },
+    event = { "BufReadPre", "BufNewFile", },
     config = function()
       -- LSP configuration
       local lspconfig = require("lspconfig")
@@ -66,6 +66,8 @@ return {
           end,
         },
 
+        denols = {},
+
         biome = {
           filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "css", "html", "json", "jsonc", "grit" },
           cmd = { "biome", "lsp-proxy" },
@@ -106,6 +108,9 @@ return {
         qmlls = {
           cmd = { "qmlls", "-E" }
         },
+
+        -- Android
+        dartls = {},
 
         -- Lua
         lua_ls = {
