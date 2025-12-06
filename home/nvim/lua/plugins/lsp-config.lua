@@ -57,15 +57,13 @@ return {
         },
 
         -- TypeScript/JavaScript
-        ts_ls = {
-          filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
-          cmd = { "typescript-language-server", "--stdio" },
-          on_attach = function(client, bufnr)
-            client.server_capabilities.documentFormattingProvider = false
-            client.server_capabilities.documentRangeFormattingProvider = false
-          end,
+        tsgo = {
+          -- filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+          -- on_attach = function(client, bufnr)
+          --   client.server_capabilities.documentFormattingProvider = false
+          --   client.server_capabilities.documentRangeFormattingProvider = false
+          -- end,
         },
-
         denols = {},
 
         biome = {
