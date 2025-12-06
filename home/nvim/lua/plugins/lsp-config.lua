@@ -3,9 +3,6 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile", },
     config = function()
-      -- LSP configuration
-      local lspconfig = require("lspconfig")
-
       -- Setup completion capabilities
       local capabilities = require("blink.cmp").get_lsp_capabilities()
 
@@ -19,7 +16,7 @@ return {
         end,
       })
 
-      -- LSP servers configuration
+      -- LSP servers configuration using the new vim.lsp.config API (Neovim 0.11+)
       local servers = {
         -- Nix
         nixd = {
@@ -57,13 +54,7 @@ return {
         },
 
         -- TypeScript/JavaScript
-        tsgo = {
-          -- filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
-          -- on_attach = function(client, bufnr)
-          --   client.server_capabilities.documentFormattingProvider = false
-          --   client.server_capabilities.documentRangeFormattingProvider = false
-          -- end,
-        },
+        tsgo = {},
         denols = {},
 
         biome = {
@@ -131,10 +122,11 @@ return {
         },
       }
 
-      -- Setup each server
+      -- Setup each server using the new vim.lsp.config API
       for server, config in pairs(servers) do
         config.capabilities = capabilities
-        lspconfig[server].setup(config)
+        vim.lsp.config(server, config)
+        vim.lsp.enable(server)
       end
     end,
   },
