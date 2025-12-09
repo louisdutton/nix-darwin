@@ -39,6 +39,9 @@ return {
           },
         },
 
+        -- Go
+        gopls = {},
+
         -- Rust
         rust_analyzer = {
           settings = {
