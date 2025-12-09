@@ -16,3 +16,12 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
     vim.bo.commentstring = '// %s'
   end,
 })
+
+-- Filetype detection for berlioz dsl
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = '*.brl',
+  callback = function()
+    vim.bo.filetype = 'berlioz'
+    vim.bo.commentstring = '// %s'
+  end,
+})

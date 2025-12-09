@@ -123,7 +123,14 @@ return {
             },
           },
         },
+
+        -- Berlioz DSP
+        berlioz_ls = {
+          filetypes = { "berlioz" },
+          cmd = { "berlioz", "lsp" },
+        }
       }
+
 
       -- Setup each server using the new vim.lsp.config API
       for server, config in pairs(servers) do
