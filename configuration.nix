@@ -27,9 +27,9 @@
 
   # aliases and custom utils
   environment = {
-    variables = {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
+    variables = rec {
+      EDITOR = "${lib.getExe pkgs.fugue}";
+      VISUAL = EDITOR;
     };
 
     shellAliases = {
