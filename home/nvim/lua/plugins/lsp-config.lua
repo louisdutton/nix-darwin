@@ -58,6 +58,7 @@ return {
 
         -- TypeScript/JavaScript
         tsgo = {},
+        ts_ls = {},
         denols = {},
 
         biome = {
