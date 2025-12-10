@@ -27,7 +27,7 @@
     jq # json query
 
     # agentic tools
-    claude-code
+    opencode
     glow
   ];
 

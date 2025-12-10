@@ -39,7 +39,7 @@
       l = "ls";
       la = "ls -a";
       ll = "ls -l";
-      vibe = "caffeinate -d claude --dangerously-skip-permissions";
+      vibe = "caffeinate -d ${lib.getExe pkgs.opencode}";
     };
 
     systemPackages = with pkgs; [
@@ -53,12 +53,6 @@
       '')
     ];
   };
-
-  # whitelist claude-code
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
-      "claude-code"
-    ];
 
   # secret management
   sops.defaultSopsFile = ./secrets.yml;
