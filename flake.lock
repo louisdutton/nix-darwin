@@ -129,11 +129,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1765400182,
-        "narHash": "sha256-I/L4ce8KeOAz42PJdP9hzIkIcu5vtEyvxEz4Hsvrvbo=",
+        "lastModified": 1765452901,
+        "narHash": "sha256-jF2LeqZmzapYzuJMyNmyl1HotDAH0ttKt4zlDwE0z8Y=",
         "owner": "louisdutton",
         "repo": "fugue",
-        "rev": "0242cefab968311f442e9ba45d4c233fbe2c97d2",
+        "rev": "c8783fe32a94e560c72ca58712e9aec00d12bc5b",
         "type": "github"
       },
       "original": {

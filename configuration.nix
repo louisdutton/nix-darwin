@@ -31,6 +31,7 @@
     variables = rec {
       EDITOR = "${lib.getExe pkgs.fugue}";
       VISUAL = EDITOR;
+      FUGUE_RUNTIME = with pkgs.tree-sitter; "${mkGrammars allGrammars}";
     };
 
     shellAliases = {
