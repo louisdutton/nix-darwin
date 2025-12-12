@@ -21,11 +21,6 @@
   home.homeDirectory = lib.mkDefault /Users/louis;
 
   home.packages = with pkgs; [
-    sd # better sed
-    fd # better find
-    xh # better curl
-    jq # json query
-
     # agentic tools
     opencode
     glow

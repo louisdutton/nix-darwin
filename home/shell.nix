@@ -3,9 +3,14 @@
   lib,
   ...
 }: {
-  # shell
   home.shell.enableZshIntegration = true;
   home.shell.enableNushellIntegration = true;
+  home.packages = with pkgs; [
+    sd # better sed
+    fd # better find
+    xh # better curl
+    fx # json query (alternative to jq)
+  ];
 
   programs = {
     zsh = {
@@ -124,7 +129,12 @@
     eza.enable = true;
 
     # better grep
-    ripgrep.enable = true;
+    ripgrep = {
+      enable = true;
+      arguments = [
+        "--smart-case"
+      ];
+    };
 
     # better top
     btop = {
