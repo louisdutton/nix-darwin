@@ -64,9 +64,12 @@
 
   programs.git = {
     enable = true;
-    userName = user.displayName;
-    userEmail = user.email;
-    extraConfig = {
+    settings = {
+      user = {
+        name = user.displayName;
+        email = user.email;
+      };
+
       pull = {
         rebase = true;
       };
@@ -74,13 +77,14 @@
         "https://github.com".helper = "!gh auth git-credential";
       };
     };
+  };
 
-    delta = {
-      enable = true;
-      options = {
-        dark = true;
-        syntax-theme = "base16-stylix";
-      };
+  programs.delta = {
+    enable = true;
+    enableGitIntegration = true;
+    options = {
+      dark = true;
+      syntax-theme = "base16-stylix";
     };
   };
 }

@@ -2,13 +2,13 @@
   description = "Louis Dutton's NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     stylix.url = "github:danth/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
-    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.url = "github:mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
     apple-silicon.inputs.nixpkgs.follows = "nixpkgs";
