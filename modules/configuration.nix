@@ -2,9 +2,10 @@
   pkgs,
   user,
   inputs,
-  config,
   ...
 }: {
+  imports = [./ssh.nix];
+
   # nix
   nix = {
     nixPath = ["nixpkgs=${inputs.nixpkgs}"];
@@ -45,9 +46,9 @@
 
   # aliases and custom utils
   environment = {
-    variables = {
+    variables = rec {
       EDITOR = "nvim";
-      VISUAL = "nvim";
+      VISUAL = EDITOR;
     };
 
     shellAliases = {
@@ -70,37 +71,6 @@
           --fast
       '')
     ];
-  };
-
-  # ssh
-  sops.secrets."ssh/homelab".owner = "louis";
-  sops.secrets."ssh/mini".owner = "louis";
-  programs.ssh = let
-    homelab = "192.168.1.231";
-    mini = "192.168.1.157";
-  in {
-    knownHosts = {
-      homelab = {
-        extraHostNames = ["homelab" homelab];
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILzuc9CKsYm/sICfjH1Y8UYsEeX9zA8muWMQYRlS/Mbp";
-      };
-    };
-
-    extraConfig = ''
-      Host homelab
-        HostName ${homelab}
-        User root
-        IdentityFile ${config.sops.secrets."ssh/homelab".path}
-        Port 22
-        IdentitiesOnly yes
-
-      Host mini
-        HostName ${mini}
-        User louis
-        IdentityFile ${config.sops.secrets."ssh/mini".path}
-        Port 22
-        IdentitiesOnly yes
-    '';
   };
 
   # theming
