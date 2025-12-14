@@ -1,6 +1,7 @@
 {
   pkgs,
   user,
+  lib,
   inputs,
   ...
 }: {
@@ -54,6 +55,7 @@
     shellAliases = {
       e = "$EDITOR";
       g = "lazygit";
+      fp = "${lib.getExe pkgs.nix-search-cli}";
     };
 
     systemPackages = with pkgs; [
