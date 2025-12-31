@@ -28,11 +28,11 @@
 
   # aliases and custom utils
   environment = {
-    variables = rec {
-      EDITOR = "${lib.getExe pkgs.fugue}";
-      VISUAL = EDITOR;
-      FUGUE_RUNTIME = with pkgs.tree-sitter; "${mkGrammars allGrammars}";
-    };
+    # variables = rec {
+    #   EDITOR = "${lib.getExe pkgs.fugue}";
+    #   VISUAL = EDITOR;
+    #   FUGUE_RUNTIME = with pkgs.tree-sitter; "${mkGrammars allGrammars}";
+    # };
 
     shellAliases = {
       e = "$EDITOR";
@@ -41,7 +41,7 @@
       l = "ls";
       la = "ls -a";
       ll = "ls -l";
-      vibe = "caffeinate -d ${lib.getExe pkgs.opencode}";
+      # vibe = "caffeinate -d ${lib.getExe pkgs.opencode}";
     };
 
     systemPackages = with pkgs; [
