@@ -22,6 +22,9 @@
     settings.General.Experimental = true; # enable device battery status
   };
 
+  # keyboard
+  hardware.keyboard.zsa.enable = true;
+
   environment = {
     shellAliases = {
       rebuild = "sudo nixos-rebuild switch --impure --flake ~/projects/nixos";
