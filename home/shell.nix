@@ -139,6 +139,9 @@
     };
     zsh.shellAliases.top = "btop";
 
+    # vibe coding
+    zsh.shellAliases.vibe = "${lib.getExe pkgs.opencode}";
+
     # fuzzy find
     fzf = {
       enable = true;
