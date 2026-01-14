@@ -1,11 +1,8 @@
 return {
   {
     "neovim/nvim-lspconfig",
-    event = { "BufReadPre", "BufNewFile" },
+    event = { "BufReadPre", "BufNewFile", },
     config = function()
-      -- LSP configuration
-      local lspconfig = require("lspconfig")
-
       -- Setup completion capabilities
       local capabilities = require("blink.cmp").get_lsp_capabilities()
 
@@ -19,7 +16,7 @@ return {
         end,
       })
 
-      -- LSP servers configuration
+      -- LSP servers configuration using the new vim.lsp.config API (Neovim 0.11+)
       local servers = {
         -- Nix
         nixd = {
@@ -31,16 +28,19 @@ return {
               },
               options = {
                 nixos = {
-                  expr = "(builtins.getFlake \"/home/louis/projects/nixos\").nixosConfigurations.mini.options",
-                },
-                ["home-manager"] = {
                   expr =
-                  "(builtins.getFlake \"/home/louis/projects/nixos\").nixosConfigurations.mini.options.home-manager.users.type.getSubOptions []",
+                  "(builtins.getFlake \"/Users/louis/projects/evergive/evergive\").nixosConfigurations.eg-api-00.options",
                 },
+                -- ["home-manager"] = {
+                --   expr = "(builtins.getFlake \"/Users/louis/.config/nix-darwin\").homeConfigurations.nixos.options",
+                -- },
               },
             },
           },
         },
+
+        -- Go
+        gopls = {},
 
         -- Rust
         rust_analyzer = {
@@ -57,13 +57,12 @@ return {
         },
 
         -- TypeScript/JavaScript
-        ts_ls = {
-          filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
-          cmd = { "typescript-language-server", "--stdio" },
-        },
+        tsgo = {},
+        ts_ls = {},
+        denols = {},
 
         biome = {
-          filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "css", "html", "json" },
+          filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "css", "html", "json", "jsonc", "grit" },
           cmd = { "biome", "lsp-proxy" },
         },
 
@@ -71,6 +70,10 @@ return {
         jsonls = {
           filetypes = { "json", "jsonc" },
           cmd = { "vscode-json-language-server", "--stdio" },
+          on_attach = function(client, bufnr)
+            client.server_capabilities.documentFormattingProvider = false
+            client.server_capabilities.documentRangeFormattingProvider = false
+          end,
         },
 
         -- HTML
@@ -99,6 +102,9 @@ return {
           cmd = { "qmlls", "-E" }
         },
 
+        -- Android
+        dartls = {},
+
         -- Lua
         lua_ls = {
           settings = {
@@ -118,12 +124,20 @@ return {
             },
           },
         },
+
+        -- Berlioz DSP
+        berlioz_ls = {
+          filetypes = { "berlioz" },
+          cmd = { "berlioz", "lsp" },
+        }
       }
 
-      -- Setup each server
+
+      -- Setup each server using the new vim.lsp.config API
       for server, config in pairs(servers) do
         config.capabilities = capabilities
-        lspconfig[server].setup(config)
+        vim.lsp.config(server, config)
+        vim.lsp.enable(server)
       end
     end,
   },
