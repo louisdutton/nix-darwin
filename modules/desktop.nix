@@ -21,6 +21,31 @@
     jack.enable = true;
   };
 
+  # configure policies (not the actual package) for chromium-based browsers
+  # the browser package itself is managed by home-manager
+  programs.chromium = {
+    enable = true;
+    defaultSearchProviderEnabled = true;
+    defaultSearchProviderSearchURL = "https://www.startpage.com/sp/search?query={searchTerms}";
+    defaultSearchProviderSuggestURL = "https://www.startpage.com/osuggestions?q=%s{searchTerms}";
+    extraOpts = {
+      "BrowserSignin" = 0;
+      "SyncDisabled" = false;
+      "PasswordManagerEnabled" = false;
+      "SpellcheckEnabled" = true;
+      "SpellcheckLanguage" = [
+        "en-GB"
+      ];
+    };
+
+    # this doesn't work for ungoogled-chromium
+    # in that case, the exts but be fetched as part of the home-manager config
+    # extensions = [
+    #   "ghmbeldphafepmbegfdlkpapadhbakde" # proton-pass
+    #   "gfbliohnnapiefjpjlpjnehglfpaknnc" # surfing keys
+    # ];
+  };
+
   environment = {
     systemPackages = with pkgs; [
       pamixer

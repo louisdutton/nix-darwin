@@ -7,10 +7,6 @@
     enable = true;
     package = pkgs.ungoogled-chromium; # extensions need to be manually fetched for ungoogled-chromium
 
-    # defaultSearchProviderEnabled = true;
-    # defaultSearchProviderSearchURL = "https://www.startpage.com/sp/search?query={searchTerms}";
-    # defaultSearchProviderSuggestURL = "https://www.startpage.com/osuggestions?q=%s{searchTerms}";
-
     extensions = let
       browserVersion = lib.versions.major package.version;
       createChromiumExtension = {
@@ -41,15 +37,5 @@
         version = "1.17.11";
       })
     ];
-
-    # extraOpts = {
-    #   "BrowserSignin" = 0;
-    #   "SyncDisabled" = true;
-    #   "PasswordManagerEnabled" = false;
-    #   "SpellcheckEnabled" = true;
-    #   "SpellcheckLanguage" = [
-    #     "en-GB"
-    #   ];
-    # };
   };
 }
