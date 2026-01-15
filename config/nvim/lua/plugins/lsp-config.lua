@@ -16,6 +16,11 @@ return {
         end,
       })
 
+      local no_format = function(client, bufnr)
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
+      end
+
       -- LSP servers configuration using the new vim.lsp.config API (Neovim 0.11+)
       local servers = {
         -- Nix
@@ -57,7 +62,9 @@ return {
         },
 
         -- TypeScript/JavaScript
-        tsgo = {},
+        tsgo = {
+          on_attach = no_format,
+        },
         ts_ls = {},
         denols = {},
 
@@ -70,10 +77,7 @@ return {
         jsonls = {
           filetypes = { "json", "jsonc" },
           cmd = { "vscode-json-language-server", "--stdio" },
-          on_attach = function(client, bufnr)
-            client.server_capabilities.documentFormattingProvider = false
-            client.server_capabilities.documentRangeFormattingProvider = false
-          end,
+          on_attach = no_format,
         },
 
         -- HTML
