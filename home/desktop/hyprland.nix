@@ -1,6 +1,7 @@
 {
   wayland.windowManager.hyprland = {
     enable = true;
+    systemd.enable = false; # UWSM handles session management
     settings = let
       term = "ghostty";
       menu = "wofi --show drun -a";
