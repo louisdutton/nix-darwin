@@ -10,7 +10,12 @@
   };
 
   services.getty.autologinUser = user.name;
-  # programs.zsh.loginShellInit = "hyprland"; // breaks headless sessions like ssh
+
+  programs.zsh.loginShellInit = ''
+    if [[ -z "$WAYLAND_DISPLAY" ]] && [[ $(tty) == /dev/tty1 ]]; then
+      exec uwsm start hyprland-uwsm.desktop
+    fi
+  '';
 
   # audio
   security.rtkit.enable = true;
