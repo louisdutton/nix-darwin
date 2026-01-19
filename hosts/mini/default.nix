@@ -9,7 +9,6 @@
     ../../modules/asahi.nix
     ../../modules/desktop.nix
     ../../modules/sops.nix
-    ../../modules/games.nix
   ];
 
   networking.hostName = "mini";
@@ -33,4 +32,9 @@
 
   services.tailscale.enable = true;
   system.stateVersion = "25.11";
+
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "claude-code"
+    ];
 }
