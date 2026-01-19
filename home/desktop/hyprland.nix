@@ -1,10 +1,12 @@
-{
+{pkgs, ...}: {
+  home.packages = [pkgs.grimblast];
+
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = false; # UWSM handles session management
     settings = let
       term = "ghostty";
-      menu = "wofi --show drun -a";
+      menu = "hyprlauncher";
       mod = "ALT";
     in {
       exec-once = [
@@ -41,6 +43,10 @@
         "${mod}, V, togglefloating"
         "${mod}, SPACE, exec, ${menu}"
         "${mod}, F, fullscreen"
+
+        # Screenshots
+        ", Print, exec, grimblast --notify copy active"
+        "SHIFT, Print, exec, grimblast --notify copy screen"
 
         # Move focus with mainMod + hjkl
         "${mod}, H, movefocus, l"

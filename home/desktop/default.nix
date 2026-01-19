@@ -2,7 +2,7 @@
   imports = [
     ./hyprland.nix
     ./quickshell.nix
-    ./wofi.nix
+    ./hyprlauncher.nix
     ./hyprpaper.nix
     ./browser.nix
   ];
