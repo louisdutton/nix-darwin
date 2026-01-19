@@ -3,12 +3,13 @@
     enable = true;
     settings = {
       splash = true;
-      ipc = false;
-      preload = [
-        "~/projects/nixos/wallpapers/catppuccin.png"
-      ];
+      ipc = true;
       wallpaper = [
-        ",~/projects/nixos/wallpapers/catppuccin.png"
+        {
+          monitor = "";
+          # path = "~/projects/nixos/wallpapers/catppuccin.png";
+          path = builtins.toString ../../wallpapers/catppuccin.png;
+        }
       ];
     };
   };

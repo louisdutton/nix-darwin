@@ -5,14 +5,10 @@
     settings = let
       term = "ghostty";
       menu = "wofi --show drun -a";
-      wallpaper = "hyprpaper";
-      bar = "waybar";
       mod = "ALT";
     in {
       exec-once = [
         term
-        wallpaper
-        bar
         # "nm-applet --indicator"
       ];
 
