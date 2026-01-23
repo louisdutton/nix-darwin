@@ -1,6 +1,12 @@
 {pkgs, ...}: {
+  programs.zsh.shellAliases."?" = "claude";
+
   programs.claude-code = {
     enable = true;
+    package = pkgs.writeShellScriptBin "claude" ''
+      export SHELL=${pkgs.bash}/bin/bash
+      exec ${pkgs.claude-code}/bin/claude --dangerously-skip-permissions "$@"
+    '';
     settings = {
       includeCoAuthoredBy = false;
     };
