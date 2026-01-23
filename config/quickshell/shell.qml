@@ -1,14 +1,120 @@
 import Quickshell
-import Quickshell.Services.Pipewire
-import Quickshell.Services.UPower
 import Quickshell.Hyprland
 import Quickshell.Io
 import QtQuick
 
-Variants {
-  model: Quickshell.screens
-  
-  PanelWindow {
+Scope {
+  id: root
+  property int volumePct: 0
+  property bool volumeMuted: false
+  property int prevVolumePct: 0
+  property bool prevVolumeMuted: false
+  property bool osdVisible: false
+
+  Process {
+    running: true
+    onRunningChanged: if (!running) running = true
+    command: ["pamixer", "--get-volume-human"]
+    stdout: StdioCollector {
+      onStreamFinished: {
+        let val = this.text.trim()
+        root.volumeMuted = val === "muted" || val === "0%"
+        root.volumePct = val === "muted" ? 0 : parseInt(val) || 0
+
+        if (root.volumePct !== root.prevVolumePct || root.volumeMuted !== root.prevVolumeMuted) {
+          if (root.prevVolumePct !== 0 || root.prevVolumeMuted !== false) {
+            root.osdVisible = true
+            osdTimer.restart()
+          }
+          root.prevVolumePct = root.volumePct
+          root.prevVolumeMuted = root.volumeMuted
+        }
+      }
+    }
+  }
+
+  Timer {
+    id: osdTimer
+    interval: 1500
+    onTriggered: root.osdVisible = false
+  }
+
+  // Volume OSD
+  Variants {
+    model: Quickshell.screens
+
+    PanelWindow {
+      id: osdWindow
+      required property var modelData
+      screen: modelData
+      visible: root.osdVisible
+      color: "transparent"
+      exclusionMode: ExclusionMode.Ignore
+
+      anchors {
+        bottom: true
+        left: true
+        right: true
+      }
+
+      implicitHeight: 80
+      margins.bottom: 100
+
+      Rectangle {
+        anchors.centerIn: parent
+        width: 280
+        height: 60
+        radius: 12
+        color: "#1e1e2e"
+        border.color: "#45475a"
+        border.width: 1
+
+        Row {
+          anchors.centerIn: parent
+          spacing: 15
+
+          Text {
+            text: root.volumeMuted ? "󰝟" : "󰕾"
+            color: root.volumeMuted ? "#f38ba8" : "#cdd6f4"
+            font.pixelSize: 28
+            anchors.verticalCenter: parent.verticalCenter
+          }
+
+          Column {
+            anchors.verticalCenter: parent.verticalCenter
+            spacing: 6
+
+            Text {
+              text: root.volumeMuted ? "Muted" : root.volumePct + "%"
+              color: "#cdd6f4"
+              font.pixelSize: 14
+              font.bold: true
+            }
+
+            Rectangle {
+              width: 180
+              height: 6
+              radius: 3
+              color: "#45475a"
+
+              Rectangle {
+                width: parent.width * (root.volumePct / 100)
+                height: parent.height
+                radius: 3
+                color: root.volumeMuted ? "#f38ba8" : "#89b4fa"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Status bar
+  Variants {
+    model: Quickshell.screens
+
+    PanelWindow {
     required property var modelData
     screen: modelData
     color: "transparent"
@@ -96,11 +202,11 @@ Variants {
           
           // Volume
           Text {
-            text: '   (not working)'
-            color: "#f38ba8"
+            text: root.volumeMuted ? "󰝟" : "󰕾"
+            color: root.volumeMuted ? "#f38ba8" : "#cdd6f4"
             font.pixelSize: 14
           }
-          
+
           // Network
           Text {
             id: network
@@ -130,11 +236,11 @@ Variants {
           Text {
             id: battery
             property int percentage: -1
-            property bool hasBattery: percentage !== -1
+            property bool charging: false
+            property bool hasBattery: percentage >= 0
             property string batteryIcon: {
-              if (!hasBattery) return "󰚥"
-              if (battery.charging) return "󰂄"
-              let pct = battery.percentage || 0
+              if (charging) return "󰂄"
+              let pct = percentage
               if (pct > 90) return "󰁹"
               if (pct > 80) return "󰂂"
               if (pct > 70) return "󰂁"
@@ -146,17 +252,29 @@ Variants {
               if (pct > 10) return "󰁻"
               return "󰁺"
             }
-            text: batteryIcon + " " + (hasBattery ? Math.round(battery.percentage) : "AC") + (hasBattery ? "%" : "")
-            color: hasBattery && battery.percentage < 20 ? "#f38ba8" : "#cdd6f4"
+            text: batteryIcon + " " + percentage + "%"
+            color: percentage < 20 ? "#f38ba8" : "#cdd6f4"
             font.pixelSize: 14
-            visible: true
+            visible: hasBattery
 
             Process {
               running: true
-              onRunningChanged: if (!running) running = true // loop
-              command: ["cat", "/sys/class/power_supply/BAT1/capacity"]
+              onRunningChanged: if (!running) running = true
+              command: ["sh", "-c", "cat /sys/class/power_supply/BAT1/capacity 2>/dev/null || echo -1"]
               stdout: StdioCollector {
-                onStreamFinished: battery.percentage = Number.parseInt(this.text.trim())
+                onStreamFinished: {
+                  let val = Number.parseInt(this.text.trim())
+                  battery.percentage = isNaN(val) ? -1 : val
+                }
+              }
+            }
+
+            Process {
+              running: battery.hasBattery
+              onRunningChanged: if (!running && battery.hasBattery) running = true
+              command: ["cat", "/sys/class/power_supply/BAT1/status"]
+              stdout: StdioCollector {
+                onStreamFinished: battery.charging = this.text.trim() === "Charging"
               }
             }
           }
@@ -179,6 +297,7 @@ Variants {
           }
         }
       }
+    }
     }
   }
 }
