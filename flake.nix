@@ -12,6 +12,8 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
     apple-silicon.inputs.nixpkgs.follows = "nixpkgs";
+    agent.url = "github:louisdutton/agent";
+    agent.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs @ {
@@ -49,7 +51,7 @@
       nixosConfigurations.mini = nixpkgs.lib.nixosSystem {
         inherit specialArgs;
         system = "aarch64-linux";
-        modules = modules ++ [./hosts/mini];
+        modules = modules ++ [./hosts/mini inputs.agent.nixosModules.agent];
       };
 
       nixosConfigurations.ideapad = nixpkgs.lib.nixosSystem {

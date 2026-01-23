@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   ...
@@ -31,6 +32,24 @@
   };
 
   services.tailscale.enable = true;
+
+  # Agent Mobile
+  services.agent = {
+    enable = true;
+    user = "louis";
+    group = "users";
+  };
+
+  # Caddy reverse proxy
+  services.caddy = {
+    enable = true;
+    virtualHosts."mini.taila65fcf.ts.net" = {
+      extraConfig = ''
+        reverse_proxy localhost:${toString config.services.agent.port}
+      '';
+    };
+  };
+
   system.stateVersion = "25.11";
 
   nixpkgs.config.allowUnfreePredicate = pkg:
