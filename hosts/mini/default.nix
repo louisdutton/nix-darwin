@@ -31,7 +31,10 @@
     };
   };
 
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    permitCertUid = "caddy";
+  };
 
   # Agent Mobile
   services.agent = {
@@ -40,7 +43,7 @@
     group = "users";
   };
 
-  # Caddy reverse proxy
+  # Caddy reverse proxy with Tailscale HTTPS
   services.caddy = {
     enable = true;
     virtualHosts."mini.taila65fcf.ts.net" = {
