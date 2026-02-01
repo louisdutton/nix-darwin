@@ -4,6 +4,24 @@
   lib,
   ...
 }: {
+  home-manager.users.louis = {
+    systemd.user.services.agent = {
+      Unit = {
+        Description = "Agent service";
+        After = ["network.target"];
+      };
+      Service = {
+        Type = "simple";
+        WorkingDirectory = "%h/projects/agent";
+        ExecStart = "${pkgs.zsh}/bin/zsh -l -c 'nix run'";
+        Restart = "on-failure";
+        RestartSec = 5;
+      };
+      Install = {
+        WantedBy = ["default.target"];
+      };
+    };
+  };
   imports = [
     ./hardware-configuration.nix
     ../../modules/configuration.nix
@@ -48,7 +66,7 @@
     enable = true;
     virtualHosts."mini.taila65fcf.ts.net" = {
       extraConfig = ''
-        reverse_proxy localhost:${toString config.services.agent.port}
+        reverse_proxy 127.0.0.1:9370
       '';
     };
   };
