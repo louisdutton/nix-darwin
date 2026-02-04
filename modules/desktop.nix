@@ -13,7 +13,7 @@
 
   programs.zsh.loginShellInit = ''
     if [[ -z "$WAYLAND_DISPLAY" ]] && [[ $(tty) == /dev/tty1 ]]; then
-      uwsm start hyprland-uwsm.desktop
+      uwsm start -D Hyprland -- start-hyprland
     fi
   '';
 
