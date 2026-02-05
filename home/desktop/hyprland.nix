@@ -32,8 +32,11 @@
         blur.enabled = false;
       };
 
-      # don't render whilst nothing changes on screen
-      misc.vfr = true;
+      misc = {
+        # don't render whilst nothing changes on screen
+        vfr = true;
+        disable_hyprland_logo = true;
+      };
 
       bind = [
         # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
