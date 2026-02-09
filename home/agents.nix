@@ -1,8 +1,23 @@
 {pkgs, ...}: {
   programs.zsh.shellAliases."?" = "claude";
 
+  programs.mcp = {
+    enable = true;
+    servers = {
+      playwright = {
+        command = "${pkgs.playwright-mcp}/bin/mcp-server-playwright";
+        args = ["--headless"];
+      };
+      ms365 = {
+        command = "${pkgs.bun}/bin/bunx";
+        args = ["-y" "@softeria/ms-365-mcp-server"];
+      };
+    };
+  };
+
   programs.claude-code = {
     enable = true;
+    enableMcpIntegration = true;
     package = pkgs.writeShellScriptBin "claude" ''
       export SHELL=${pkgs.bash}/bin/bash
       exec ${pkgs.claude-code}/bin/claude --dangerously-skip-permissions "$@"
