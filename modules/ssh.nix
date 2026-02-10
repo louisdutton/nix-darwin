@@ -1,6 +1,6 @@
 {user, ...}: let
   keys = {
-    macbook = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICXEtgvjmOWvDFyMmg9YoK7eecoAOJLwGWzWMGKXQpkK";
+    macbook = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILKLL8byTkpIyx1ohQMT428LyifRsfv2uboqAP9FE7cO";
     homelab = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILzuc9CKsYm/sICfjH1Y8UYsEeX9zA8muWMQYRlS/Mbp";
   };
   inherit (builtins) attrValues mapAttrs;
