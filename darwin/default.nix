@@ -11,8 +11,11 @@
   # sys-dependant rebuild command
   environment.shellAliases = {
     clip = "pbcopy";
-    rebuild = "sudo darwin-rebuild switch --flake ~/.config/nix-darwin";
+    rebuild = "sudo darwin-rebuild switch --flake ~/projects/nix-darwin";
   };
+
+  # tailscale
+  services.tailscale.enable = true;
 
   system = {
     primaryUser = "louis";
