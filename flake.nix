@@ -72,6 +72,10 @@
         lua-language-server
         alejandra
       ];
+
+      shellHook = ''
+        echo 'link nvim config: ln -s $PWD/config/* ~/.config'
+      '';
     };
   };
 }
