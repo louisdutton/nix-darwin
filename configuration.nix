@@ -19,6 +19,11 @@
     ];
   };
 
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "claude-code"
+    ];
+
   # users
   time.timeZone = "Europe/London";
   networking.hostName = "nixos";

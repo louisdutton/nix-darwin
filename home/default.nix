@@ -9,6 +9,7 @@
     ./git.nix
     ./terminal.nix
     ./vim.nix
+    ./agents.nix
   ];
 
   # self-management
