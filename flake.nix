@@ -44,6 +44,9 @@
         home-manager.users.${user.name} = import ./home;
         home-manager.backupFileExtension = "backup";
         home-manager.extraSpecialArgs = specialArgs;
+        home-manager.sharedModules = [
+          sops-nix.homeManagerModules.sops
+        ];
       }
     ];
   in
