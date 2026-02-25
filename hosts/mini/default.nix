@@ -26,15 +26,15 @@ in {
       };
     };
 
-    systemd.user.services.ghost-server = {
+    systemd.user.services.seance = {
       Unit = {
-        Description = "Ghost server";
+        Description = "Seance server";
         After = ["network.target"];
       };
       Service = {
         Type = "simple";
         WorkingDirectory = "%h/projects/ghost";
-        ExecStart = "${pkgs.zsh}/bin/zsh -l -c 'nix run .#ghost-server -- -h 0.0.0.0'";
+        ExecStart = "${pkgs.zsh}/bin/zsh -l -c 'nix run .#seance -- -h 0.0.0.0'";
         Restart = "on-failure";
         RestartSec = 5;
         Environment = ["PATH=/run/current-system/sw/bin"];
