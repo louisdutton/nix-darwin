@@ -43,6 +43,24 @@ in {
         WantedBy = ["default.target"];
       };
     };
+
+    systemd.user.services.medium = {
+      Unit = {
+        Description = "Medium web client";
+        After = ["network.target" "seance.service"];
+      };
+      Service = {
+        Type = "simple";
+        WorkingDirectory = "%h/projects/ghost";
+        ExecStart = "${pkgs.zsh}/bin/zsh -l -c 'BUN_PORT=9374 nix run .#medium'";
+        Restart = "on-failure";
+        RestartSec = 5;
+        Environment = ["PATH=/run/current-system/sw/bin"];
+      };
+      Install = {
+        WantedBy = ["default.target"];
+      };
+    };
   };
   imports = [
     ./hardware-configuration.nix
@@ -89,6 +107,30 @@ in {
     virtualHosts."mini.taila65fcf.ts.net" = {
       extraConfig = ''
         reverse_proxy 127.0.0.1:9370
+      '';
+    };
+    virtualHosts."mini.taila65fcf.ts.net:9373" = {
+      extraConfig = ''
+        reverse_proxy [::1]:9374
+      '';
+    };
+    # Seance API
+    virtualHosts."mini.taila65fcf.ts.net:9375" = {
+      extraConfig = ''
+        header Access-Control-Allow-Origin "*"
+        header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+        header Access-Control-Allow-Headers "*"
+        @options method OPTIONS
+        handle @options {
+          respond 204
+        }
+        reverse_proxy 127.0.0.1:9380
+      '';
+    };
+    # Whisper transcription (whisper.cpp already sends CORS headers)
+    virtualHosts."mini.taila65fcf.ts.net:9376" = {
+      extraConfig = ''
+        reverse_proxy 127.0.0.1:5932
       '';
     };
   };
