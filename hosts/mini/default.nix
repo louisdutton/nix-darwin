@@ -53,7 +53,13 @@ in {
         file_server
 
         handle /api/* {
-          reverse_proxy 127.0.0.1:${toString cfg.port}
+          # Disable buffering for SSE streaming
+          reverse_proxy 127.0.0.1:${toString cfg.port} {
+            flush_interval -1
+            transport http {
+              versions 1.1
+            }
+          }
         }
       '';
     };

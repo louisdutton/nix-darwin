@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1774029495,
-        "narHash": "sha256-IDg504AlguMSPBMjs+XkVvGhHOaVWn3SEDYaBWfmhIQ=",
+        "lastModified": 1774290301,
+        "narHash": "sha256-vFPKArWZZd3yL+DroO2f6Kbu7TOMOt+WYYyPdmJDdIg=",
         "owner": "louisdutton",
         "repo": "agent",
-        "rev": "4ef206b3b1477b324769caa1ee8e94d2fa9ec909",
+        "rev": "701356023952df65829702438a946fe142580f08",
         "type": "github"
       },
       "original": {
