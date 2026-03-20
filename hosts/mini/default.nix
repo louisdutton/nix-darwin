@@ -9,53 +9,17 @@
   };
 in {
   home-manager.users.louis = {
-    systemd.user.services.agent = {
+    systemd.user.services.agent-server = {
       Unit = {
-        Description = "Agent service";
+        Description = "Agent bun server";
         After = ["network.target"];
       };
       Service = {
         Type = "simple";
         WorkingDirectory = "%h/projects/agent";
-        ExecStart = "${pkgs.zsh}/bin/zsh -l -c 'nix run'";
+        ExecStart = "${pkgs.zsh}/bin/zsh -l -c 'nix develop -c bun serve --port 9370'";
         Restart = "on-failure";
-        RestartSec = 5;
-      };
-      Install = {
-        WantedBy = ["default.target"];
-      };
-    };
-
-    systemd.user.services.seance = {
-      Unit = {
-        Description = "Seance server";
-        After = ["network.target"];
-      };
-      Service = {
-        Type = "simple";
-        WorkingDirectory = "%h/projects/ghost";
-        ExecStart = "${pkgs.zsh}/bin/zsh -l -c 'nix run .#seance -- -h 0.0.0.0'";
-        Restart = "on-failure";
-        RestartSec = 5;
-        Environment = ["PATH=/run/current-system/sw/bin"];
-      };
-      Install = {
-        WantedBy = ["default.target"];
-      };
-    };
-
-    systemd.user.services.medium = {
-      Unit = {
-        Description = "Medium web client";
-        After = ["network.target" "seance.service"];
-      };
-      Service = {
-        Type = "simple";
-        WorkingDirectory = "%h/projects/ghost";
-        ExecStart = "${pkgs.zsh}/bin/zsh -l -c 'BUN_PORT=9374 nix run .#medium'";
-        Restart = "on-failure";
-        RestartSec = 5;
-        Environment = ["PATH=/run/current-system/sw/bin"];
+        RestartSec = 2;
       };
       Install = {
         WantedBy = ["default.target"];
@@ -80,9 +44,6 @@ in {
     settings.General.Experimental = true; # enable device battery status
   };
 
-  # keyboard
-  hardware.keyboard.zsa.enable = true;
-
   environment = {
     shellAliases = {
       rebuild = "sudo nixos-rebuild switch --impure --flake ~/projects/nixos";
@@ -94,37 +55,12 @@ in {
     permitCertUid = "caddy";
   };
 
-  # Agent Mobile
-  services.agent = {
-    enable = false;
-    user = "louis";
-    group = "users";
-  };
-
   # Caddy reverse proxy with Tailscale HTTPS
   services.caddy = {
     enable = true;
     virtualHosts."mini.taila65fcf.ts.net" = {
       extraConfig = ''
         reverse_proxy 127.0.0.1:9370
-      '';
-    };
-    virtualHosts."mini.taila65fcf.ts.net:9373" = {
-      extraConfig = ''
-        reverse_proxy [::1]:9374
-      '';
-    };
-    # Seance API
-    virtualHosts."mini.taila65fcf.ts.net:9375" = {
-      extraConfig = ''
-        header Access-Control-Allow-Origin "*"
-        header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
-        header Access-Control-Allow-Headers "*"
-        @options method OPTIONS
-        handle @options {
-          respond 204
-        }
-        reverse_proxy 127.0.0.1:9380
       '';
     };
     # Whisper transcription (whisper.cpp already sends CORS headers)
