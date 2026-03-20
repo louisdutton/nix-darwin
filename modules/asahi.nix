@@ -9,6 +9,8 @@
 
   nixpkgs.overlays = [inputs.apple-silicon.overlays.apple-silicon-overlay];
 
+  hardware.asahi.peripheralFirmwareDirectory = /boot/asahi;
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
 
