@@ -9,11 +9,6 @@
     hash = "sha256-oDd5yG3zMjB19eeWyyzlAp8A7Ihp7uP9+4l6/jbG0AI=";
   };
 in {
-  services.agent = {
-    enable = true;
-    user = "louis";
-    group = "users";
-  };
   imports = [
     ./hardware-configuration.nix
     ../../modules/configuration.nix
@@ -35,6 +30,11 @@ in {
     shellAliases = {
       rebuild = "sudo nixos-rebuild switch --impure --flake ~/projects/nixos";
     };
+  };
+
+  services.agent = {
+    enable = true;
+    user = "louis";
   };
 
   services.tailscale = {
