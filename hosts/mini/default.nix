@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   ...
@@ -8,23 +9,10 @@
     hash = "sha256-oDd5yG3zMjB19eeWyyzlAp8A7Ihp7uP9+4l6/jbG0AI=";
   };
 in {
-  home-manager.users.louis = {
-    systemd.user.services.agent-server = {
-      Unit = {
-        Description = "Agent bun server";
-        After = ["network.target"];
-      };
-      Service = {
-        Type = "simple";
-        WorkingDirectory = "%h/projects/agent";
-        ExecStart = "${pkgs.zsh}/bin/zsh -l -c 'nix develop -c bun serve --port 9370'";
-        Restart = "on-failure";
-        RestartSec = 2;
-      };
-      Install = {
-        WantedBy = ["default.target"];
-      };
-    };
+  services.agent = {
+    enable = true;
+    user = "louis";
+    group = "users";
   };
   imports = [
     ./hardware-configuration.nix
@@ -58,8 +46,15 @@ in {
   services.caddy = {
     enable = true;
     virtualHosts."mini.taila65fcf.ts.net" = {
-      extraConfig = ''
-        reverse_proxy 127.0.0.1:9370
+      extraConfig = let
+        cfg = config.services.agent;
+      in ''
+        root * ${cfg.clientPackage}
+        file_server
+
+        handle /api/* {
+          reverse_proxy 127.0.0.1:${toString cfg.port}
+        }
       '';
     };
     # Whisper transcription (whisper.cpp already sends CORS headers)
