@@ -7,7 +7,7 @@
     ./dictation.nix
     ./agents.nix
     ./mail.nix
-    ./desktop
+    # ./desktop
   ];
 
   # self-management

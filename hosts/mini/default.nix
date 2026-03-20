@@ -30,7 +30,6 @@ in {
     ./hardware-configuration.nix
     ../../modules/configuration.nix
     ../../modules/asahi.nix
-    ../../modules/desktop.nix
     ../../modules/sops.nix
   ];
 
