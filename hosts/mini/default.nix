@@ -93,6 +93,7 @@ in {
     tokenFile = config.sops.secrets.github-runner-token.path;
     name = "louis-mini";
     extraLabels = ["nixos" "aarch64-linux"];
+    extraPackages = with pkgs; [claude-code];
   };
 
   system.stateVersion = "25.11";
