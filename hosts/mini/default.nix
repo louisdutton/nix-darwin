@@ -96,6 +96,11 @@ in {
     extraPackages = with pkgs; [claude-code];
   };
 
+  swapDevices = [{
+    device = "/swapfile";
+    size = 8192; # MB
+  }];
+
   system.stateVersion = "25.11";
 
   nixpkgs.config.allowUnfreePredicate = pkg:
