@@ -85,6 +85,16 @@ in {
     };
   };
 
+  # GitHub Actions runner for xgx-ai/auno
+  sops.secrets.github-runner-token = {};
+  services.github-runners.auno = {
+    enable = true;
+    url = "https://github.com/xgx-ai";
+    tokenFile = config.sops.secrets.github-runner-token.path;
+    name = "louis-mini";
+    extraLabels = ["nixos" "aarch64-linux"];
+  };
+
   system.stateVersion = "25.11";
 
   nixpkgs.config.allowUnfreePredicate = pkg:
