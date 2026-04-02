@@ -105,6 +105,26 @@
         "type": "github"
       }
     },
+    "forgecode": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1775104274,
+        "narHash": "sha256-LxlIegvZixzZFVIGr0WZECTwWZhGwwVFGLUsaiEVuUw=",
+        "owner": "antinomyhq",
+        "repo": "forgecode",
+        "rev": "9510ab5e873c78d62f7b634279c22f81cbaf9a68",
+        "type": "github"
+      },
+      "original": {
+        "owner": "antinomyhq",
+        "repo": "forgecode",
+        "type": "github"
+      }
+    },
     "fromYaml": {
       "flake": false,
       "locked": {
@@ -244,6 +264,7 @@
     },
     "root": {
       "inputs": {
+        "forgecode": "forgecode",
         "fugue": "fugue",
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",

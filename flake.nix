@@ -18,6 +18,9 @@
 
     fugue.url = "github:louisdutton/fugue";
     fugue.inputs.nixpkgs.follows = "nixpkgs";
+
+    forgecode.url = "github:antinomyhq/forgecode";
+    forgecode.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs @ {
@@ -28,6 +31,7 @@
     stylix,
     sops-nix,
     fugue,
+    forgecode,
   }: let
     user = {
       name = "louis";

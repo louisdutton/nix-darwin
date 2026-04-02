@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  inputs,
   ...
 }: {
   imports = [
@@ -25,6 +26,7 @@
     # agentic tools
     opencode
     glow
+    inputs.forgecode.packages.${pkgs.system}.default
   ];
 
   programs.chromium = {
