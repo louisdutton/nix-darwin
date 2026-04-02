@@ -1,8 +1,1 @@
--- Fuzzy finder
-return {
-  "ibhagwan/fzf-lua",
-  dependencies = { "nvim-tree/nvim-web-devicons" },
-  config = function()
-    require("fzf-lua").setup({ "fzf-native" })
-  end,
-}
+/nix/store/r1gswk8laqmm3dkdrrfvr9bkqn6x7ag1-home-manager-files/.config/nvim/lua/plugins/fzf.lua

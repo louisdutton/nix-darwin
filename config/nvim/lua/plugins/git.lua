@@ -1,7 +1,1 @@
--- Git integration
-return {
-  "lewis6991/gitsigns.nvim",
-  config = function()
-    require("gitsigns").setup()
-  end,
-}
+/nix/store/r1gswk8laqmm3dkdrrfvr9bkqn6x7ag1-home-manager-files/.config/nvim/lua/plugins/git.lua

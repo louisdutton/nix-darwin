@@ -1,11 +1,1 @@
-return {
-  "stevearc/oil.nvim",
-  config = function()
-    require("oil").setup({
-      skip_confirm_for_simple_edits = true,
-      view_options = {
-        show_hidden = true
-      }
-    })
-  end,
-}
+/nix/store/r1gswk8laqmm3dkdrrfvr9bkqn6x7ag1-home-manager-files/.config/nvim/lua/plugins/oil.lua
