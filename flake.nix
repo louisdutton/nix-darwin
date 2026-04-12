@@ -19,7 +19,7 @@
     fugue.url = "github:louisdutton/fugue";
     fugue.inputs.nixpkgs.follows = "nixpkgs";
 
-    forgecode.url = "github:antinomyhq/forgecode";
+    forgecode.url = "github:antinomyhq/forgecode/v2.9.9";
     forgecode.inputs.nixpkgs.follows = "nixpkgs";
   };
 
