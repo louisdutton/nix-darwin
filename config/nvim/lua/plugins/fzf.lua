@@ -1,1 +1,1 @@
-/nix/store/r1gswk8laqmm3dkdrrfvr9bkqn6x7ag1-home-manager-files/.config/nvim/lua/plugins/fzf.lua
+/nix/store/33jxrlzl353f9n9k9bfa85j97dj9paha-home-manager-files/.config/nvim/lua/plugins/fzf.lua
