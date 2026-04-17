@@ -21,6 +21,9 @@
 
     forgecode.url = "github:antinomyhq/forgecode/v2.9.9";
     forgecode.inputs.nixpkgs.follows = "nixpkgs";
+
+    thrall.url = "github:louisdutton/thrall";
+    thrall.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs @ {
@@ -32,6 +35,7 @@
     sops-nix,
     fugue,
     forgecode,
+    thrall,
   }: let
     user = {
       name = "louis";
@@ -60,10 +64,10 @@
           home-manager.backupFileExtension = "backup";
           home-manager.extraSpecialArgs = specialArgs;
 
-          # fugue editor
           nixpkgs.overlays = [
             fugue.overlays.default
             fugue.overlays.tree-sitter
+            thrall.overlays.default
           ];
         }
       ];

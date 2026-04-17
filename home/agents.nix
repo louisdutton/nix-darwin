@@ -1,22 +1,30 @@
 {
   pkgs,
   lib,
+  inputs,
   ...
 }: {
+  imports = [./forgecode.nix];
+
   programs.zsh.shellAliases."?" = "claude";
 
   programs.mcp = {
     enable = true;
     servers = {
-      playwright = {
-        command = "${pkgs.playwright-mcp}/bin/mcp-server-playwright";
-        args = ["--headless"];
+      thrall = {
+        command = "${pkgs.thrall-mcp}/bin/thrall-mcp";
       };
       ms365 = {
         command = "${pkgs.bun}/bin/bunx";
         args = ["-y" "@softeria/ms-365-mcp-server"];
       };
     };
+  };
+
+  programs.forge-code = {
+    enable = true;
+    enableMcpIntegration = true;
+    package = inputs.forgecode.packages.${pkgs.system}.default;
   };
 
   programs.claude-code = {

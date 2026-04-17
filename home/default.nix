@@ -23,10 +23,8 @@
   home.homeDirectory = lib.mkDefault /Users/louis;
 
   home.packages = with pkgs; [
-    # agentic tools
     opencode
     glow
-    inputs.forgecode.packages.${pkgs.system}.default
   ];
 
   programs.chromium = {
