@@ -1,11 +1,4 @@
-{
-  pkgs,
-  lib,
-  inputs,
-  ...
-}: {
-  imports = [./forgecode.nix];
-
+{pkgs, ...}: {
   programs.zsh.shellAliases."?" = "claude";
 
   programs.mcp = {
@@ -19,12 +12,6 @@
       #   args = ["-y" "@softeria/ms-365-mcp-server"];
       # };
     };
-  };
-
-  programs.forge-code = {
-    enable = true;
-    enableMcpIntegration = true;
-    package = inputs.forgecode.packages.${pkgs.system}.default;
   };
 
   programs.claude-code = {

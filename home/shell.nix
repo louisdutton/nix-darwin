@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  config,
   ...
 }: {
   home.shell.enableZshIntegration = true;
@@ -16,6 +17,7 @@
     zsh = {
       enable = true;
       enableCompletion = true;
+      dotDir = config.home.homeDirectory;
       autocd = true;
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
@@ -40,17 +42,6 @@
           	mkdir -p $1
           	cd $1
           }
-
-          # forge zsh integration (mirrors `forge setup` output)
-          # - loads the `:` prefix command plugin
-          # - loads the right-hand prompt theme
-          # zsh-autosuggestions & zsh-syntax-highlighting are already enabled above
-          if [[ -z "$_FORGE_PLUGIN_LOADED" ]]; then
-              eval "$(forge zsh plugin)"
-          fi
-          if [[ -z "$_FORGE_THEME_LOADED" ]]; then
-              eval "$(forge zsh theme)"
-          fi
         '';
 
       completionInit =

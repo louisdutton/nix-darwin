@@ -2,6 +2,7 @@
   pkgs,
   lib,
   inputs,
+  config,
   ...
 }: {
   imports = [
@@ -16,6 +17,7 @@
   home.stateVersion = "25.05";
   programs.home-manager.enable = true;
   xdg.enable = true;
+  gtk.gtk4.theme = null;
 
   # required for standalone
   home.username = lib.mkDefault "louis";

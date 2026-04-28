@@ -19,9 +19,6 @@
     fugue.url = "github:louisdutton/fugue";
     fugue.inputs.nixpkgs.follows = "nixpkgs";
 
-    forgecode.url = "github:antinomyhq/forgecode/v2.9.9";
-    forgecode.inputs.nixpkgs.follows = "nixpkgs";
-
     thrall.url = "github:louisdutton/thrall";
     thrall.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -34,7 +31,6 @@
     stylix,
     sops-nix,
     fugue,
-    forgecode,
     thrall,
   }: let
     user = {
