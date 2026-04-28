@@ -44,7 +44,6 @@
     };
     specialArgs = {
       inherit inputs user self;
-      keymap = import ./keys.nix;
     };
     system = "aarch64-darwin";
     pkgs = import nixpkgs {inherit system;};
@@ -77,13 +76,8 @@
       packages = with pkgs; [
         sops
         nixd
-        lua-language-server
         alejandra
       ];
-
-      shellHook = ''
-        echo 'link nvim config: ln -s $PWD/config/* ~/.config'
-      '';
     };
   };
 }

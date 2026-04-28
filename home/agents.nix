@@ -14,10 +14,10 @@
       thrall = {
         command = "${pkgs.thrall-mcp}/bin/thrall-mcp";
       };
-      ms365 = {
-        command = "${pkgs.bun}/bin/bunx";
-        args = ["-y" "@softeria/ms-365-mcp-server"];
-      };
+      # ms365 = {
+      #   command = "${pkgs.bun}/bin/bunx";
+      #   args = ["-y" "@softeria/ms-365-mcp-server"];
+      # };
     };
   };
 

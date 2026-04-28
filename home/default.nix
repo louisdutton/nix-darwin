@@ -9,7 +9,6 @@
     ./prompt.nix
     ./git.nix
     ./terminal.nix
-    ./vim.nix
     ./agents.nix
   ];
 
@@ -32,7 +31,6 @@
     package = pkgs.brave;
     extensions = [
       {id = "ghmbeldphafepmbegfdlkpapadhbakde";} # proton pass
-      {id = "gfbliohnnapiefjpjlpjnehglfpaknnc";} # surfing keys
     ];
   };
 }

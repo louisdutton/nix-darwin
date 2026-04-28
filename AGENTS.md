@@ -48,10 +48,10 @@ The repository is organized as follows:
 
 - `flake.nix`: The main entry point that defines inputs and outputs
 - `configuration.nix`: Common system configuration (users, packages, etc.)
-- `darwin/`: macOS-specific configurations (sketchybar, aerospace, etc.)
+- `darwin/`: macOS-specific configuration
 - `home/`: Home-manager user environment configurations
   - `default.nix`: Main home-manager configuration
-  - Topic-specific files: `vim.nix`, `git.nix`, `shell.nix`, etc.
+  - Topic-specific files: `git.nix`, `shell.nix`, etc.
 - `linux/`: NixOS configuration for the main Linux system
 - `lab/`: NixOS configuration for the homelab server
 
@@ -75,4 +75,3 @@ Secrets are managed using `sops-nix` with:
 
 - Secret definitions in `secrets.yml`
 - Age keys for encryption
-

@@ -1,1 +1,0 @@
-/nix/store/21frbnfkx33x5nzqwj2sh0wwdh1c4mh0-home-manager-files/.config/nvim/lua/autocmds.lua

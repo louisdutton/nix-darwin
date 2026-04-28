@@ -35,53 +35,6 @@
       initContent =
         # zsh
         ''
-          # vi mode
-          bindkey -v
-          export KEYTIMEOUT=1
-
-          # viins
-          bindkey "^H" backward-delete-char
-          bindkey "^?" backward-delete-char
-          bindkey '^[^?' backward-kill-word
-
-          # vicmd
-          bindkey -M vicmd h backward-char
-          bindkey -M vicmd j down-line-or-history
-          bindkey -M vicmd k up-line-or-history
-          bindkey -M vicmd l forward-char
-          bindkey -M vicmd H vi-beginning-of-line
-          bindkey -M vicmd L vi-end-of-line
-          bindkey -M vicmd i vi-insert
-          bindkey -M vicmd I vi-insert-bol
-          bindkey -M vicmd n vi-repeat-search
-          bindkey -M vicmd N vi-rev-repeat-search
-          bindkey -M vicmd u undo
-          bindkey -M vicmd U redo
-
-          # completion
-          bindkey '^[[Z' reverse-menu-complete # shift-tab to focus previous comp option
-
-          # Change cursor shape for different vi modes.
-          function zle-keymap-select {
-          	if [[ $KEYMAP == vicmd ]] ||
-          		 [[ $1 = "block" ]]; then
-          		echo -ne "\e[1 q"
-          	elif [[ $KEYMAP == main ]] ||
-          			 [[ KEYMAP == viins ]] ||
-          			 [[ KEYMAP = "" ]] ||
-          			 [[ $1 = "beam" ]]; then
-          		echo -ne "\e[5 q"
-          	fi
-          }
-          zle -N zle-keymap-select
-          zle-line-init() {
-          		zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
-          		echo -ne "\e[5 q"
-          }
-          zle -N zle-line-init
-          echo -ne "\e[5 q" # Use beam shape cursor on startup.
-          preexec() { echo -ne "\e[5 q" ;} # Use beam shape cursor for each new prompt.
-
           # take: compound mkdir && cd
           function take() {
           	mkdir -p $1
@@ -150,9 +103,6 @@
     # better top
     btop = {
       enable = true;
-      settings = {
-        vim_keys = true;
-      };
     };
     zsh.shellAliases.top = "btop";
 
@@ -165,7 +115,6 @@
       defaultOptions = [
         "--reverse"
         "--style minimal"
-        "--bind tab:down,shift-tab:up"
       ];
     };
   };
