@@ -1,11 +1,16 @@
-{user, ...}: {
+{
+  config,
+  lib,
+  user,
+  ...
+}: {
   # homedir fix
   users.users.${user.name}.home = "/Users/louis";
 
   # sys-dependant rebuild command
   environment.shellAliases = {
     clip = "pbcopy";
-    rebuild = "sudo darwin-rebuild switch --flake ~/projects/nix-darwin";
+    rebuild = "sudo ${lib.getExe config.system.build.darwin-rebuild} switch --flake ~/projects/nix-darwin";
   };
 
   # tailscale
