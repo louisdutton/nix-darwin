@@ -75,6 +75,9 @@ in {
   # homedir fix
   users.users.${user.name}.home = "/Users/louis";
 
+  # own zsh's system startup files so login and non-login shells share nix-darwin's environment
+  programs.zsh.enable = true;
+
   # sys-dependant rebuild command
   environment.shellAliases = {
     clip = "pbcopy";

@@ -70,6 +70,7 @@
 
     devShells.${system}.default = pkgs.mkShell {
       packages = with pkgs; [
+        git
         sops
         nixd
         alejandra
