@@ -64,15 +64,6 @@
       neovim
       gcc # required by neovim
       wl-clipboard
-
-      # re-deploy homelab nix configuration
-      (writeShellScriptBin "lab-deploy" ''
-        nixos-rebuild switch \
-          --flake .#homelab \
-          --target-host homelab  \
-          --build-host homelab \
-          --fast
-      '')
     ];
   };
 

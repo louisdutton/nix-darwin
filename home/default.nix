@@ -5,7 +5,6 @@
     ./git.nix
     ./terminal.nix
     ./dictation.nix
-    ./agents.nix
     ./mail.nix
     # ./desktop
   ];
