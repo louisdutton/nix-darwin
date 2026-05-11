@@ -9,7 +9,6 @@
     ./shell.nix
     ./prompt.nix
     ./git.nix
-    ./terminal.nix
   ];
 
   # self-management

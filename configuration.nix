@@ -45,7 +45,15 @@
   };
 
   # own zsh's system startup files so login and non-login shells share nix-darwin's environment
-  programs.zsh.enable = true;
+  programs.zsh = {
+    enable = true;
+    shellInit = ''
+      if [[ ":$PATH:" != *":/etc/profiles/per-user/$USER/bin:"* ]]; then
+        unset __NIX_DARWIN_SET_ENVIRONMENT_DONE
+        . ${config.system.build.setEnvironment}
+      fi
+    '';
+  };
 
   environment.shellAliases = {
   };
