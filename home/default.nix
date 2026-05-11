@@ -10,7 +10,6 @@
     ./prompt.nix
     ./git.nix
     ./terminal.nix
-    ./agents.nix
   ];
 
   # self-management
@@ -28,11 +27,4 @@
     glow
   ];
 
-  programs.chromium = {
-    enable = true;
-    package = pkgs.brave;
-    extensions = [
-      {id = "ghmbeldphafepmbegfdlkpapadhbakde";} # proton pass
-    ];
-  };
 }

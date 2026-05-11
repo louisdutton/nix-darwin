@@ -19,26 +19,16 @@
     ];
   };
 
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
-      "claude-code"
-    ];
-
   # users
   time.timeZone = "Europe/London";
   networking.hostName = "nixos";
   users.users.${user.name} = {
     description = user.displayName;
+    home = "/Users/${user.name}";
   };
 
   # aliases and custom utils
   environment = {
-    # variables = rec {
-    #   EDITOR = "${lib.getExe pkgs.fugue}";
-    #   VISUAL = EDITOR;
-    #   FUGUE_RUNTIME = with pkgs.tree-sitter; "${mkGrammars allGrammars}";
-    # };
-
     shellAliases = {
       e = "$EDITOR";
       g = "lazygit";
@@ -46,38 +36,44 @@
       l = "ls";
       la = "ls -a";
       ll = "ls -l";
-      # vibe = "caffeinate -d ${lib.getExe pkgs.opencode}";
+      clip = "pbcopy";
+      rebuild = "sudo ${lib.getExe config.system.build.darwin-rebuild} switch --flake ~/projects/nix-darwin";
     };
 
     systemPackages = with pkgs; [
-      # re-deploy homelab nix configuration
-      (writeShellScriptBin "lab-deploy" ''
-        ${lib.getExe nixos-rebuild} switch \
-          --flake .#homelab \
-          --target-host homelab  \
-          --build-host homelab \
-          --fast
-      '')
     ];
   };
 
-  # secret management
-  sops.defaultSopsFile = ./secrets.yml;
-  sops.age.keyFile = "${config.users.users.${user.name}.home}/.config/sops/age/keys.txt";
-  sops.age.generateKey = true;
+  # own zsh's system startup files so login and non-login shells share nix-darwin's environment
+  programs.zsh.enable = true;
 
-  # theming
-  stylix = {
-    enable = true;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-    opacity.terminal = 1.0;
-    fonts = {
-      sizes.applications = 10;
-      sizes.terminal = 11; # TODO make dynamic based on machine
-      monospace = {
-        package = pkgs.nerd-fonts.jetbrains-mono;
-        name = "JetBrainsMono Nerd Font";
-      };
+  environment.shellAliases = {
+  };
+
+  # tailscale
+  services.tailscale.enable = true;
+
+  system = {
+    primaryUser = "louis";
+    # check `man configuration.nix` before changing
+    stateVersion = 6;
+
+    keyboard = {
+      enableKeyMapping = true;
+      remapCapsLockToEscape = true;
+    };
+
+    defaults.CustomUserPreferences.NSGlobalDomain = {
+      # keyboard
+      AppleKeyboardUIMode = 3; # full keyboard control
+      ApplePressAndHoldEnabled = false;
+      NSAutomaticCapitalizationEnabled = false;
+      NSAutomaticDashSubstitutionEnabled = false;
+      NSAutomaticPeriodSubstitutionEnabled = false;
+      NSAutomaticQuoteSubstitutionEnabled = false;
+      NSAutomaticSpellingCorrectionEnabled = false;
+      InitialKeyRepeat = 10; # 150ms
+      KeyRepeat = 1; # 15ms
     };
   };
 }

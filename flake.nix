@@ -1,26 +1,12 @@
 {
-  description = "Louis Dutton's NixOS configuration";
+  description = "XGX system configuration";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-
     nix-darwin.url = "github:lnl7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    stylix.url = "github:danth/stylix";
-    stylix.inputs.nixpkgs.follows = "nixpkgs";
-
-    sops-nix.url = "github:mic92/sops-nix";
-    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-
-    fugue.url = "github:louisdutton/fugue";
-    fugue.inputs.nixpkgs.follows = "nixpkgs";
-
-    thrall.url = "github:louisdutton/thrall";
-    thrall.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs @ {
@@ -28,10 +14,6 @@
     home-manager,
     nix-darwin,
     nixpkgs,
-    stylix,
-    sops-nix,
-    fugue,
-    thrall,
   }: let
     user = {
       name = "louis";
@@ -48,29 +30,19 @@
       inherit specialArgs system;
       modules = [
         ./configuration.nix
-        ./darwin
         home-manager.darwinModules.home-manager
-        stylix.darwinModules.stylix
-        sops-nix.darwinModules.sops
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.${user.name} = import ./home;
           home-manager.backupFileExtension = "backup";
           home-manager.extraSpecialArgs = specialArgs;
-
-          nixpkgs.overlays = [
-            fugue.overlays.default
-            fugue.overlays.tree-sitter
-            thrall.overlays.default
-          ];
         }
       ];
     };
 
     devShells.${system}.default = pkgs.mkShell {
       packages = with pkgs; [
-        git
         sops
         nixd
         alejandra
