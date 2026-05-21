@@ -2,6 +2,7 @@
   imports = [
     ./hardware-configuration.nix
     ./matrix.nix
+    ./wireguard.nix
     ../../modules/configuration.nix
     ../../modules/asahi.nix
     ../../modules/sops.nix
