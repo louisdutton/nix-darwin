@@ -7,6 +7,7 @@
 }: {
   imports = [
     ./shell.nix
+    ./ssh.nix
     ./prompt.nix
     ./git.nix
   ];
@@ -25,5 +26,4 @@
     opencode
     glow
   ];
-
 }
