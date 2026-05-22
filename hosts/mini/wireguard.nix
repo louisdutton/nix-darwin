@@ -12,6 +12,8 @@ in {
   sops.secrets."wireguard/mini-private-key" = {};
 
   networking = {
+    tempAddresses = "disabled";
+
     firewall = {
       allowedUDPPorts = [port];
       trustedInterfaces = [interface];
