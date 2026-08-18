@@ -58,23 +58,6 @@
   environment.shellAliases = {
   };
 
-  # tailscale
-  services.tailscale.enable = true;
-
-  # wireguard
-  networking.wg-quick.interfaces.home = {
-    address = ["10.70.0.3/32"];
-    privateKeyFile = "/Users/${user.name}/.config/wireguard/mini.key";
-    peers = [
-      {
-        publicKey = "NOBGYbQhMT8/MjgsO8aMMXf82saSZQwoMq+FlC4gogE=";
-        allowedIPs = ["10.70.0.0/24"];
-        endpoint = "81.151.210.172:51820";
-        persistentKeepalive = 25;
-      }
-    ];
-  };
-
   system = {
     primaryUser = "louis";
     # check `man configuration.nix` before changing
