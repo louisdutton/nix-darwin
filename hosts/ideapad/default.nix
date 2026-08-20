@@ -25,19 +25,14 @@
   # this machine doesn't have ssh setup
   sops.age.keyFile = "/home/louis/.config/sops/age/keys.txt";
 
-  # enhanced kiosk tty
-  environment.systemPackages = [pkgs.foot];
-  fonts.packages = [pkgs.nerd-fonts.jetbrains-mono];
-  services.cage = {
-    enable = true;
-    user = "louis";
-    program = "${pkgs.foot}/bin/foot";
-    extraArguments = ["-s"];
-    environment = {
-      XKB_DEFAULT_REPEAT_RATE = "15";
-      XKB_DEFAULT_REPEAT_DELAY = "50";
-    };
-  };
+  environment.systemPackages = with pkgs; [
+    foot
+    zellij
+
+    # agent
+    codex
+    bubblewrap
+  ];
 
   system.stateVersion = "24.05";
 }
