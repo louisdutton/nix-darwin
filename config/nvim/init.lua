@@ -11,6 +11,18 @@ vim.opt.shiftwidth = indent
 vim.opt.tabstop = indent
 vim.opt.expandtab = true
 vim.opt.wrap = false
+vim.g.clipboard = {
+  name = 'TTY clipboard',
+  copy = {
+    ['+'] = { 'tty-copy' },
+    ['*'] = { 'tty-copy' },
+  },
+  paste = {
+    ['+'] = { 'tty-paste' },
+    ['*'] = { 'tty-paste' },
+  },
+  cache_enabled = 0,
+}
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.scrolloff = 10
 vim.opt.breakindent = true

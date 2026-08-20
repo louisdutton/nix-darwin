@@ -3,7 +3,31 @@
   lib,
   config,
   ...
-}: {
+}: let
+  ttyCopy = pkgs.writeShellApplication {
+    name = "tty-copy";
+    text = ''
+      : "''${XDG_RUNTIME_DIR:?XDG_RUNTIME_DIR is not set}"
+      umask 077
+      cat > "$XDG_RUNTIME_DIR/tty-clipboard"
+    '';
+  };
+
+  ttyPaste = pkgs.writeShellApplication {
+    name = "tty-paste";
+    text = ''
+      : "''${XDG_RUNTIME_DIR:?XDG_RUNTIME_DIR is not set}"
+      if [[ -f "$XDG_RUNTIME_DIR/tty-clipboard" ]]; then
+        cat "$XDG_RUNTIME_DIR/tty-clipboard"
+      fi
+    '';
+  };
+in {
+  home.packages = [
+    ttyCopy
+    ttyPaste
+  ];
+
   # shell
   home.shell.enableZshIntegration = true;
   home.shell.enableNushellIntegration = true;
@@ -16,22 +40,6 @@
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       dotDir = config.home.homeDirectory;
-
-      plugins = [
-        {
-          name = "zsh-system-clipboard";
-          src = pkgs.fetchFromGitHub {
-            owner = "kutsan";
-            repo = "zsh-system-clipboard";
-            rev = "v0.8.0";
-            sha256 = "VWTEJGudlQlNwLOUfpo0fvh0MyA2DqV+aieNPx/WzSI=";
-          };
-        }
-      ];
-
-      envExtra = ''
-        ZSH_SYSTEM_CLIPBOARD_USE_WL_CLIPBOARD=1
-      '';
 
       initContent =
         # zsh
@@ -58,6 +66,44 @@
           bindkey -M vicmd N vi-rev-repeat-search
           bindkey -M vicmd u undo
           bindkey -M vicmd U redo
+
+          # shared clipboard for the kernel TTY
+          tty-paste-widget() {
+            LBUFFER+="$(tty-paste)"
+          }
+          zle -N tty-paste-widget
+          bindkey -M viins '^[p' tty-paste-widget
+          bindkey -M vicmd '^[p' tty-paste-widget
+
+          tty-copy-widget() {
+            print -rn -- "$BUFFER" | tty-copy
+          }
+          zle -N tty-copy-widget
+          bindkey -M viins '^[y' tty-copy-widget
+          bindkey -M vicmd '^[y' tty-copy-widget
+
+          # Make vi-mode yanks and puts use the shared clipboard too.
+          tty-vi-yank() {
+            zle vi-yank
+            print -rn -- "$CUTBUFFER" | tty-copy
+          }
+          zle -N tty-vi-yank
+          bindkey -M vicmd y tty-vi-yank
+          bindkey -M visual y tty-vi-yank
+
+          tty-vi-put-after() {
+            CUTBUFFER="$(tty-paste)"
+            zle vi-put-after
+          }
+          zle -N tty-vi-put-after
+          bindkey -M vicmd p tty-vi-put-after
+
+          tty-vi-put-before() {
+            CUTBUFFER="$(tty-paste)"
+            zle vi-put-before
+          }
+          zle -N tty-vi-put-before
+          bindkey -M vicmd P tty-vi-put-before
 
           # completion
           bindkey '^[[Z' reverse-menu-complete # shift-tab to focus previous comp option

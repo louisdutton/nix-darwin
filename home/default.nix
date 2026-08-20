@@ -3,6 +3,7 @@
     ./shell.nix
     ./prompt.nix
     ./git.nix
+    ./zellij.nix
     # ./mail.nix
     # ./desktop
   ];
@@ -17,9 +18,8 @@
     fd # better find
     xh # better curl
     jq # json query
-
-    # web
-    ddgr
-    w3m
   ];
+
+  # agent
+  programs.codex.enable = true;
 }

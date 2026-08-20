@@ -63,7 +63,6 @@
       git
       neovim
       gcc # required by neovim
-      wl-clipboard
     ];
   };
 

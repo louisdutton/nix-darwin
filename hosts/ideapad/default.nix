@@ -25,14 +25,5 @@
   # this machine doesn't have ssh setup
   sops.age.keyFile = "/home/louis/.config/sops/age/keys.txt";
 
-  environment.systemPackages = with pkgs; [
-    foot
-    zellij
-
-    # agent
-    codex
-    bubblewrap
-  ];
-
   system.stateVersion = "24.05";
 }

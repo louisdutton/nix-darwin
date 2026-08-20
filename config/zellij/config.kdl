@@ -1,0 +1,18 @@
+keybinds clear-defaults=true {
+    normal {
+        bind "Alt h" { MoveFocus "Left"; }
+        bind "Alt j" { MoveFocus "Down"; }
+        bind "Alt k" { MoveFocus "Up"; }
+        bind "Alt l" { MoveFocus "Right"; }
+
+        bind "Alt n" { NewPane; }
+        bind "Alt q" { CloseFocus; }
+        bind "Alt f" { ToggleFocusFullscreen; }
+        bind "Alt e" { EditScrollback; }
+    }
+}
+
+simplified_ui true
+default_layout "compact"
+mouse_mode false
+show_startup_tips false
