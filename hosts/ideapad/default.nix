@@ -6,8 +6,6 @@
     ../../modules/sops.nix
   ];
 
-  users.users.hollie.isNormalUser = true;
-
   networking.hostName = "ideapad";
 
   boot.loader.systemd-boot.enable = true;
