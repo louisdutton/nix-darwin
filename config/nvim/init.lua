@@ -34,11 +34,11 @@ vim.opt.updatetime = 250
 vim.opt.signcolumn = 'yes'
 vim.opt.fillchars = { eob = " " }
 
--- inherit terminal colors
+-- Use Vim's built-in ANSI-oriented scheme for the kernel console.
 vim.opt.termguicolors = false
-vim.cmd('colorscheme default')
 
 -- Load plugin configuration
 require('manager')
+vim.cmd.colorscheme('vim')
 require('keymaps')
 require('autocmds')
