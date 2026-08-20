@@ -14,7 +14,11 @@
     peripheralFirmwareDirectory = /boot/vendorfw;
   };
 
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot = {
+    enable = true;
+    # The Asahi ESP is small and each NixOS generation adds a kernel and initrd.
+    configurationLimit = 3;
+  };
   boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
 
   # wpa_supplicant doesn't work on asahi
