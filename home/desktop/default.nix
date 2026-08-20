@@ -5,5 +5,6 @@
     ./hyprlauncher.nix
     ./hyprpaper.nix
     ./browser.nix
+    ./terminal.nix
   ];
 }

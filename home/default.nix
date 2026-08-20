@@ -3,9 +3,7 @@
     ./shell.nix
     ./prompt.nix
     ./git.nix
-    ./terminal.nix
-    ./dictation.nix
-    ./mail.nix
+    # ./mail.nix
     # ./desktop
   ];
 
