@@ -65,19 +65,4 @@
       gcc # required by neovim
     ];
   };
-
-  # theming
-  stylix = {
-    enable = false;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-    opacity.terminal = 1.0;
-    fonts = {
-      sizes.applications = 10;
-      sizes.terminal = 12;
-      monospace = {
-        package = pkgs.nerd-fonts.jetbrains-mono;
-        name = "JetBrainsMono Nerd Font";
-      };
-    };
-  };
 }

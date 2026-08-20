@@ -84,7 +84,6 @@
     enableGitIntegration = true;
     options = {
       dark = true;
-      syntax-theme = "base16-stylix";
     };
   };
 }

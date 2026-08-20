@@ -6,8 +6,6 @@
     flake-utils.url = "github:numtide/flake-utils";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    stylix.url = "github:danth/stylix";
-    stylix.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.url = "github:mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
@@ -19,7 +17,6 @@
     nixpkgs,
     flake-utils,
     home-manager,
-    stylix,
     sops-nix,
     ...
   }: let
@@ -34,7 +31,6 @@
     };
     modules = [
       home-manager.nixosModules.home-manager
-      stylix.nixosModules.stylix
       sops-nix.nixosModules.sops
       {
         home-manager.useGlobalPkgs = true;
