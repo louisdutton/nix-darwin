@@ -9,7 +9,10 @@
 
   nixpkgs.overlays = [inputs.apple-silicon.overlays.apple-silicon-overlay];
 
-  hardware.asahi.peripheralFirmwareDirectory = /boot/asahi;
+  hardware.asahi = {
+    enable = true;
+    peripheralFirmwareDirectory = /boot/vendorfw;
+  };
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = lib.mkForce false;

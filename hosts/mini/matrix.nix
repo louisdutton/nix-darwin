@@ -4,7 +4,7 @@
   ];
 
   matrix = {
-    enable = true;
+    enable = false;
     serverName = "mini.taila65fcf.ts.net";
     enableCaddy = true;
     allowFederation = false;

@@ -32,9 +32,14 @@ in {
 
       peers = [
         {
-          # Bootstrap profile for Louis' first remote device.
+          # louis mobile.
           publicKey = "kai0tDVE+sbd73IXSNrhfCR35uFK8zLZrACMkn5yry8=";
           allowedIPs = ["10.70.0.2/32"];
+        }
+        {
+          # hollie's mobile.
+          publicKey = "LveL8SjK9ggMWWrAvWmuIelIUjJBtW0rkKl3q1gq5lE=";
+          allowedIPs = ["10.70.0.4/32"];
         }
       ];
     };

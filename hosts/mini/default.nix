@@ -1,6 +1,13 @@
-{config, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
+    ./essentials-repository.nix
+    ./essentials-push.nix
+    ./essentials-webdav.nix
     ./matrix.nix
     ./radicale.nix
     ./wireguard.nix
@@ -11,6 +18,22 @@
 
   networking.hostName = "mini";
   services.openssh.enable = true;
+
+  security.sudo.extraRules = [
+    {
+      users = ["louis"];
+      commands = [
+        {
+          command = "${pkgs.nixos-rebuild}/bin/nixos-rebuild";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/run/current-system/sw/bin/nixos-rebuild";
+          options = ["NOPASSWD"];
+        }
+      ];
+    }
+  ];
 
   # bluetooth
   hardware.bluetooth = {
@@ -23,17 +46,6 @@
     shellAliases = {
       rebuild = "sudo nixos-rebuild switch --impure --flake ~/projects/nixos";
     };
-  };
-
-  services.tailscale = {
-    enable = true;
-    permitCertUid = "caddy";
-  };
-
-  # Caddy reverse proxy with Tailscale HTTPS
-  services.caddy = {
-    enable = true;
-    virtualHosts."mini.taila65fcf.ts.net" = {};
   };
 
   # network-level adblock

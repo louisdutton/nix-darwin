@@ -145,8 +145,8 @@
     fzf = {
       enable = true;
       colors.bg = lib.mkForce "-1"; # transparent
-      fileWidgetCommand = "fd --type f";
-      changeDirWidgetCommand = "fd --type d";
+      fileWidget.command = "fd --type f";
+      changeDirWidget.command = "fd --type d";
       defaultOptions = [
         "--reverse"
         "--style minimal"
