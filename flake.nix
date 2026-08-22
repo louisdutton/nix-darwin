@@ -8,6 +8,8 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.url = "github:mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
     apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
     apple-silicon.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -55,6 +57,12 @@
         inherit specialArgs;
         system = "x86_64-linux";
         modules = modules ++ [./hosts/ideapad];
+      };
+
+      nixosConfigurations.theatre = nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
+        system = "x86_64-linux";
+        modules = modules ++ [./hosts/theatre];
       };
     }
     // flake-utils.lib.eachDefaultSystem (system: let
