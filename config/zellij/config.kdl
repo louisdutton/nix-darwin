@@ -21,6 +21,27 @@ keybinds clear-defaults=true {
     }
 }
 
+plugins {
+    compact-bar location="file:~/.local/share/zellij/plugins/zjstatus.wasm" {
+        format_left   "#[fg=#89b4fa,bold]{session} "
+        format_center "{tabs}"
+        format_right  "{command_battery}#[fg=#a6adc8]{datetime} "
+        format_space  ""
+
+        tab_normal "#[fg=#6c7086] {index}:{name} "
+        tab_active "#[fg=#cdd6f4,bold] {index}:{name} "
+
+        command_battery_command "zellij-battery"
+        command_battery_format "#[fg=#a6e3a1]{stdout} "
+        command_battery_interval "30"
+        command_battery_rendermode "static"
+
+        datetime "#[fg=#a6adc8]{format}"
+        datetime_format "%H:%M"
+        datetime_timezone "Europe/London"
+    }
+}
+
 simplified_ui true
 default_layout "compact"
 mouse_mode false
