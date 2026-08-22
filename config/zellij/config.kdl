@@ -12,6 +12,12 @@ keybinds clear-defaults=true {
         bind "Alt q" { CloseFocus; }
         bind "Alt f" { ToggleFocusFullscreen; }
         bind "Alt e" { EditScrollback; }
+        bind "Alt r" { SwitchToMode "RenamePane"; PaneNameInput 0; }
+    }
+
+    renamepane {
+        bind "Enter" "Ctrl c" { SwitchToMode "Normal"; }
+        bind "Esc" { UndoRenamePane; SwitchToMode "Normal"; }
     }
 }
 
