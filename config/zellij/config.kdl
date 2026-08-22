@@ -5,6 +5,9 @@ keybinds clear-defaults=true {
         bind "Alt k" { MoveFocus "Up"; }
         bind "Alt l" { MoveFocus "Right"; }
 
+        bind "Alt J" { ScrollDown; }
+        bind "Alt K" { ScrollUp; }
+
         bind "Alt n" { NewPane; }
         bind "Alt q" { CloseFocus; }
         bind "Alt f" { ToggleFocusFullscreen; }
