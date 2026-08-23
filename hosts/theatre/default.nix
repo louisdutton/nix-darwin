@@ -48,7 +48,7 @@
       enable = true;
       wayland.enable = true;
     };
-    defaultSession = "steam";
+    defaultSession = "opengamepadui";
     autoLogin = {
       enable = true;
       user = user.name;
@@ -67,6 +67,12 @@
       # Steam's bubblewrap sandbox refuses inherited ambient capabilities.
       # GameMode still handles per-game performance tuning.
       capSysNice = false;
+    };
+    opengamepadui = {
+      enable = true;
+      inputplumber.enable = true;
+      powerstation.enable = true;
+      gamescopeSession.enable = true;
     };
     steam = {
       enable = true;
