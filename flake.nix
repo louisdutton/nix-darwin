@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.url = "github:mic92/sops-nix";
@@ -17,7 +16,6 @@
   outputs = inputs @ {
     self,
     nixpkgs,
-    flake-utils,
     home-manager,
     sops-nix,
     ...
@@ -45,37 +43,23 @@
         ];
       }
     ];
-  in
-    {
-      nixosConfigurations.mini = nixpkgs.lib.nixosSystem {
-        inherit specialArgs;
-        system = "aarch64-linux";
-        modules = modules ++ [./hosts/mini];
-      };
+  in {
+    nixosConfigurations.mini = nixpkgs.lib.nixosSystem {
+      inherit specialArgs;
+      system = "aarch64-linux";
+      modules = modules ++ [./hosts/mini];
+    };
 
-      nixosConfigurations.ideapad = nixpkgs.lib.nixosSystem {
-        inherit specialArgs;
-        system = "x86_64-linux";
-        modules = modules ++ [./hosts/ideapad];
-      };
+    nixosConfigurations.ideapad = nixpkgs.lib.nixosSystem {
+      inherit specialArgs;
+      system = "x86_64-linux";
+      modules = modules ++ [./hosts/ideapad];
+    };
 
-      nixosConfigurations.theatre = nixpkgs.lib.nixosSystem {
-        inherit specialArgs;
-        system = "x86_64-linux";
-        modules = modules ++ [./hosts/theatre];
-      };
-    }
-    // flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = import nixpkgs {inherit system;};
-    in {
-      devShells.default = with pkgs;
-        mkShell {
-          packages = [
-            sops
-            nixd
-            lua-language-server
-            alejandra
-          ];
-        };
-    });
+    nixosConfigurations.theatre = nixpkgs.lib.nixosSystem {
+      inherit specialArgs;
+      system = "x86_64-linux";
+      modules = modules ++ [./hosts/theatre];
+    };
+  };
 }

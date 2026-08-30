@@ -153,15 +153,6 @@ in {
         '';
     };
 
-    # automatically init nix shell when entering a relevant directory
-    direnv = {
-      enable = true;
-      nix-direnv.enable = true;
-      config = {
-        hide_env_diff = true;
-      };
-    };
-
     # better cd
     zoxide = {
       enable = true;

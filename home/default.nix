@@ -11,6 +11,7 @@
   # self-management
   home.stateVersion = "25.05";
   programs.home-manager.enable = true;
+  programs.devenv.enable = true;
   xdg.enable = true;
 
   home.packages = with pkgs; [

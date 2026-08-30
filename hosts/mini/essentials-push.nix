@@ -6,11 +6,13 @@
   identities = import ./essentials-identities.nix;
   identityFile = builtins.toFile "essentials-device-identities.json" (
     builtins.toJSON {
-      devices = lib.mapAttrs (
-        _: device: {
-          inherit (device) user groups;
-        }
-      ) identities.devices;
+      devices =
+        lib.mapAttrs (
+          _: device: {
+            inherit (device) user groups;
+          }
+        )
+        identities.devices;
     }
   );
   interface = "wg0";

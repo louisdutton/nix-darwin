@@ -22,22 +22,26 @@
     lib.filter (
       device:
         identities.devices.${device}.user == user
-    ) deviceNames;
+    )
+    deviceNames;
   legacyDevicesForUser = user:
     lib.filter (
       device:
         lib.elem user identities.legacyWebdavDevices.${device}.privateUsers
-    ) legacyDeviceNames;
+    )
+    legacyDeviceNames;
   devicesForGroup = group:
     lib.filter (
       device:
         lib.elem group identities.devices.${device}.groups
-    ) deviceNames;
+    )
+    deviceNames;
   legacyDevicesForGroup = group:
     lib.filter (
       device:
         lib.elem group identities.legacyWebdavDevices.${device}.groups
-    ) legacyDeviceNames;
+    )
+    legacyDeviceNames;
   members = values: lib.concatStringsSep " " values;
   authGroupFile = pkgs.writeText "essentials-webdav-groups" ''
     louis-private: ${members (devicesForUser "louis" ++ legacyDevicesForUser "louis")}

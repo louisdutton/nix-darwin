@@ -1,4 +1,8 @@
-{pkgs, config, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   home.packages = [pkgs.hydroxide];
 
   sops.age.keyFile = "/home/louis/.config/sops/age/keys.txt";
