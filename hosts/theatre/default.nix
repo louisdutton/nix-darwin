@@ -42,6 +42,12 @@
     settings.General.Experimental = true;
   };
 
+  # Keep the MediaTek MT7922 Bluetooth function awake. Runtime USB power
+  # management can make game-controller connections on this adapter unreliable.
+  services.udev.extraRules = ''
+    ACTION=="add|bind", SUBSYSTEM=="usb", ATTR{idVendor}=="0e8d", ATTR{idProduct}=="0616", TEST=="power/control", ATTR{power/control}="on"
+  '';
+
   # SDDM only launches the session; no desktop environment is installed.
   services.displayManager = {
     sddm = {
