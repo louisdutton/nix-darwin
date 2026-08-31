@@ -16,6 +16,9 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  environment.shellAliases.rebuild =
+    "sudo nixos-rebuild switch --flake ~/projects/nixos";
+
   users.users.${user.name} = {
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJkTqlA9tbOrjytaN+8hAyPVWgrqucBMJSFBsswNtVug louis@ideapad"
