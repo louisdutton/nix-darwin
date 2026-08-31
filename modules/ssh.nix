@@ -7,5 +7,11 @@ in {
   users.users.${user.name}.openssh.authorizedKeys.keys = attrValues keys;
   programs.ssh = {
     knownHosts = mapAttrs (k: v: {publicKey = v;}) keys;
+    extraConfig = ''
+      Host theatre theatre.lan
+        # Detect a broken LAN path instead of leaving the terminal hung forever.
+        ServerAliveInterval 15
+        ServerAliveCountMax 3
+    '';
   };
 }
