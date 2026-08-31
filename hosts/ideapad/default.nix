@@ -8,9 +8,6 @@
 
   networking.hostName = "ideapad";
 
-  # Avoid latency spikes and packet loss during interactive LAN sessions.
-  networking.networkmanager.wifi.powersave = false;
-
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
