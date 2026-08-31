@@ -41,6 +41,8 @@
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
+    # Otherwise BlueZ replaces General.Name with networking.hostName.
+    disabledPlugins = ["hostname"];
     settings.General = {
       # Expose controller battery information to Steam and other clients.
       Experimental = true;
