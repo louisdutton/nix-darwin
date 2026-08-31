@@ -41,16 +41,8 @@
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
-    # Otherwise BlueZ replaces General.Name with networking.hostName.
-    disabledPlugins = ["hostname"];
-    settings.General = {
-      # Expose controller battery information to Steam and other clients.
-      Experimental = true;
-      # Nintendo controllers use a less reliable generic-host mode unless the
-      # Bluetooth host name looks like a Switch, leading to dropped reports and
-      # eventual disconnects.
-      Name = "Nintendo Switch";
-    };
+    # Expose controller battery information to Steam and other clients.
+    settings.General.Experimental = true;
   };
 
   # SDDM only launches the session; no desktop environment is installed.
