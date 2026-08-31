@@ -98,7 +98,16 @@
   zramSwap.enable = true;
 
   environment.systemPackages = with pkgs; [
-    heroic
+    (symlinkJoin {
+      name = "heroic-steam";
+      paths = [ heroic ];
+      nativeBuildInputs = [ makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/heroic \
+          --unset LD_PRELOAD \
+          --add-flags "--disable-gpu --no-sandbox"
+      '';
+    })
     mangohud
   ];
 
