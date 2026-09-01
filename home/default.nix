@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     ./shell.nix
     ./prompt.nix
@@ -13,6 +17,10 @@
   programs.home-manager.enable = true;
   programs.devenv.enable = true;
   xdg.enable = true;
+
+  xdg.configFile."nvim".source =
+    config.lib.file.mkOutOfStoreSymlink
+    "${config.home.homeDirectory}/projects/nixos/config/nvim";
 
   home.packages = with pkgs; [
     sd # better sed
