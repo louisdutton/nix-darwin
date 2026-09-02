@@ -1,6 +1,5 @@
 return {
   "kylechui/nvim-surround",
-  dependencies = "windwp/nvim-autopairs",
   config = function()
     require("nvim-surround").setup({
       keymaps = {
