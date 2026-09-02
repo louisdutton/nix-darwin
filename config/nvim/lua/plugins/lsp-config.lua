@@ -44,9 +44,6 @@ return {
           },
         },
 
-        -- Go
-        gopls = {},
-
         -- Rust
         rust_analyzer = {
           settings = {
@@ -61,36 +58,12 @@ return {
           },
         },
 
-        -- TypeScript/JavaScript
-        tsgo = {
-          on_attach = no_format,
-        },
-        ts_ls = {},
-        denols = {},
-
-        biome = {
-          filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "css", "html", "json", "jsonc", "grit" },
-          cmd = { "biome", "lsp-proxy" },
-        },
-
         -- JSON
         jsonls = {
           filetypes = { "json", "jsonc" },
           cmd = { "vscode-json-language-server", "--stdio" },
           on_attach = no_format,
         },
-
-        -- HTML
-        html = {},
-
-        -- CSS
-        cssls = {},
-
-        -- Tailwind
-        tailwindcss = {},
-
-        -- Clang
-        clangd = {},
 
         -- Bash
         bashls = {},
@@ -100,14 +73,6 @@ return {
 
         -- Odin
         ols = {},
-
-        -- QML
-        qmlls = {
-          cmd = { "qmlls", "-E" }
-        },
-
-        -- Android
-        dartls = {},
 
         -- Lua
         lua_ls = {
@@ -128,14 +93,7 @@ return {
             },
           },
         },
-
-        -- Berlioz DSP
-        berlioz_ls = {
-          filetypes = { "berlioz" },
-          cmd = { "berlioz", "lsp" },
-        }
       }
-
 
       -- Setup each server using the new vim.lsp.config API
       for server, config in pairs(servers) do
