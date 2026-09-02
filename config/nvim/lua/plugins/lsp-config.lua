@@ -7,7 +7,7 @@ return {
       local capabilities = require("blink.cmp").get_lsp_capabilities()
 
       -- LSP performance optimizations
-      vim.lsp.set_log_level("WARN")
+      vim.lsp.log.set_level("WARN")
 
       -- Format on save
       vim.api.nvim_create_autocmd("BufWritePre", {
