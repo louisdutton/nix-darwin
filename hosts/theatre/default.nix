@@ -8,7 +8,9 @@
     inputs.disko.nixosModules.disko
     ./disk-config.nix
     ./hardware-configuration.nix
+    ./wireguard.nix
     ../../modules/configuration.nix
+    ../../modules/sops.nix
   ];
 
   networking.hostName = "theatre";

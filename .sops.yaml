@@ -4,8 +4,9 @@ keys:
   - &master age18u0enq67fx8m2m5e4nelteyhd8kg4ng3qgpvwsyqlrj32fr0w49sydz8r0
   - &homelab age1su9ue59ured7v4k3zqjjjca2jgtws4ams3rw3slnl76zfwzjspaq86janx
   - &ideapad age1j5uynhlxtwc3ad8v8q06w73urkh0gfufxqf8aalq3rssm55laurqhyfcah
+  - &theatre-host age13juqynk26pg7esqkvrx6rlsa75mfp64yhx8s5u2wse6n43evmpssttlwmk
 
 creation_rules:
   - path_regex: secrets.yml$
     key_groups:
-      - age: [*mini, *mini-host, *master, *homelab, *ideapad]
+      - age: [*mini, *mini-host, *master, *homelab, *ideapad, *theatre-host]

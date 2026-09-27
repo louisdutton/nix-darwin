@@ -41,6 +41,11 @@ in {
           publicKey = "LveL8SjK9ggMWWrAvWmuIelIUjJBtW0rkKl3q1gq5lE=";
           allowedIPs = ["10.70.0.4/32"];
         }
+        {
+          # Theatre PC.
+          publicKey = "XYCT1wAURlM30U+lQIw6xS9TX/c7SDM/DCvNvqMTcnU=";
+          allowedIPs = ["10.70.0.3/32"];
+        }
       ];
     };
   };
