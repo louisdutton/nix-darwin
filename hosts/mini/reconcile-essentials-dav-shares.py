@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Provision canonical Essentials DAV collections and device share mappings."""
+"""Provision canonical Essentials DAV collections and person share mappings."""
 
 from __future__ import annotations
 
@@ -87,6 +87,13 @@ def ensure_collection(storage: Path, owner: str, collection: str, spec: Any) -> 
             raise ValueError(f"invalid Radicale properties in {properties_path}")
         properties.update(loaded)
     properties.update({"tag": tag, "D:displayname": display_name})
+    components = spec.get("components")
+    if components is not None:
+        if tag != "VCALENDAR" or not isinstance(components, list) or not components or not all(
+            component in {"VEVENT", "VTODO", "VJOURNAL"} for component in components
+        ):
+            raise ValueError(f"invalid components for {owner}/{collection}: {components!r}")
+        properties["C:supported-calendar-component-set"] = ",".join(components)
     encoded = json.dumps(properties, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     atomic_write(properties_path, lambda output: output.write(encoded))
 
@@ -94,31 +101,21 @@ def ensure_collection(storage: Path, owner: str, collection: str, spec: Any) -> 
 def desired_rows(identities: dict[str, Any], now: int) -> list[dict[str, str]]:
     users = checked_mapping(identities.get("users"), "users")
     groups = checked_mapping(identities.get("groups"), "groups")
-    devices = checked_mapping(identities.get("devices"), "devices")
     dav = checked_mapping(identities.get("davCollections"), "davCollections")
-    user_collections = checked_mapping(dav.get("users"), "davCollections.users")
     group_collections = checked_mapping(dav.get("groups"), "davCollections.groups")
 
     rows: list[dict[str, str]] = []
-    for raw_device_name, raw_device in sorted(devices.items()):
-        device_name = checked_name(raw_device_name, "device name")
-        device = checked_mapping(raw_device, f"device {device_name}")
-        user = checked_name(device.get("user"), f"user for device {device_name}")
-        if user not in users:
-            raise ValueError(f"device {device_name} references unknown user {user}")
-        raw_groups = device.get("groups")
-        if not isinstance(raw_groups, list) or not all(isinstance(group, str) for group in raw_groups):
-            raise ValueError(f"groups for device {device_name} must be a list of names")
-
+    for raw_user in sorted(users):
+        user = checked_name(raw_user, "user name")
         mappings: list[tuple[str, str, str]] = []
-        private = checked_mapping(user_collections.get(user, {}), f"collections for {user}")
-        for raw_collection in sorted(private):
-            collection = checked_name(raw_collection, f"collection for {user}")
-            mappings.append((f"private-{collection}", user, collection))
-        for raw_group in sorted(raw_groups):
-            group = checked_name(raw_group, f"group for device {device_name}")
-            if group not in groups:
-                raise ValueError(f"device {device_name} references unknown group {group}")
+        for raw_group, raw_group_spec in sorted(groups.items()):
+            group = checked_name(raw_group, "group name")
+            group_spec = checked_mapping(raw_group_spec, f"group {group}")
+            members = group_spec.get("members")
+            if not isinstance(members, list) or not all(isinstance(member, str) for member in members):
+                raise ValueError(f"members for group {group} must be a list of names")
+            if user not in members:
+                continue
             shared = checked_mapping(group_collections.get(group, {}), f"collections for {group}")
             for raw_collection in sorted(shared):
                 collection = checked_name(raw_collection, f"collection for {group}")
@@ -126,9 +123,9 @@ def desired_rows(identities: dict[str, Any], now: int) -> list[dict[str, str]]:
 
         for alias, owner, collection in mappings:
             rows.append({
-                "ShareType": "map", "PathOrToken": f"/{device_name}/{alias}/",
+                "ShareType": "map", "PathOrToken": f"/{user}/{alias}/",
                 "PathMapped": f"/{owner}/{collection}/", "Conversion": "none",
-                "Owner": owner, "User": device_name, "Permissions": "rw",
+                "Owner": owner, "User": user, "Permissions": "rw",
                 "EnabledByOwner": "True", "EnabledByUser": "True",
                 "HiddenByOwner": "False", "HiddenByUser": "False",
                 "TimestampCreated": str(now), "TimestampUpdated": str(now),

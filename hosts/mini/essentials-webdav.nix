@@ -16,37 +16,11 @@
   sharedDir = "/srv/essentials/family";
   stateDir = "/var/lib/essentials-webdav";
   authFile = config.sops.secrets."essentials-webdav/htpasswd".path;
-  deviceNames = lib.attrNames identities.devices;
-  legacyDeviceNames = lib.attrNames identities.legacyWebdavDevices;
-  devicesForUser = user:
-    lib.filter (
-      device:
-        identities.devices.${device}.user == user
-    )
-    deviceNames;
-  legacyDevicesForUser = user:
-    lib.filter (
-      device:
-        lib.elem user identities.legacyWebdavDevices.${device}.privateUsers
-    )
-    legacyDeviceNames;
-  devicesForGroup = group:
-    lib.filter (
-      device:
-        lib.elem group identities.devices.${device}.groups
-    )
-    deviceNames;
-  legacyDevicesForGroup = group:
-    lib.filter (
-      device:
-        lib.elem group identities.legacyWebdavDevices.${device}.groups
-    )
-    legacyDeviceNames;
   members = values: lib.concatStringsSep " " values;
   authGroupFile = pkgs.writeText "essentials-webdav-groups" ''
-    louis-private: ${members (devicesForUser "louis" ++ legacyDevicesForUser "louis")}
-    hollie-private: ${members (devicesForUser "hollie" ++ legacyDevicesForUser "hollie")}
-    family: ${members (devicesForGroup "family" ++ legacyDevicesForGroup "family")}
+    louis-private: louis
+    hollie-private: hollie
+    family: ${members identities.groups.family.members}
   '';
   davDirectory = url: directory: group: ''
     Alias "${url}/" "${directory}/"
@@ -74,22 +48,6 @@ in {
         group: lib.all (user: lib.hasAttr user identities.users) group.members
       ) (lib.attrValues identities.groups);
       message = "Every Essentials group member must be a declared user.";
-    }
-    {
-      assertion = lib.all (
-        device:
-          lib.hasAttr device.user identities.users
-          && lib.all (group: lib.hasAttr group identities.groups) device.groups
-      ) (lib.attrValues identities.devices);
-      message = "Every Essentials device must reference a declared user and group.";
-    }
-    {
-      assertion = lib.all (
-        device:
-          lib.all (user: lib.hasAttr user identities.users) device.privateUsers
-          && lib.all (group: lib.hasAttr group identities.groups) device.groups
-      ) (lib.attrValues identities.legacyWebdavDevices);
-      message = "Every legacy WebDAV ACL must reference a declared user and group.";
     }
   ];
 

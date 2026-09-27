@@ -1,4 +1,5 @@
 import csv
+import copy
 import importlib.util
 import json
 import tempfile
@@ -19,7 +20,11 @@ IDENTITIES = {
     "davCollections": {
         "users": {
             "alice": {
-                "personal": {"tag": "VCALENDAR", "displayName": "Alice — Private"},
+                "personal": {
+                    "tag": "VCALENDAR",
+                    "displayName": "Alice",
+                    "components": ["VEVENT", "VTODO"],
+                },
                 "contacts": {"tag": "VADDRESSBOOK", "displayName": "Alice — Private"},
             },
             "bob": {"personal": {"tag": "VCALENDAR", "displayName": "Bob — Private"}},
@@ -29,7 +34,6 @@ IDENTITIES = {
             "contacts": {"tag": "VADDRESSBOOK", "displayName": "Family"},
         }},
     },
-    "devices": {"alice-phone": {"user": "alice", "groups": ["family"]}},
 }
 
 
@@ -47,32 +51,38 @@ class ReconcileTest(unittest.TestCase):
             return list(csv.DictReader(source, delimiter=";"))
 
     @mock.patch.object(reconcile_dav.time, "time", return_value=1234)
-    def test_creates_canonical_collections_and_device_maps(self, _time):
+    def test_creates_canonical_collections_and_person_maps(self, _time):
         reconcile_dav.reconcile(IDENTITIES, self.storage, self.database)
         props = json.loads((self.storage / "collection-root/alice/personal/.Radicale.props").read_text())
-        self.assertEqual({"D:displayname": "Alice — Private", "tag": "VCALENDAR"}, props)
+        self.assertEqual({
+            "C:supported-calendar-component-set": "VEVENT,VTODO",
+            "D:displayname": "Alice",
+            "tag": "VCALENDAR",
+        }, props)
         mappings = {row["PathOrToken"]: row for row in self.rows()}
         self.assertEqual({
-            "/alice-phone/private-contacts/", "/alice-phone/private-personal/",
-            "/alice-phone/family-calendar/", "/alice-phone/family-contacts/",
+            "/alice/family-calendar/", "/alice/family-contacts/",
+            "/bob/family-calendar/", "/bob/family-contacts/",
         }, set(mappings))
-        private = mappings["/alice-phone/private-personal/"]
-        self.assertEqual("/alice/personal/", private["PathMapped"])
-        self.assertEqual("alice", private["Owner"])
-        self.assertEqual("alice-phone", private["User"])
-        self.assertEqual("rw", private["Permissions"])
-        self.assertEqual("True", private["EnabledByOwner"])
-        self.assertEqual("False", private["HiddenByUser"])
+        family = mappings["/alice/family-calendar/"]
+        self.assertEqual("/family/calendar/", family["PathMapped"])
+        self.assertEqual("family", family["Owner"])
+        self.assertEqual("alice", family["User"])
+        self.assertEqual("rw", family["Permissions"])
+        self.assertEqual("True", family["EnabledByOwner"])
+        self.assertEqual("False", family["HiddenByUser"])
 
     @mock.patch.object(reconcile_dav.time, "time", side_effect=[100, 200, 300])
-    def test_is_idempotent_and_revokes_removed_devices(self, _time):
+    def test_is_idempotent_and_revokes_removed_memberships(self, _time):
         reconcile_dav.reconcile(IDENTITIES, self.storage, self.database)
         original = self.rows()[0]
         reconcile_dav.reconcile(IDENTITIES, self.storage, self.database)
         unchanged = self.rows()[0]
         self.assertEqual(original["TimestampCreated"], unchanged["TimestampCreated"])
         self.assertEqual(original["TimestampUpdated"], unchanged["TimestampUpdated"])
-        reconcile_dav.reconcile(dict(IDENTITIES, devices={}), self.storage, self.database)
+        without_members = copy.deepcopy(IDENTITIES)
+        without_members["groups"]["family"]["members"] = []
+        reconcile_dav.reconcile(without_members, self.storage, self.database)
         self.assertEqual([], self.rows())
         self.assertTrue((self.storage / "collection-root/alice/personal").is_dir())
 
@@ -87,8 +97,9 @@ class ReconcileTest(unittest.TestCase):
         self.assertEqual("calendar data", (collection / "event.ics").read_text())
 
     def test_rejects_unsafe_names(self):
-        invalid = dict(IDENTITIES, devices={"../escape": {"user": "alice", "groups": []}})
-        with self.assertRaisesRegex(ValueError, "invalid device name"):
+        invalid = copy.deepcopy(IDENTITIES)
+        invalid["users"]["../escape"] = {"displayName": "Escape"}
+        with self.assertRaisesRegex(ValueError, "invalid user name"):
             reconcile_dav.reconcile(invalid, self.storage, self.database)
 
 

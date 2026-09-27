@@ -34,17 +34,10 @@
       if [[ "$origin_device" =~ ^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$ ]]; then
         payload="$(printf '{"protocolVersion":1,"namespace":"dav","originDeviceId":"%s"}' "$origin_device")"
       fi
-      token_file=${config.sops.secrets."essentials-sync/invalidation-token".path}
-      if [[ ! -r "$token_file" ]]; then
-        echo "DAV invalidation token is unavailable" >&2
-        exit 0
-      fi
-      token="$(<"$token_file")"
-      if ! printf 'header = "Authorization: Bearer %s"\n' "$token" |
-        curl --config - --fail --silent --show-error --max-time 5 \
+      if ! curl --fail --silent --show-error --max-time 5 \
         --header 'Content-Type: application/json' \
         --data "$payload" \
-        http://10.70.0.1:8090/internal/v1/invalidate >/dev/null; then
+        http://127.0.0.1:8093/essentials-sync >/dev/null; then
         echo "DAV invalidation publish failed; periodic sync remains active" >&2
       fi
     '';
@@ -105,7 +98,7 @@ in {
   };
 
   systemd.services.radicale = {
-    after = ["wireguard-wg0.service" "essentials-push.service"];
+    after = ["wireguard-wg0.service" "ntfy-sh.service"];
     requires = ["wireguard-wg0.service"];
     serviceConfig.ExecStartPre = ["${reconcileDavShares}/bin/reconcile-essentials-dav-shares"];
   };

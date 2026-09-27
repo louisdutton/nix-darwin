@@ -6,32 +6,34 @@
 
   groups.family.members = ["louis" "hollie"];
 
-  # Canonical Radicale collections published through device-specific principals.
-  # Explicit lists prevent test or administrative collections from appearing in
-  # automatic DAV discovery.
+  # Canonical collections belong to people or groups. Client devices are
+  # metadata only and authenticate as their person.
   davCollections = {
     users = {
       louis.personal = {
         tag = "VCALENDAR";
-        displayName = "Louis — Private";
+        displayName = "Louis";
+        components = ["VEVENT" "VTODO"];
       };
       louis.contacts = {
         tag = "VADDRESSBOOK";
-        displayName = "Louis — Private";
+        displayName = "Louis";
       };
       hollie.personal = {
         tag = "VCALENDAR";
-        displayName = "Hollie — Private";
+        displayName = "Hollie";
+        components = ["VEVENT" "VTODO"];
       };
       hollie.contacts = {
         tag = "VADDRESSBOOK";
-        displayName = "Hollie — Private";
+        displayName = "Hollie";
       };
     };
     groups.family = {
       family = {
         tag = "VCALENDAR";
         displayName = "Family";
+        components = ["VEVENT" "VTODO"];
       };
       contacts = {
         tag = "VADDRESSBOOK";
@@ -39,19 +41,4 @@
       };
     };
   };
-
-  # Add a device here only when it has its own push token and WebDAV password.
-  # Device labels are public identifiers; secrets remain in SOPS.
-  devices = {
-    hollie-pixel-8a = {
-      user = "hollie";
-      groups = ["family"];
-    };
-    louis-pixel-8 = {
-      user = "louis";
-      groups = ["family"];
-    };
-  };
-
-  legacyWebdavDevices = {};
 }
