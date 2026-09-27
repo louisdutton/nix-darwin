@@ -5,7 +5,10 @@
 }: let
   interface = "wg0";
 in {
-  environment.systemPackages = [pkgs.wireguard-tools];
+  environment.systemPackages = [
+    pkgs.android-tools
+    pkgs.wireguard-tools
+  ];
 
   sops.secrets."wireguard/theatre-private-key" = {};
 
