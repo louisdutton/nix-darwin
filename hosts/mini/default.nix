@@ -5,7 +5,6 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    ./essentials-repository.nix
     ./essentials-push.nix
     ./essentials-webdav.nix
     ./matrix.nix

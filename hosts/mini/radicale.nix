@@ -81,16 +81,12 @@
     name = "notify-essentials-dav-change";
     runtimeInputs = [pkgs.curl];
     text = ''
-      origin_device="''${1:-}"
-      request_method="''${2:-}"
+      request_method="''${1:-}"
       case "$request_method" in
         PUT|DELETE|MKCOL|MKCALENDAR|PROPPATCH|MOVE) ;;
         *) exit 0 ;;
       esac
       payload='{"protocolVersion":1,"namespace":"dav"}'
-      if [[ "$origin_device" =~ ^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$ ]]; then
-        payload="$(printf '{"protocolVersion":1,"namespace":"dav","originDeviceId":"%s"}' "$origin_device")"
-      fi
       if ! curl --fail --silent --show-error --max-time 5 \
         --header 'Content-Type: application/json' \
         --data "$payload" \
@@ -120,7 +116,7 @@ in {
 
       storage = {
         filesystem_folder = storageRoot;
-        hook = "${notifyDav}/bin/notify-essentials-dav-change %(user)s %(request)s";
+        hook = "${notifyDav}/bin/notify-essentials-dav-change %(request)s";
       };
 
       sharing = {
@@ -164,6 +160,4 @@ in {
     after = ["wireguard-wg0.service" "ntfy-sh.service"];
     requires = ["wireguard-wg0.service"];
   };
-
-  users.users.radicale.extraGroups = ["essentials-push"];
 }
