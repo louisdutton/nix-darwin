@@ -6,20 +6,77 @@
 }: let
   identities = import ./essentials-identities.nix;
   storageRoot = "/var/lib/radicale/collections";
-  sharingDatabase = "${storageRoot}/collection-db/sharing.csv";
-  davIdentityFile = builtins.toFile "essentials-dav-identities.json" (
-    builtins.toJSON identities
+  collectionRoot = "${storageRoot}/collection-root";
+  csvFields = [
+    "ShareType"
+    "PathOrToken"
+    "PathMapped"
+    "Conversion"
+    "Owner"
+    "User"
+    "Permissions"
+    "EnabledByOwner"
+    "EnabledByUser"
+    "HiddenByOwner"
+    "HiddenByUser"
+    "TimestampCreated"
+    "TimestampUpdated"
+    "Properties"
+    "Actions"
+  ];
+  shareRow = user: group: collection:
+    lib.concatStringsSep ";" [
+      "map"
+      "/${user}/${group}-${collection}/"
+      "/${group}/${collection}/"
+      "none"
+      group
+      user
+      "rw"
+      "True"
+      "True"
+      "False"
+      "False"
+      "0"
+      "0"
+      ""
+      ""
+    ];
+  sharingRows = lib.concatMap (
+    group:
+      lib.concatMap (
+        user:
+          map (collection: shareRow user group collection) (
+            lib.attrNames identities.davCollections.groups.${group}
+          )
+      ) identities.groups.${group}.members
+  ) (lib.attrNames identities.groups);
+  sharingDatabase = pkgs.writeText "essentials-radicale-sharing.csv" (
+    lib.concatLines ([(lib.concatStringsSep ";" csvFields)] ++ sharingRows)
   );
-  reconcileDavShares = pkgs.writeShellApplication {
-    name = "reconcile-essentials-dav-shares";
-    runtimeInputs = [pkgs.python3];
-    text = ''
-      exec python3 ${./reconcile-essentials-dav-shares.py} \
-        --identities ${davIdentityFile} \
-        --storage ${storageRoot} \
-        --database ${sharingDatabase}
-    '';
-  };
+  collectionProperties = spec:
+    {
+      inherit (spec) tag;
+      "D:displayname" = spec.displayName;
+    }
+    // lib.optionalAttrs (spec ? components) {
+      "C:supported-calendar-component-set" = lib.concatStringsSep "," spec.components;
+    };
+  collectionRules = owners:
+    lib.concatLists (
+      lib.mapAttrsToList (
+        owner: collections:
+          ["d ${collectionRoot}/${owner} 0750 radicale radicale - -"]
+          ++ lib.concatLists (
+            lib.mapAttrsToList (
+              collection: spec: [
+                "d ${collectionRoot}/${owner}/${collection} 0750 radicale radicale - -"
+                "f ${collectionRoot}/${owner}/${collection}/.Radicale.props 0640 radicale radicale - - ${builtins.toJSON (collectionProperties spec)}"
+              ]
+            ) collections
+          )
+      ) owners
+    );
   notifyDav = pkgs.writeShellApplication {
     name = "notify-essentials-dav-change";
     runtimeInputs = [pkgs.curl];
@@ -68,7 +125,7 @@ in {
 
       sharing = {
         type = "csv";
-        database_path = sharingDatabase;
+        database_path = toString sharingDatabase;
         collection_by_map = true;
         collection_by_token = false;
         permit_create_map = false;
@@ -97,10 +154,15 @@ in {
     };
   };
 
+  # Create canonical collection directories and metadata only when absent.
+  # The `f` tmpfiles rule never replaces existing metadata or collection data.
+  systemd.tmpfiles.rules =
+    collectionRules identities.davCollections.users
+    ++ collectionRules identities.davCollections.groups;
+
   systemd.services.radicale = {
     after = ["wireguard-wg0.service" "ntfy-sh.service"];
     requires = ["wireguard-wg0.service"];
-    serviceConfig.ExecStartPre = ["${reconcileDavShares}/bin/reconcile-essentials-dav-shares"];
   };
 
   users.users.radicale.extraGroups = ["essentials-push"];
