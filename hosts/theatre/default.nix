@@ -104,7 +104,7 @@
       postBuild = ''
         wrapProgram $out/bin/heroic \
           --unset LD_PRELOAD \
-          --add-flags "--disable-gpu --no-sandbox"
+          --add-flags "--no-sandbox"
       '';
     })
     mangohud
