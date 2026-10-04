@@ -49,7 +49,8 @@
           map (collection: shareRow user group collection) (
             lib.attrNames identities.davCollections.groups.${group}
           )
-      ) identities.groups.${group}.members
+      )
+      identities.groups.${group}.members
   ) (lib.attrNames identities.groups);
   sharingDatabase = pkgs.writeText "essentials-radicale-sharing.csv" (
     lib.concatLines ([(lib.concatStringsSep ";" csvFields)] ++ sharingRows)
@@ -73,9 +74,11 @@
                 "d ${collectionRoot}/${owner}/${collection} 0750 radicale radicale - -"
                 "f ${collectionRoot}/${owner}/${collection}/.Radicale.props 0640 radicale radicale - - ${builtins.toJSON (collectionProperties spec)}"
               ]
-            ) collections
+            )
+            collections
           )
-      ) owners
+      )
+      owners
     );
   notifyDav = pkgs.writeShellApplication {
     name = "notify-essentials-dav-change";

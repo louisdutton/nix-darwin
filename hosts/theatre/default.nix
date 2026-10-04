@@ -3,7 +3,9 @@
   pkgs,
   user,
   ...
-}: {
+}: let
+  theatreKodi = pkgs.kodi.withPackages (addons: [addons.joystick]);
+in {
   imports = [
     inputs.disko.nixosModules.disko
     ./disk-config.nix
@@ -18,8 +20,7 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  environment.shellAliases.rebuild =
-    "sudo nixos-rebuild switch --flake ~/projects/nixos";
+  environment.shellAliases.rebuild = "sudo nixos-rebuild switch --flake ~/projects/nixos";
 
   users.users.${user.name} = {
     openssh.authorizedKeys.keys = [
@@ -97,10 +98,15 @@
   zramSwap.enable = true;
 
   environment.systemPackages = with pkgs; [
+    theatreKodi
+    (writeShellScriptBin "kodi-steam" ''
+      unset LD_PRELOAD
+      exec ${theatreKodi}/bin/kodi -fs "$@"
+    '')
     (symlinkJoin {
       name = "heroic-steam";
-      paths = [ heroic ];
-      nativeBuildInputs = [ makeWrapper ];
+      paths = [heroic];
+      nativeBuildInputs = [makeWrapper];
       postBuild = ''
         wrapProgram $out/bin/heroic \
           --unset LD_PRELOAD \
