@@ -22,6 +22,22 @@ in {
 
   environment.shellAliases.rebuild = "sudo nixos-rebuild switch --flake ~/projects/nixos";
 
+  security.sudo.extraRules = [
+    {
+      users = [user.name];
+      commands = [
+        {
+          command = "${pkgs.nixos-rebuild}/bin/nixos-rebuild";
+          options = ["NOPASSWD"];
+        }
+        {
+          command = "/run/current-system/sw/bin/nixos-rebuild";
+          options = ["NOPASSWD"];
+        }
+      ];
+    }
+  ];
+
   users.users.${user.name} = {
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJkTqlA9tbOrjytaN+8hAyPVWgrqucBMJSFBsswNtVug louis@ideapad"
