@@ -2,6 +2,7 @@
 import argparse
 import fcntl
 import hashlib
+from html import unescape
 import json
 import os
 import re
@@ -73,7 +74,31 @@ def cache_artwork(item):
     return result
 
 
-def refresh_artwork(items, ids=None):
+def cache_description(item):
+    """Cache the official overview for offline library browsing."""
+    if isinstance(item.get('description'), str) and item['description'].strip():
+        return item
+    appid = str(item['id'])
+    if not appid.isdecimal():
+        raise ValueError('GOG ID must be numeric')
+    url = 'https://api.gog.com/products/' + appid + '?expand=description'
+    with urlopen(url, timeout=20) as response:
+        description = json.load(response).get('description', {})
+    text = description.get('lead') or description.get('full') or ''
+    # Product pages may put logos, trailers or demo promotions before the overview.
+    text = re.sub(r'<(video|script|style)\b[^>]*>.*?</\1>', '', text, flags=re.I | re.S)
+    paragraphs = re.split(r'(?:<br\s*/?>\s*){2,}|<hr\b[^>]*>|</?p\b[^>]*>|<h[1-6]\b[^>]*>', text, flags=re.I)
+    text = ''
+    for paragraph in paragraphs:
+        paragraph = ' '.join(unescape(re.sub(r'<[^>]*>', ' ', paragraph)).split())
+        if len(paragraph.split()) < 8 or paragraph.lower().startswith('check out') or re.search(r'\bdemo\b.*\bavailable\b', paragraph, re.I):
+            continue
+        text = paragraph
+        break
+    return {**item, 'description': text, 'description_source': url}
+
+
+def refresh_metadata(items, ids=None):
     result = []
     for item in items:
         if ids is None or item['id'] in ids:
@@ -81,6 +106,10 @@ def refresh_artwork(items, ids=None):
                 item = cache_artwork(item)
             except Exception as error:
                 print('Artwork unavailable:', item['id'], type(error).__name__, file=sys.stderr)
+            try:
+                item = cache_description(item)
+            except Exception as error:
+                print('Description unavailable:', item['id'], type(error).__name__, file=sys.stderr)
         result.append(item)
     save(state_dir() / 'library.json', result)
     return result
@@ -321,7 +350,7 @@ def library():
         if page >= int(data.get('totalPages', 1)):
             break
         page += 1
-    return refresh_artwork(result)
+    return refresh_metadata(result)
 
 
 def main():
@@ -336,8 +365,8 @@ def main():
     migration = commands.add_parser('migrate-heroic')
     migration.add_argument('--refresh', action='store_true', help='Re-import existing launch preferences too')
     commands.add_parser('login')
-    artwork = commands.add_parser('artwork', help='Cache missing portrait artwork for owned games')
-    artwork.add_argument('ids', nargs='*')
+    metadata = commands.add_parser('metadata', aliases=['artwork'], help='Cache missing artwork and official descriptions for owned games')
+    metadata.add_argument('ids', nargs='*')
     importing = commands.add_parser('import')
     importing.add_argument('path')
     install = commands.add_parser('install')
@@ -378,8 +407,8 @@ def run_command(args):
         if args.status_file:
             save(args.status_file, estimate)
         print(json.dumps(estimate))
-    elif args.command == 'artwork':
-        refresh_artwork(read(state_dir() / 'library.json', []), set(args.ids) if args.ids else None)
+    elif args.command in ('metadata', 'artwork'):
+        refresh_metadata(read(state_dir() / 'library.json', []), set(args.ids) if args.ids else None)
     elif args.command == 'uninstall':
         if not args.id.isdecimal():
             raise ValueError('GOG ID must be numeric')

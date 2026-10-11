@@ -12,7 +12,7 @@ gog list --installed
 gog list --offline             # Previously fetched account inventory
 gog list --json
 gog info GAME_ID               # Download/disk estimates and destination free space
-gog artwork                    # Cache missing GOG portrait covers, offline inventory
+gog metadata                   # Cache official descriptions and artwork for offline browsing
 gog install GAME_ID            # Windows build, ~/Games/GOG/GAME_ID
 gog install GAME_ID --path /absolute/game/directory --platform linux
 gog update GAME_ID
@@ -53,14 +53,11 @@ These paths respect XDG config/data overrides in the CLI; theatre Kodi currently
 uses the standard data path. Kodi's Games row includes owned, uninstalled GOG
 games with dimmed labels. Selecting one offers installation confirmation;
 uninstalled portraits are also dimmed, including when focused. Library refresh
-caches missing portrait covers directly from GOG, independently of Heroic.
-Artwork refresh also caches GOG's full background images (falling back to wide
-artwork if unavailable), even when a portrait was already cached. Kodi fits the
-complete backdrop without cropping or animated zoom, preserving aspect ratio.
-Wide banners dock at the screen's top edge and fade vertically into the theme
-background. The rails' vertical scrolling viewport reaches both screen edges,
-rather than clipping rows inside the theme's former menu/header gutters.
-installed GOG games have an Uninstall context-menu action. The row also offers
+caches missing artwork and official descriptions directly from GOG,
+independently of Heroic. Descriptions are plain text overviews from the product
+API, shown in the game inspector. `gog metadata` refreshes missing metadata
+without fetching the account inventory; `gog artwork` remains an alias.
+Installed GOG games have an Uninstall context-menu action. The row also offers
 an explicit owned-library refresh (normal browsing remains offline).
 
 Kodi calls the same Nix-pinned CLI, with a cancellable progress dialog and owned
