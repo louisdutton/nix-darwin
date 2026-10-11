@@ -119,16 +119,7 @@ in {
       unset LD_PRELOAD
       exec ${theatreKodi}/bin/kodi -fs "$@"
     '')
-    (symlinkJoin {
-      name = "heroic-steam";
-      paths = [heroic];
-      nativeBuildInputs = [makeWrapper];
-      postBuild = ''
-        wrapProgram $out/bin/heroic \
-          --unset LD_PRELOAD \
-          --add-flags "--no-sandbox"
-      '';
-    })
+    (import ../../pkgs/gog {inherit pkgs;})
     mangohud
   ];
 
