@@ -44,6 +44,34 @@
       }
     ];
   in {
+    packages.x86_64-linux = let
+      pkgs = import nixpkgs {
+        system = "x86_64-linux";
+        config.allowUnfree = true;
+      };
+      preview = import ./pkgs/kodi {
+        inherit pkgs;
+        homeDirectory = "/home/${user.name}";
+        preview = true;
+      };
+    in {
+      theatre-skin = preview.skin;
+      theatre-kodi-preview = preview.package;
+    };
+
+    checks.x86_64-linux.theatre-skin =
+      nixpkgs.legacyPackages.x86_64-linux.runCommand "theatre-skin-check" {
+        nativeBuildInputs = [nixpkgs.legacyPackages.x86_64-linux.python3];
+      } ''
+        python3 ${./tests/kodi/test_skin.py} ${./config/kodi/skin.theatre}
+        touch "$out"
+      '';
+
+    checks.x86_64-linux.inputplumber = import ./tests/inputplumber.nix {
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      inherit nixpkgs;
+    };
+
     nixosConfigurations.mini = nixpkgs.lib.nixosSystem {
       inherit specialArgs;
       system = "aarch64-linux";

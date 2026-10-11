@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="plugin.program.localhome" name="Local Home" version="1.13.0" provider-name="Local">
+  <requires><import addon="xbmc.python" version="3.0.0" /><import addon="script.module.pil" /></requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>executable video</provides>
+  </extension>
+  <extension point="xbmc.python.script" library="default.py" />
+  <extension point="xbmc.service" library="service.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Local films, TV shows and independently launched games</summary>
+    <description lang="en_GB">Uses Kodi's local video library, selected installed Steam-library games and the local GOG catalogue. Games launch independently; GOG downloads and library refreshes are explicit actions.</description>
+    <platform>linux</platform>
+    <license>MIT</license>
+  </extension>
+</addon>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="skin.theatre" version="0.1.0" name="Theatre" provider-name="Louis Dutton; jurialmunkey; beatmasterrs">
+  <requires>
+    <import addon="xbmc.gui" version="5.17.0" />
+    <import addon="plugin.program.localhome" version="1.13.0" />
+  </requires>
+  <extension point="xbmc.gui.skin" defaultthemename="Textures.xbt" debugging="false" effectslowdown="1">
+    <res width="1920" height="1080" aspect="16:9" default="true" folder="1080i" />
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">A local media and games interface for Theatre</summary>
+    <description lang="en_GB">Continue, Favourites and Videos/Games navigation with native playback, settings and controller dialogs. A streamlined fork of Arctic: Zephyr - Reloaded 3.0.3.</description>
+    <platform>linux</platform>
+    <license>Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported</license>
+    <assets><icon>icon.png</icon></assets>
+  </extension>
+</addon>

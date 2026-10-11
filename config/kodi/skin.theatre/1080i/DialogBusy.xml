@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<window id="136">
+  <onload>ClearProperty(down)</onload>
+  <onunload>ClearProperty(down)</onunload>
+  <allowoverlay>no</allowoverlay>
+  <controls>
+    <control type="group">
+      <visible>!Window.IsVisible(DialogProgress.xml)</visible>
+      <visible>true</visible>
+      <visible>true</visible>
+      <visible>String.IsEmpty(Window(home).Property(TrailerFade))</visible>
+      <include>GlobalOverlay</include>
+      <include>GlobalOverlay</include>
+      <control type="group">
+        <centertop>50%</centertop>
+        <centerleft>50%</centerleft>
+        <width>450</width>
+        <height>100</height>
+        <include content="BusySpinner">
+          <param name="color" value="ffededed" />
+        </include>
+      </control>
+    </control>
+  </controls>
+</window>

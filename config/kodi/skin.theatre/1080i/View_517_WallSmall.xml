@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<includes>
+  <include name="View_517_WallSmall_Dimensions_Normal">
+    <right>44</right>
+    <width>1806</width>
+  </include>
+  <include name="View_517_WallSmall">
+    <control type="group">
+      <include>Animation.Common</include>
+      <visible>Control.IsVisible(517)</visible>
+      <include>ViewSlideForJumpBar</include>
+      <control type="panel" id="517">
+        <visible>![String.StartsWith(Container.FolderPath,plugin://plugin.program.localhome/) + [Container.Content(videos) | Container.Content(games)]] + [Container.Content(musicvideos) | Container.Content(movies) | Container.Content(tvshows) | Container.Content(sets) | Container.Content(videos) | $EXP[InGameMode]]</visible>
+        <top>206</top>
+        <include>View_517_WallSmall_Dimensions_Normal</include>
+        <height>672</height>
+        <onleft>9000</onleft>
+        <onright>1604</onright>
+        <onup>517</onup>
+        <ondown>517</ondown>
+        <preloaditems>2</preloaditems>
+        <pagecontrol>1604</pagecontrol>
+        <viewtype label="31333">list</viewtype>
+        <include>ScrolltimeViewsList</include>
+        <itemlayout height="224" width="148">
+          <control type="group">
+            <height>212</height>
+            <include content="include.widget.poster">
+              <param name="id" value="517" />
+              <param name="height" value="212" />
+            </include>
+          </control>
+        </itemlayout>
+        <focusedlayout height="224" width="148">
+          <control type="group">
+            <height>212</height>
+            <include content="include.widget.poster.focus">
+              <param name="id" value="517" />
+              <param name="height" value="212" />
+              <param name="glow_top" value="0" />
+              <param name="glow_height" value="212" />
+              <param name="glow_left" value="-2" />
+              <param name="glow_right" value="-1" />
+              <param name="glow_zoom" value="108" />
+            </include>
+          </control>
+        </focusedlayout>
+      </control>
+      <control type="scrollbar" id="1604">
+        <include content="scrollbar_vertical">
+          <param name="scrollid" value="1604" />
+        </include>
+      </control>
+    </control>
+  </include>
+</includes>

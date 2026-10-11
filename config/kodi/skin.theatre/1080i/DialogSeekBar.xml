@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='utf-8'?>
+<window id="115">
+  <visible>Window.IsActive(fullscreenvideo) + !Window.IsVisible(VideoOSD) + [Player.Seeking | Player.HasPerformedSeek(2) | Player.Paused]</visible>
+  <allowoverlay>no</allowoverlay>
+  <controls>
+    <control type="group">
+      <control type="image">
+        <left>0</left>
+        <top>755</top>
+        <width>1920</width>
+        <height>325</height>
+        <texture>common/white.png</texture>
+        <colordiffuse>EE181818</colordiffuse>
+      </control>
+      <control type="label">
+        <left>80</left>
+        <top>782</top>
+        <width>1160</width>
+        <height>64</height>
+        <label>$INFO[VideoPlayer.Title]</label>
+        <font>LocalHomeSectionTitle</font>
+        <textcolor>FFFFFFFF</textcolor>
+      </control>
+      <control type="label">
+        <left>80</left>
+        <top>846</top>
+        <width>1160</width>
+        <height>44</height>
+        <label>$INFO[Player.Time] / $INFO[Player.Duration]$INFO[Player.SeekOffset, (,)]</label>
+        <font>Small</font>
+        <textcolor>FFFFFFFF</textcolor>
+      </control>
+      <control type="progress">
+        <left>80</left>
+        <top>900</top>
+        <width>1160</width>
+        <height>8</height>
+        <info>Player.Progress</info>
+        <texturebg colordiffuse="FF555555">common/white.png</texturebg>
+        <lefttexture />
+        <midtexture>common/white.png</midtexture>
+        <righttexture />
+        <overlaytexture />
+        <colordiffuse>FFFFFFFF</colordiffuse>
+      </control>
+    </control>
+  </controls>
+</window>

@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<window id="10035">
+  <defaultcontrol always="true">900</defaultcontrol>
+  <controls>
+    <include>GlobalBackground</include>
+    <control type="label">
+      <left>70</left>
+      <top>80</top>
+      <width>1700</width>
+      <height>80</height>
+      <font>LocalHomeSectionTitle</font>
+      <textcolor>FFFFFFFF</textcolor>
+      <label>Theatre</label>
+    </control>
+    <control type="textbox">
+      <left>70</left>
+      <top>200</top>
+      <width>1700</width>
+      <height>450</height>
+      <font>Small</font>
+      <textcolor>FFFFFFFF</textcolor>
+      <label>Continue at the bottom, with Home, Videos and Games in the top navigation.[CR][CR]The Home layout is fixed. Use Kodi settings to configure playback, audio, subtitles and input.</label>
+    </control>
+    <control type="button" id="900">
+      <left>70</left>
+      <top>700</top>
+      <width>500</width>
+      <height>80</height>
+      <include>DefDialogButtonsDefault</include>
+      <label>5</label>
+      <onclick>ActivateWindow(Settings)</onclick>
+    </control>
+    <include>TheatreButtonPrompts</include>
+  </controls>
+</window>

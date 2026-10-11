@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='utf-8'?>
+<includes>
+  <include name="View_55_Wall">
+    <control type="group">
+      <include>Animation.Common</include>
+      <visible>Control.IsVisible(55)</visible>
+      <include>ViewSlideForJumpBar</include>
+      <control type="panel" id="55">
+        <visible>![String.StartsWith(Container.FolderPath,plugin://plugin.program.localhome/) + [Container.Content(videos) | Container.Content(games)]] + [$EXP[InGameMode] | Container.Content(musicvideos) | Container.Content(movies) | Container.Content(tvshows) | Container.Content(seasons) | Container.Content(sets) | Container.Content(videos)]</visible>
+        <top>206</top>
+        <right>70</right>
+        <left>70</left>
+        <height>670</height>
+        <onleft>9000</onleft>
+        <onright>1606</onright>
+        <onup>55</onup>
+        <ondown>55</ondown>
+        <preloaditems>2</preloaditems>
+        <pagecontrol>1606</pagecontrol>
+        <viewtype label="31521">list</viewtype>
+        <include>ScrolltimeViewsList</include>
+        <itemlayout height="335" width="222">
+          <control type="group">
+            <height>325</height>
+            <include content="include.widget.poster">
+              <param name="id" value="55" />
+              <param name="visible_title_overlay" value="false" />
+            </include>
+          </control>
+        </itemlayout>
+        <focusedlayout height="335" width="222">
+          <control type="group">
+            <height>325</height>
+            <include content="include.widget.poster.focus">
+              <param name="id" value="55" />
+              <param name="visible_title_overlay" value="false" />
+            </include>
+          </control>
+        </focusedlayout>
+      </control>
+      <control type="scrollbar" id="1606">
+        <include content="scrollbar_vertical">
+          <param name="scrollid" value="1606" />
+        </include>
+      </control>
+    </control>
+  </include>
+</includes>

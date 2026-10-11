@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<includes>
+  <variable name="GameStudio">
+    <value condition="!String.IsEmpty(Game.Developer)">$INFO[Game.Developer]</value>
+    <value>$INFO[ListItem.Studio]</value>
+  </variable>
+  <variable name="GameGenre">
+    <value condition="!String.IsEmpty(Game.Genres)">$INFO[Game.Genres]</value>
+    <value>$INFO[ListItem.Genre]</value>
+  </variable>
+  <variable name="GameYear">
+    <value condition="!String.IsEmpty(Game.Year)">$INFO[Game.Year]</value>
+    <value>$INFO[ListItem.Year]</value>
+  </variable>
+</includes>

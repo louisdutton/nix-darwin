@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='utf-8'?>
+<window id="2901">
+  <defaultcontrol always="true">13</defaultcontrol>
+  <allowoverlay>no</allowoverlay>
+  <controls>
+    <control type="group">
+      <control type="image">
+        <left>0</left>
+        <top>731</top>
+        <width>1920</width>
+        <height>349</height>
+        <texture>common/white.png</texture>
+        <colordiffuse>EE181818</colordiffuse>
+      </control>
+      <control type="label">
+        <left>80</left>
+        <top>758</top>
+        <width>1160</width>
+        <height>64</height>
+        <label>$INFO[VideoPlayer.Title]</label>
+        <font>LocalHomeSectionTitle</font>
+        <textcolor>FFFFFFFF</textcolor>
+      </control>
+      <control type="label">
+        <left>80</left>
+        <top>822</top>
+        <width>1160</width>
+        <height>44</height>
+        <label>$INFO[Player.Time] / $INFO[Player.Duration]$INFO[Player.SeekOffset, (,)]</label>
+        <font>Small</font>
+        <textcolor>FFFFFFFF</textcolor>
+      </control>
+      <control type="progress">
+        <left>80</left>
+        <top>876</top>
+        <width>1160</width>
+        <height>8</height>
+        <info>Player.Progress</info>
+        <texturebg colordiffuse="FF555555">common/white.png</texturebg>
+        <lefttexture />
+        <midtexture>common/white.png</midtexture>
+        <righttexture />
+        <overlaytexture />
+        <colordiffuse>FFFFFFFF</colordiffuse>
+      </control>
+      <control type="button" id="13">
+        <left>1320</left>
+        <top>758</top>
+        <width>520</width>
+        <height>72</height>
+        <font>Small</font>
+        <align>center</align>
+        <aligny>center</aligny>
+        <textcolor>FFFFFFFF</textcolor>
+        <focusedcolor>FF111111</focusedcolor>
+        <texturefocus>common/white.png</texturefocus>
+        <texturenofocus />
+        <label>Audio</label>
+        <onclick>ActivateWindow(osdaudiosettings)</onclick>
+        <onleft>StepBack</onleft>
+        <onright>StepForward</onright>
+        <onup>15</onup>
+        <ondown>14</ondown>
+      </control>
+      <control type="button" id="14">
+        <left>1320</left>
+        <top>842</top>
+        <width>520</width>
+        <height>72</height>
+        <font>Small</font>
+        <align>center</align>
+        <aligny>center</aligny>
+        <textcolor>FFFFFFFF</textcolor>
+        <focusedcolor>FF111111</focusedcolor>
+        <texturefocus>common/white.png</texturefocus>
+        <texturenofocus />
+        <label>Subtitles</label>
+        <onclick>ActivateWindow(osdsubtitlesettings)</onclick>
+        <onleft>StepBack</onleft>
+        <onright>StepForward</onright>
+        <onup>13</onup>
+        <ondown>15</ondown>
+      </control>
+      <control type="button" id="15">
+        <left>1320</left>
+        <top>926</top>
+        <width>520</width>
+        <height>72</height>
+        <font>Small</font>
+        <align>center</align>
+        <aligny>center</aligny>
+        <textcolor>FFFFFFFF</textcolor>
+        <focusedcolor>FF111111</focusedcolor>
+        <texturefocus>common/white.png</texturefocus>
+        <texturenofocus />
+        <label>$VAR[LocalHomeExitLabel]</label>
+        <onclick>RunScript(plugin.program.localhome,back)</onclick>
+        <onleft>StepBack</onleft>
+        <onright>StepForward</onright>
+        <onup>14</onup>
+        <ondown>13</ondown>
+      </control>
+    </control>
+    <include>TheatreButtonPrompts</include>
+  </controls>
+</window>

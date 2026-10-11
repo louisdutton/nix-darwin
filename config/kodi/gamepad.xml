@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='utf-8'?>
+<keymap>
+  <global>
+    <keyboard>
+      <f6>ActivateWindow(Settings)</f6>
+      <f7>ActivateWindow(ShutdownMenu)</f7>
+      <f8>Noop</f8>
+      <f9>Noop</f9>
+      <c>ContextMenu</c>
+    </keyboard>
+    <joystick profile="game.controller.default">
+      <x>ContextMenu</x>
+      <y>PlayPause</y>
+      <start>ActivateWindow(Settings)</start>
+      <back>Noop</back>
+      <guide>ActivateWindow(ShutdownMenu)</guide>
+    </joystick>
+  </global>
+  <window1100>
+    <keyboard>
+      <f8>PageUp(31104)</f8>
+      <f9>PageDown(31104)</f9>
+    </keyboard>
+    <joystick profile="game.controller.default">
+      <rightstick direction="up">PageUp(31104)</rightstick>
+      <rightstick direction="down">PageDown(31104)</rightstick>
+      <rightstick direction="left">Noop</rightstick>
+      <rightstick direction="right">Noop</rightstick>
+    </joystick>
+  </window1100>
+  <Home>
+    <keyboard>
+      <backspace>RunScript(plugin.program.localhome,page,back)</backspace>
+      <backspace mod="longpress">ActivateWindow(ShutdownMenu)</backspace>
+      <pageup>RunScript(plugin.program.localhome,page,previous)</pageup>
+      <pagedown>RunScript(plugin.program.localhome,page,next)</pagedown>
+    </keyboard>
+    <joystick profile="game.controller.default">
+      <start>ActivateWindow(Settings)</start>
+      <b>RunScript(plugin.program.localhome,page,back)</b>
+      <b holdtime="500">ActivateWindow(ShutdownMenu)</b>
+      <leftbumper>RunScript(plugin.program.localhome,page,previous)</leftbumper>
+      <rightbumper>RunScript(plugin.program.localhome,page,next)</rightbumper>
+    </joystick>
+  </Home>
+  <FullscreenVideo>
+    <keyboard>
+      <backspace>RunScript(plugin.program.localhome,back)</backspace>
+      <escape>RunScript(plugin.program.localhome,back)</escape>
+      <return>PlayPause</return>
+      <up>OSD</up>
+      <down>OSD</down>
+      <left>StepBack</left>
+      <right>StepForward</right>
+      <space>PlayPause</space>
+      <c>OSD</c>
+      <f6>OSD</f6>
+      <pageup>Seek(-10)</pageup>
+      <pagedown>Seek(10)</pagedown>
+    </keyboard>
+    <joystick profile="game.controller.default">
+      <b>RunScript(plugin.program.localhome,back)</b>
+      <a>PlayPause</a>
+      <y>PlayPause</y>
+      <x>OSD</x>
+      <start>OSD</start>
+      <left>StepBack</left>
+      <right>StepForward</right>
+      <up>OSD</up>
+      <down>OSD</down>
+      <guide>ActivateWindow(ShutdownMenu)</guide>
+    </joystick>
+  </FullscreenVideo>
+  <VideoOSD>
+    <keyboard>
+      <backspace>Close</backspace>
+      <escape>Close</escape>
+      <space>PlayPause</space>
+      <c>Close</c>
+      <f6>Close</f6>
+      <left>StepBack</left>
+      <right>StepForward</right>
+    </keyboard>
+    <joystick profile="game.controller.default">
+      <b>Close</b>
+      <y>PlayPause</y>
+      <x>Close</x>
+      <start>Close</start>
+      <left>StepBack</left>
+      <right>StepForward</right>
+      <guide>ActivateWindow(ShutdownMenu)</guide>
+    </joystick>
+  </VideoOSD>
+  <Videos>
+    <keyboard>
+      <pageup>RunScript(plugin.program.localhome,page,previous)</pageup>
+      <pagedown>RunScript(plugin.program.localhome,page,next)</pagedown>
+    </keyboard>
+    <joystick profile="game.controller.default">
+      <leftbumper>RunScript(plugin.program.localhome,page,previous)</leftbumper>
+      <rightbumper>RunScript(plugin.program.localhome,page,next)</rightbumper>
+    </joystick>
+  </Videos>
+  <Programs>
+    <keyboard>
+      <pageup>RunScript(plugin.program.localhome,page,previous)</pageup>
+      <pagedown>RunScript(plugin.program.localhome,page,next)</pagedown>
+    </keyboard>
+    <joystick profile="game.controller.default">
+      <leftbumper>RunScript(plugin.program.localhome,page,previous)</leftbumper>
+      <rightbumper>RunScript(plugin.program.localhome,page,next)</rightbumper>
+    </joystick>
+  </Programs>
+</keymap>

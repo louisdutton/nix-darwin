@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="text-shade">
+      <stop offset="0" stop-color="#181818"/>
+      <stop offset="0.25" stop-color="#181818" stop-opacity="0.98"/>
+      <stop offset="0.48" stop-color="#181818" stop-opacity="0.93"/>
+      <stop offset="0.66" stop-color="#181818" stop-opacity="0.70"/>
+      <stop offset="0.84" stop-color="#181818" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#181818" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="edge-shade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#181818" stop-opacity="0.55"/>
+      <stop offset="0.22" stop-color="#181818" stop-opacity="0"/>
+      <stop offset="0.64" stop-color="#181818" stop-opacity="0"/>
+      <stop offset="0.93" stop-color="#181818" stop-opacity="1"/>
+      <stop offset="1" stop-color="#181818"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#text-shade)"/>
+  <rect width="1920" height="1080" fill="url(#edge-shade)"/>
+</svg>

@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='utf-8'?>
+<includes>
+  <variable name="TheatrePromptSelect">
+    <value condition="Window.IsActive(11100)">Select</value>
+    <value condition="!System.HasModalDialog + Window.IsActive(Home) + String.IsEqual(Window(Home).Property(LocalHome.Page),games)">Open</value>
+    <value condition="!System.HasModalDialog + Window.IsActive(Home) + [String.IsEqual(Window(Home).Property(LocalHome.Page),home) | String.IsEmpty(Window(Home).Property(LocalHome.Page))] + !String.IsEqual(Container(30111).ListItem.DBTYPE,movie)">Open</value>
+    <value condition="!System.HasModalDialog + Window.IsActive(Home) + String.IsEqual(Window(Home).Property(LocalHome.Page),videos) + String.IsEqual(Container(30121).ListItem.DBTYPE,tvshow)">Open</value>
+    <value condition="!System.HasModalDialog + Window.IsActive(Home) + [String.IsEqual(Window(Home).Property(LocalHome.Page),home) | String.IsEmpty(Window(Home).Property(LocalHome.Page)) | String.IsEqual(Window(Home).Property(LocalHome.Page),videos)]">Play</value>
+    <value condition="!System.HasModalDialog + Window.IsActive(Videos) + ListItem.IsFolder">Open</value>
+    <value condition="!System.HasModalDialog + Window.IsActive(Videos)">Play</value>
+    <value condition="Window.IsActive(virtualkeyboard)">Type</value>
+    <value>Select</value>
+  </variable>
+  <variable name="TheatrePromptBack">
+    <value condition="Window.IsActive(VideoOSD)">Close</value>
+    <value condition="!System.HasModalDialog + Window.IsActive(Home)">Home</value>
+    <value>Back</value>
+  </variable>
+  <variable name="TheatrePromptPause">
+    <value condition="Player.Paused">Resume</value>
+    <value>Pause</value>
+  </variable>
+  <include name="TheatreButtonPrompts">
+    <control type="group" id="30900">
+      <bottom>0</bottom>
+      <width>1920</width>
+      <height>72</height>
+      <control type="image">
+        <width>1920</width>
+        <height>72</height>
+        <texture>common/white.png</texture>
+        <colordiffuse>F0181818</colordiffuse>
+      </control>
+      <control type="grouplist">
+        <left>70</left>
+        <top>8</top>
+        <width>1200</width>
+        <height>56</height>
+        <orientation>horizontal</orientation>
+        <itemgap>24</itemgap>
+        <include content="TheatreButtonPrompt">
+          <param name="id" value="30902" />
+          <param name="icon" value="localhome/prompt-a.png" />
+          <param name="label" value="$VAR[TheatrePromptSelect]" />
+          <param name="visible" value="$EXP[TheatrePromptSelection] + !Window.IsActive(textviewer) + [!Window.IsActive(11100) | Control.HasFocus(31102) | [Control.HasFocus(31101) + String.IsEmpty(Window(Home).Property(LocalHome.GameInfo.Error))]]" />
+          <param name="width" value="170" />
+          <param name="textwidth" value="118" />
+        </include>
+        <include content="TheatreButtonPrompt">
+          <param name="id" value="30903" />
+          <param name="icon" value="localhome/prompt-b.png" />
+          <param name="label" value="$VAR[TheatrePromptBack]" />
+          <param name="visible" value="$EXP[TheatrePromptBackAvailable]" />
+          <param name="width" value="160" />
+          <param name="textwidth" value="108" />
+        </include>
+        <include content="TheatreButtonPrompt">
+          <param name="id" value="30904" />
+          <param name="icon" value="localhome/prompt-x.png" />
+          <param name="label" value="Options" />
+          <param name="visible" value="$EXP[TheatrePromptOptions]" />
+          <param name="width" value="170" />
+          <param name="textwidth" value="118" />
+        </include>
+        <include content="TheatreButtonPrompt">
+          <param name="id" value="30905" />
+          <param name="icon" value="localhome/prompt-y.png" />
+          <param name="label" value="$VAR[TheatrePromptPause]" />
+          <param name="visible" value="Window.IsActive(VideoOSD)" />
+          <param name="width" value="170" />
+          <param name="textwidth" value="118" />
+        </include>
+        <include content="TheatreButtonPrompt">
+          <param name="id" value="30912" />
+          <param name="icon" value="localhome/prompt-scroll.png" />
+          <param name="label" value="Scroll" />
+          <param name="visible" value="Window.IsActive(11100) + !System.HasModalDialog + Integer.IsGreater(Container(31103).NumPages,1) + String.IsEmpty(Window(Home).Property(LocalHome.GameInfo.Error))" />
+          <param name="width" value="180" />
+          <param name="textwidth" value="128" />
+        </include>
+      </control>
+      <control type="grouplist">
+        <right>70</right>
+        <top>8</top>
+        <width>400</width>
+        <height>56</height>
+        <orientation>horizontal</orientation>
+        <align>right</align>
+        <itemgap>24</itemgap>
+        <include content="TheatreButtonPrompt">
+          <param name="id" value="30910" />
+          <param name="icon" value="localhome/prompt-plus.png" />
+          <param name="label" value="Settings" />
+          <param name="visible" value="$EXP[TheatrePromptBrowsing]" />
+          <param name="width" value="190" />
+          <param name="textwidth" value="138" />
+          <param name="color" value="FFAAAAAA" />
+        </include>
+        <include content="TheatreButtonPrompt">
+          <param name="id" value="30911" />
+          <param name="icon" value="localhome/prompt-home.png" />
+          <param name="label" value="Power" />
+          <param name="visible" value="$EXP[TheatrePromptBrowsing]" />
+          <param name="width" value="160" />
+          <param name="textwidth" value="108" />
+          <param name="color" value="FFAAAAAA" />
+        </include>
+      </control>
+    </control>
+  </include>
+  <expression name="TheatrePromptBrowsing">!System.HasModalDialog + !Window.IsActive(FullScreenVideo)</expression>
+  <expression name="TheatrePromptPages">$EXP[TheatrePromptBrowsing] + [Window.IsActive(Home) | Window.IsActive(Videos) | Window.IsActive(Programs)]</expression>
+  <expression name="TheatrePromptSelection">Window.IsActive(VideoOSD) | System.HasModalDialog | [$EXP[TheatrePromptBrowsing] + [[Window.IsActive(Home) + [Control.HasFocus(30111) | Control.HasFocus(30121) | Control.HasFocus(30122)]] | [!Window.IsActive(Home) + [[!Window.IsActive(Videos) + !Window.IsActive(Programs)] | Integer.IsGreater(Container.NumItems,0)]]]]</expression>
+  <expression name="TheatrePromptBackAvailable">System.HasModalDialog | !Window.IsActive(Home) | [Window.IsActive(Home) + [String.IsEqual(Window(Home).Property(LocalHome.Page),videos) | String.IsEqual(Window(Home).Property(LocalHome.Page),games)]]</expression>
+  <expression name="TheatrePromptOptions">$EXP[TheatrePromptPages] + $EXP[TheatrePromptSelection]</expression>
+  <include name="TheatreButtonPrompt">
+    <param name="id" />
+    <param name="icon" />
+    <param name="label" />
+    <param name="visible" />
+    <param name="width" />
+    <param name="textwidth" />
+    <definition>
+      <control type="group" id="$PARAM[id]">
+        <width>$PARAM[width]</width>
+        <height>56</height>
+        <visible>$PARAM[visible]</visible>
+        <control type="image">
+          <width>48</width>
+          <height>56</height>
+          <aspectratio>keep</aspectratio>
+          <texture colordiffuse="$PARAM[color]">$PARAM[icon]</texture>
+        </control>
+        <control type="label">
+          <width>$PARAM[textwidth]</width>
+          <height>56</height>
+          <font>Small</font>
+          <aligny>center</aligny>
+          <textcolor>$PARAM[color]</textcolor>
+          <label>$PARAM[label]</label>
+          <left>52</left>
+        </control>
+      </control>
+    </definition>
+    <param name="color" default="FFFFFFFF" />
+  </include>
+</includes>

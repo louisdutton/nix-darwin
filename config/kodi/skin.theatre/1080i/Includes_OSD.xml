@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<includes>
+  <variable name="OSDPanel">
+    <value>Background</value>
+  </variable>
+  <variable name="OSDPanelWhite70">
+    <value>Dark1</value>
+  </variable>
+  <variable name="OSDPanelWhite70-Kaitoast">
+    <value condition="String.IsEqual(Control.GetLabel(400),kaitoast/info.png)">$VAR[OSDPanelWhite70]</value>
+    <value>ffbbbbbb</value>
+  </variable>
+</includes>

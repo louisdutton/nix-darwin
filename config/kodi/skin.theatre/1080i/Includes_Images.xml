@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='utf-8'?>
+<includes>
+  <variable name="PosterImage">
+    <value condition="!String.IsEmpty(ListItem.Art(season.poster)) + !Window.IsVisible(Home)">$INFO[ListItem.Art(season.poster)]</value>
+    <value condition="!String.IsEmpty(ListItem.Art(poster))">$INFO[ListItem.Art(poster)]</value>
+    <value condition="!String.IsEmpty(ListItem.Art(tvshow.poster))">$INFO[ListItem.Art(tvshow.poster)]</value>
+    <value condition="String.IsEqual(ListItem.DBType,genre) | String.EndsWith(Container.FolderPath,Genres)">$VAR[ThumbImageGenres]</value>
+    <value condition="!String.IsEmpty(ListItem.EpgEventIcon) + String.StartsWith(ListItem.FolderPath,pvr://timers)">$INFO[ListItem.EpgEventIcon]</value>
+    <value>$INFO[ListItem.Icon]</value>
+  </variable>
+  <variable name="DialogSelectImageList">
+    <value condition="String.IsEqual(ListItem.DBType,tvshow) + !String.IsEmpty(ListItem.Art(tvshow.poster))">$INFO[ListItem.Art(tvshow.poster)]</value>
+    <value condition="[String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow)] + !String.IsEmpty(ListItem.Art(poster))">$INFO[ListItem.Art(poster)]</value>
+    <value>$INFO[ListItem.Icon]</value>
+  </variable>
+  <variable name="DialogSelectImageBig">
+    <value condition="String.IsEqual(Container(6).ListItem.DBType,tvshow) + !String.IsEmpty(Container(6).ListItem.Art(tvshow.poster))">$INFO[Container(6).ListItem.Art(tvshow.poster)]</value>
+    <value condition="[String.IsEqual(Container(6).ListItem.DBType,movie) | String.IsEqual(Container(6).ListItem.DBType,tvshow)] + !String.IsEmpty(Container(6).ListItem.Art(poster))">$INFO[Container(6).ListItem.Art(poster)]</value>
+    <value>$INFO[Container(6).ListItem.Icon]</value>
+  </variable>
+  <variable name="CastImage">
+    <value condition="!String.IsEmpty(ListItem.Art(thumb))">$INFO[ListItem.Art(thumb)]</value>
+  </variable>
+  <variable name="PosterImageSquare">
+    <value condition="!String.IsEmpty(ListItem.Art(poster))">$INFO[ListItem.Art(poster)]</value>
+    <value condition="!String.IsEmpty(ListItem.Art(thumb))">$INFO[ListItem.Art(thumb)]</value>
+    <value condition="!String.IsEmpty(ListItem.Icon)">$INFO[ListItem.Icon]</value>
+    <value condition="String.IsEqual(ListItem.DBTYPE,artist)">DefaultArtist.png</value>
+    <value condition="String.IsEqual(ListItem.DBTYPE,album)">DefaultAlbumCover.png</value>
+    <value condition="String.IsEqual(ListItem.DBTYPE,song)">DefaultMusicSongs.png</value>
+    <value condition="!String.IsEmpty(ListItem.AddonName)">DefaultAddon.png</value>
+  </variable>
+  <variable name="ThumbImageGenres">
+    <value>DefaultGenre.png</value>
+  </variable>
+  <variable name="FanartImage">
+    <value condition="!String.IsEmpty(Container(5161).ListItem.Icon) + String.IsEqual(Container(5161).ListItem.DBTYPE,episode) + Control.HasFocus(5161)">$INFO[Container(5161).ListItem.Icon]</value>
+    <value condition="!String.IsEmpty(ListItem.Art(landscape)) + Container.Content(tvshows)">$INFO[ListItem.Art(landscape)]</value>
+    <value condition="!String.IsEmpty(ListItem.Art(landscape)) + Container.Content(seasons)">$INFO[ListItem.Art(landscape)]</value>
+    <value condition="!String.IsEmpty(ListItem.Art(tvshow.landscape)) + Container.Content(seasons)">$INFO[ListItem.Art(tvshow.landscape)]</value>
+    <value condition="!String.IsEmpty(ListItem.Art(landscape)) + Container.Content(movies)">$INFO[ListItem.Art(landscape)]</value>
+    <value condition="!String.IsEmpty(ListItem.Thumb) + String.IsEqual(ListItem.DBType,video)">$INFO[ListItem.Thumb]</value>
+    <value condition="!String.IsEmpty(ListItem.Icon) + Container.Content(addons)">$INFO[ListItem.Icon]</value>
+    <value condition="!String.IsEmpty(ListItem.Art(title)) + $EXP[InGameMode]">$INFO[ListItem.Art(title)]</value>
+    <value condition="!String.IsEmpty(ListItem.Art(fanart)) + !Container.Content(episodes) + !Container.Content(albums)">$INFO[ListItem.Art(fanart)]</value>
+    <value condition="!String.IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
+    <value condition="!String.IsEmpty(ListItem.EpgEventIcon) + String.StartsWith(ListItem.FolderPath,pvr://timers)">$INFO[ListItem.EpgEventIcon]</value>
+    <value>$INFO[ListItem.Icon]</value>
+  </variable>
+  <variable name="FanartImageClearArt">
+    <value condition="!String.IsEmpty(ListItem.Art(tvshow.clearlogo))">$INFO[ListItem.Art(tvshow.clearlogo)]</value>
+    <value condition="!String.IsEmpty(ListItem.Art(clearlogo))">$INFO[ListItem.Art(clearlogo)]</value>
+    <value condition="!String.IsEmpty(ListItem.Art(artist.clearlogo))">$INFO[ListItem.Art(artist.clearlogo)]</value>
+  </variable>
+  <variable name="WidgetFanartImage">
+    <value condition="!String.IsEmpty(ListItem.Art(landscape)) + !Window.IsVisible(VideoOSDBookmarks.xml)">$INFO[ListItem.Art(landscape)]</value>
+    <value condition="!String.IsEmpty(ListItem.Art(fanart)) + !Window.IsVisible(VideoOSDBookmarks.xml)">$INFO[ListItem.Art(fanart)]</value>
+    <value condition="!String.IsEmpty(ListItem.Art(thumb))">$INFO[ListItem.Art(thumb)]</value>
+    <value condition="!String.IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
+    <value condition="!String.IsEmpty(ListItem.EpgEventIcon) + String.StartsWith(ListItem.FolderPath,pvr://timers)">$INFO[ListItem.EpgEventIcon]</value>
+    <value>$INFO[ListItem.Icon]</value>
+  </variable>
+  <variable name="ImageBluray">
+    <value condition="String.IsEqual(ListItem.VideoResolution,4K) | Integer.IsEqual(ListItem.VideoResolution,2160)">ultrahd</value>
+    <value>bluray</value>
+  </variable>
+  <variable name="Image_Thumb_Label">
+    <value condition="!String.IsEmpty(ListItem.Thumb)">$INFO[ListItem.Thumb]</value>
+    <value>$INFO[ListItem.Label]</value>
+  </variable>
+  <variable name="Image_9505_Thumb_Label">
+    <value condition="!String.IsEmpty(Container(9505).ListItem.Thumb)">$INFO[Container(9505).ListItem.Thumb]</value>
+    <value>$INFO[Container(9505).ListItem.Label]</value>
+  </variable>
+</includes>

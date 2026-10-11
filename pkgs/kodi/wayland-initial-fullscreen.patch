@@ -1,0 +1,15 @@
+diff --git a/xbmc/windowing/wayland/WinSystemWayland.cpp b/xbmc/windowing/wayland/WinSystemWayland.cpp
+--- a/xbmc/windowing/wayland/WinSystemWayland.cpp
++++ b/xbmc/windowing/wayland/WinSystemWayland.cpp
+@@ -370,6 +370,11 @@ bool CWinSystemWayland::CreateNewWindow(const std::string& name,
+   UpdateDesktopResolution(res, res.strOutput, m_bufferSize.Width(), m_bufferSize.Height(), res.fRefreshRate, 0);
+   res.bFullScreen = fullScreen;
+ 
++  // Match Kodi's initial mode until the compositor configures the surface.
++  // Otherwise a fullscreen startup followed by a windowed configure queues
++  // VIDEORESIZE, which the fullscreen application ignores, instead of MODECHANGE.
++  m_bFullScreen = fullScreen;
++
+   // Now start processing events
+   //
+   // There are two stages to the event handling:
