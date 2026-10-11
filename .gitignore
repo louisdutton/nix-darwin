@@ -6,3 +6,7 @@ devenv.local.nix
 devenv.local.yaml
 nvim.log
 .installer-cache/
+
+# Generated Python bytecode
+__pycache__/
+*.py[cod]
