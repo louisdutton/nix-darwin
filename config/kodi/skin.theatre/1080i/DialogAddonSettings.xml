@@ -11,7 +11,7 @@
         <posy>-30</posy>
         <width>1500</width>
         <height>975</height>
-        <texture border="16" colordiffuse="White100">common/rounded-shadow8.png</texture>
+        <texture border="16" colordiffuse="White100">localhome/rounded-box.png</texture>
       </control>
       <control type="label" id="2">
         <description>Header Label</description>
@@ -22,7 +22,7 @@
         <textcolor>Dark2</textcolor>
         <label />
       </control>
-      <include>Kodi_Logo</include>
+
       <control type="image">
         <top>70</top>
         <left>15</left>
@@ -60,28 +60,28 @@
         <description>Default Category Button</description>
         <width>387</width>
         <align>left</align>
-        <texturefocus colordiffuse="$VAR[ColorHighlight]" border="8">common/box.png</texturefocus>
-        <alttexturefocus colordiffuse="$VAR[ColorHighlight]" border="8">common/box.png</alttexturefocus>
+        <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
+        <alttexturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</alttexturefocus>
         <focusedcolor>FocusText</focusedcolor>
       </control>
       <control type="button" id="7">
         <description>Default Button</description>
         <align>left</align>
-        <texturefocus colordiffuse="$VAR[ColorHighlight]" border="8">common/box.png</texturefocus>
+        <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
         <focusedcolor>FocusText</focusedcolor>
       </control>
       <control type="radiobutton" id="8">
         <description>Default RadioButton</description>
         <align>left</align>
         <radioposx>910</radioposx>
-        <texturefocus colordiffuse="$VAR[ColorHighlight]" border="8">common/box.png</texturefocus>
+        <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
         <focusedcolor>FocusText</focusedcolor>
       </control>
       <control type="spincontrolex" id="9">
         <description>Default spincontrolex</description>
         <reverse>yes</reverse>
         <align>left</align>
-        <texturefocus colordiffuse="$VAR[ColorHighlight]" border="8">common/box.png</texturefocus>
+        <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
         <focusedcolor>FocusText</focusedcolor>
       </control>
       <control type="label" id="14">
@@ -97,7 +97,7 @@
         <description>Default Slider</description>
         <width>969</width>
         <align>left</align>
-        <texturefocus colordiffuse="$VAR[ColorHighlight]" border="8">common/box.png</texturefocus>
+        <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
         <textwidth>600</textwidth>
         <focusedcolor>FocusText</focusedcolor>
       </control>
@@ -122,8 +122,8 @@
           <onright>29</onright>
           <onup>5</onup>
           <ondown>5</ondown>
-          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="5">common/box.png</texturefocus>
-          <texturenofocus colordiffuse="Black12" border="5">common/box.png</texturenofocus>
+          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
+          <texturenofocus colordiffuse="Black12" border="16">localhome/rounded-box.png</texturenofocus>
           <include>DefDialogButtons</include>
           <focusedcolor>FocusText</focusedcolor>
         </control>
@@ -137,8 +137,8 @@
           <onright>30</onright>
           <onup>5</onup>
           <ondown>5</ondown>
-          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="5">common/box.png</texturefocus>
-          <texturenofocus colordiffuse="Black12" border="5">common/box.png</texturenofocus>
+          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
+          <texturenofocus colordiffuse="Black12" border="16">localhome/rounded-box.png</texturenofocus>
           <include>DefDialogButtons</include>
           <focusedcolor>FocusText</focusedcolor>
         </control>
@@ -152,8 +152,8 @@
           <onright>28</onright>
           <onup>5</onup>
           <ondown>5</ondown>
-          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="5">common/box.png</texturefocus>
-          <texturenofocus colordiffuse="Black12" border="5">common/box.png</texturenofocus>
+          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
+          <texturenofocus colordiffuse="Black12" border="16">localhome/rounded-box.png</texturenofocus>
           <include>DefDialogButtons</include>
           <focusedcolor>FocusText</focusedcolor>
         </control>

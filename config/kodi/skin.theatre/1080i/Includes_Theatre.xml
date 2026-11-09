@@ -1,20 +1,50 @@
 <?xml version='1.0' encoding='utf-8'?>
 <includes>
-  <include name="TheatreInspectorBackdrop">
-    <param name="focus_x" default="1280" />
+  <!-- Content locations share one non-interactive breadcrumb; Home uses tabs. -->
+  <include name="TheatreBreadcrumb">
+    <param name="section" default="Videos" />
+    <param name="title" default="$VAR[TheatreVideoLocation]" />
     <definition>
-      <control type="group">
-        <left>$PARAM[focus_x]</left>
-        <control type="image">
-          <left>-1080</left>
-          <width>2160</width>
-          <height>1008</height>
-          <aspectratio align="center" aligny="center">scale</aspectratio>
-          <texture background="false">$INFO[Window(Home).Property(LocalHome.GameInfo.Fanart)]</texture>
+      <control type="grouplist">
+        <left>SidePad</left>
+        <top>SidePad</top>
+        <width>1760</width>
+        <height>64</height>
+        <orientation>horizontal</orientation>
+        <itemgap>24</itemgap>
+        <control type="label">
+          <width>auto</width>
+          <height>64</height>
+          <aligny>center</aligny>
+          <font>HeaderLabel</font>
+          <textcolor>Dark2</textcolor>
+          <label>$PARAM[section]</label>
+        </control>
+        <control type="label">
+          <width>20</width>
+          <height>64</height>
+          <aligny>center</aligny>
+          <align>center</align>
+          <font>HeaderLabel</font>
+          <textcolor>Dark2</textcolor>
+          <label>›</label>
+        </control>
+        <control type="label">
+          <width min="1" max="1500">auto</width>
+          <height>64</height>
+          <aligny>center</aligny>
+          <font>HeaderLabel</font>
+          <textcolor>Dark1</textcolor>
+          <label>$PARAM[title]</label>
         </control>
       </control>
     </definition>
   </include>
+  <variable name="TheatreVideoLocation">
+    <value condition="Container.Content(episodes) + !String.IsEmpty(ListItem.TVShowTitle)">$INFO[ListItem.TVShowTitle]</value>
+    <value condition="!String.IsEmpty(Container.FolderName)">$INFO[Container.FolderName]</value>
+    <value>$VAR[MainHeaderLabel]</value>
+  </variable>
   <variable name="TheatreGameAction">
     <value condition="String.IsEqual(Window(Home).Property(LocalHome.GameInfo.Action),Install)">Install</value>
     <value>Play</value>
@@ -25,23 +55,26 @@
     <value condition="!Window.IsActive(Home) + !String.IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
     <value>special://skin/media/localhome/neutral.png</value>
   </variable>
+  <!-- Home and game details share the complete backdrop, including its overlay. -->
   <include name="GlobalBackground">
-    <control type="image">
-      <left>0</left>
-      <top>0</top>
-      <width>1920</width>
-      <height>1080</height>
-      <texture>localhome/neutral.png</texture>
-    </control>
-    <control type="image">
-      <left>0</left>
-      <top>0</top>
-      <width>1920</width>
-      <height>1080</height>
-      <!-- Crop every source to the same screen area; keep the fade fixed to it. -->
-      <aspectratio align="center" aligny="top" scalediffuse="false">scale</aspectratio>
-      <texture background="false" diffuse="localhome/banner-fade.png" colordiffuse="26FFFFFF">$VAR[TheatreFanart]</texture>
-    </control>
+    <param name="image" default="$VAR[TheatreFanart]" />
+    <definition>
+      <control type="image">
+        <left>0</left>
+        <top>0</top>
+        <width>1920</width>
+        <height>1080</height>
+        <texture>localhome/neutral.png</texture>
+      </control>
+      <control type="image">
+        <left>0</left>
+        <top>0</top>
+        <width>1920</width>
+        <height>1080</height>
+        <aspectratio align="center" aligny="top" scalediffuse="false">scale</aspectratio>
+        <texture background="false" diffuse="localhome/banner-fade.png" colordiffuse="26FFFFFF">$PARAM[image]</texture>
+      </control>
+    </definition>
   </include>
   <include name="TheatreContinue">
     <control type="group" id="3011199">

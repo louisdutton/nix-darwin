@@ -3,6 +3,54 @@ import json
 import sys
 
 
+def episode_options(xbmc, xbmcgui):
+    """Offer only actions supported by the focused local library episode."""
+    if not xbmc.getCondVisibility('Container.Content(episodes) + Control.HasFocus(50)'):
+        xbmc.executebuiltin('Action(ContextMenu)')
+        return
+    episodeid = xbmc.getInfoLabel('ListItem.DBID')
+    if not episodeid.isdecimal() or int(episodeid) <= 0:
+        return
+    def request(method, params):
+        response = json.loads(xbmc.executeJSONRPC(json.dumps({
+            'jsonrpc': '2.0', 'id': 1, 'method': method, 'params': params})))
+        if 'error' in response:
+            raise RuntimeError(str(response['error']))
+        return response.get('result', {})
+    try:
+        episodeid = int(episodeid)
+        episode = request('VideoLibrary.GetEpisodeDetails', {
+            'episodeid': episodeid, 'properties': ['file', 'playcount', 'resume']})['episodedetails']
+        if not episode.get('file', '').startswith('/'):
+            return
+        resumed = episode.get('resume', {}).get('position', 0) > 0
+        watched = episode.get('playcount', 0) > 0
+        actions = [('Resume', 'resume')] if resumed else []
+        actions.append(('Play from beginning' if resumed else 'Play', 'play'))
+        actions.append(('Mark as unwatched' if watched else 'Mark as watched', 'watched'))
+        if resumed:
+            actions.append(('Clear resume point', 'clear'))
+        actions.append(('Episode information', 'info'))
+        choice = xbmcgui.Dialog().contextmenu([label for label, _ in actions])
+        if not 0 <= choice < len(actions):
+            return
+        action = actions[choice][1]
+        if action in ('resume', 'play'):
+            request('Player.Open', {'item': {'episodeid': episodeid},
+                                    'options': {'resume': action == 'resume'}})
+        elif action == 'info':
+            xbmc.executebuiltin('Action(Info)')
+        else:
+            params = {'episodeid': episodeid, 'resume': {'position': 0, 'total': 0}}
+            if action == 'watched':
+                params['playcount'] = 0 if watched else 1
+            request('VideoLibrary.SetEpisodeDetails', params)
+            xbmc.executebuiltin('Container.Refresh')
+    except (KeyError, RuntimeError, ValueError) as error:
+        xbmc.log('Local Home: episode options failed: ' + str(error), xbmc.LOGERROR)
+        xbmcgui.Dialog().notification('Episode options', 'Could not update this episode')
+
+
 def open_episode(xbmc, xbmcgui, episodeid):
     response = json.loads(xbmc.executeJSONRPC(json.dumps({
         'jsonrpc': '2.0', 'id': 1, 'method': 'VideoLibrary.GetEpisodeDetails',

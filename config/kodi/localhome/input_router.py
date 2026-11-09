@@ -45,6 +45,7 @@ class Router:
         self.state = None
         self.game = None
         self.native_enabled = None
+        self.mode = 'kodi'
 
     def native_input(self, enabled):
         if self.native_enabled == enabled:
@@ -71,12 +72,21 @@ class Router:
                 self.applied[device] = mode
         return bool(devices)
 
+    def route(self, mode):
+        self.mode = mode
+        # Disable raw joystick consumption before exposing a game's buttons.
+        # Enable it only after the Kodi profile has neutralized those buttons.
+        if mode == 'game':
+            self.native_input(False)
+        self.profile(mode)
+        if mode == 'kodi':
+            self.native_input(True)
+
     def tick(self, catalog):
         if os.environ.get('THEATRE_COMPOSITOR') == 'gamescope':
             from gamescope import focused, GAME_APP
             from game_session import TOOLS
-            managed = self.profile('game' if focused(TOOLS['xprop']) == GAME_APP else 'kodi')
-            self.native_input(not managed)
+            self.route('game' if focused(TOOLS['xprop']) == GAME_APP else 'kodi')
             return
         current = windows()
         active_property = command('xprop', '-root', '_NET_ACTIVE_WINDOW')
@@ -84,9 +94,8 @@ class Router:
         kodi = next((window for window, info in current.items() if '"kodi"' in info['class']), None)
         game = choose_game(catalog, current, active, self.game)
         # A running game can remain open while Kodi has focus. Its controller
-        # gets neutralized when switching to keyboard navigation for Kodi.
-        managed = self.profile('game' if game and active == game else 'kodi')
-        self.native_input(not managed)
+        # buttons get neutralized while Kodi owns native stick navigation.
+        self.route('game' if game and active == game else 'kodi')
         if self.game and not game and kodi:
             command('xdotool', 'windowactivate', kodi)
         self.game = game
@@ -120,7 +129,7 @@ def main():
                 # profile; do not restore joystick consumption behind games.
                 if not router.applied:
                     try:
-                        router.native_input(True)
+                        router.native_input(router.mode == 'kodi')
                     except Exception:
                         pass
                 # Retry hotplug/service startup without flooding Kodi's log.

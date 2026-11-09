@@ -13,8 +13,8 @@
     "locale.language" = "resource.language.en_gb";
     "locale.timezonecountry" = "Britain (UK)";
     "locale.timezone" = "Europe/London";
-    # Safe bootstrap/fallback. The router disables native joystick input only
-    # after InputPlumber has actually provided our managed controller.
+    # Kodi owns stick deadzones and navigation; the router disables joystick
+    # input before giving a foreground game its controller profile.
     "input.enablejoystick" = true;
     "input.enablemouse" = false;
     "input.asknewcontrollers" = false;

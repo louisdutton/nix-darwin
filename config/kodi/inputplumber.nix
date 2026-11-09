@@ -5,16 +5,6 @@ let
     target_events = [target];
   };
   key = name: source: keyboard: button name source {inherit keyboard;};
-  stickAxis = stick: name: direction: keyboard: {
-    inherit name;
-    source_event.gamepad.axis = {
-      name = stick;
-      inherit direction;
-      deadzone = 0.4;
-    };
-    target_events = [{inherit keyboard;}];
-  };
-  axis = stickAxis "LeftStick";
   ignore = name: event: {
     inherit name;
     source_event.gamepad = event;
@@ -50,7 +40,7 @@ in {
     version = 1;
     kind = "DeviceProfile";
     name = "Theatre Kodi";
-    description = "Keyboard navigation without leaking gamepad events to background games.";
+    description = "Native stick navigation with keyboard buttons; neutralize game buttons behind Kodi.";
     mapping = [
       (key "Power" "Guide" "KeyF7")
       (key "Nintendo A selects" "East" "KeyEnter")
@@ -58,34 +48,17 @@ in {
       (key "Nintendo X context menu" "North" "KeyC")
       (key "Nintendo Y play pause" "West" "KeySpace")
       (key "Settings" "Start" "KeyF6")
-      (ignore "Unused minus button" {button = "Select";})
+      (key "List options" "Select" "KeyF10")
       (key "Up" "DPadUp" "KeyUp")
       (key "Down" "DPadDown" "KeyDown")
       (key "Left" "DPadLeft" "KeyLeft")
       (key "Right" "DPadRight" "KeyRight")
-      (axis "Stick Up" "up" "KeyUp")
-      (axis "Stick Down" "down" "KeyDown")
-      (axis "Stick Left" "left" "KeyLeft")
-      (axis "Stick Right" "right" "KeyRight")
       (key "Left page" "LeftBumper" "KeyPageUp")
       (key "Right page" "RightBumper" "KeyPageDown")
       (ignore "Ignore other gamepad buttons" {button = "LeftStick";})
       (ignore "Ignore right stick click" {button = "RightStick";})
       (ignore "Ignore screenshot" {button = "Screenshot";})
-      (stickAxis "RightStick" "Scroll description up" "up" "KeyF8")
-      (stickAxis "RightStick" "Scroll description down" "down" "KeyF9")
-      (ignore "Ignore right stick left" {
-        axis = {
-          name = "RightStick";
-          direction = "left";
-        };
-      })
-      (ignore "Ignore right stick right" {
-        axis = {
-          name = "RightStick";
-          direction = "right";
-        };
-      })
+      # Sticks pass through to Kodi; its native deadzone and repeat apply.
       (ignore "Ignore left trigger" {trigger.name = "LeftTrigger";})
       (ignore "Ignore digital left trigger" {button = "LeftTrigger";})
       (ignore "Ignore digital right trigger" {button = "RightTrigger";})

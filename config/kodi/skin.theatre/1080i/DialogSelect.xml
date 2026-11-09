@@ -19,11 +19,7 @@
         <include condition="!String.IsEmpty(Window(home).Property(SetUserRating))">DefDialogHeaderUserRating</include>
         <label />
       </control>
-      <include content="Kodi_Logo">
-        <param name="dimensions" value="40" />
-        <param name="top" value="40" />
-        <param name="left" value="40" />
-      </include>
+
       <control type="image">
         <top>95</top>
         <left>40</left>
@@ -212,7 +208,7 @@
           <ondown>7</ondown>
           <font>Button</font>
           <textcolor>Black70</textcolor>
-          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="5">common/box.png</texturefocus>
+          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
           <focusedcolor>FocusText</focusedcolor>
         </control>
         <control type="button" id="7">
@@ -228,7 +224,7 @@
           <ondown>3</ondown>
           <font>Button</font>
           <textcolor>Black70</textcolor>
-          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="5">common/box.png</texturefocus>
+          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
           <visible>!Control.IsVisible(21)</visible>
           <animation effect="slide" start="0" end="0,-80" condition="!Control.IsVisible(5)" time="0" delay="0">Conditional</animation>
           <focusedcolor>FocusText</focusedcolor>

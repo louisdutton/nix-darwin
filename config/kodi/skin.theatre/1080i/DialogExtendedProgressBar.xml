@@ -20,7 +20,7 @@
         <width>660</width>
         <height>100</height>
         <animation effect="fade" start="100" end="90" condition="true" time="0" delay="0">Conditional</animation>
-        <texture border="16" diffuse="diffuse/wall-fanart.png" colordiffuse="Background">common/rounded-shadow8.png</texture>
+        <texture border="16" diffuse="diffuse/wall-fanart.png" colordiffuse="Background">localhome/rounded-box.png</texture>
       </control>
       <control type="group">
         <control type="group">

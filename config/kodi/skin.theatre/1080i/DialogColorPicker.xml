@@ -13,7 +13,7 @@
         <top>220</top>
         <width>1760</width>
         <height>636</height>
-        <texture border="5" colordiffuse="Panel">common/box.png</texture>
+        <texture colordiffuse="Panel" border="16">localhome/rounded-box.png</texture>
       </control>
       <control type="group">
         <left>SidePad</left>
@@ -132,7 +132,7 @@
         </include>
         <include content="Def_Gradient">
           <param name="visible" value="String.IsEqual(Window(home).Property(gradient),logo)" />
-          <param name="color" value="$VAR[ColorKodiLogo]" />
+          <param name="color" value="$VAR[ColorHighlight]" />
         </include>
       </control>
       <control type="grouplist" id="9100">
@@ -174,13 +174,13 @@
         <control type="image">
           <width>76</width>
           <height>66</height>
-          <texture border="5">common/box.png</texture>
+          <texture border="16">localhome/rounded-box.png</texture>
           <colordiffuse>$INFO[Window(home).Property(colorstring)]</colordiffuse>
         </control>
         <control type="image">
           <width>76</width>
           <height>66</height>
-          <texture border="5">common/box.png</texture>
+          <texture border="16">localhome/rounded-box.png</texture>
           <colordiffuse>$VAR[Label_ColorPickerColor]</colordiffuse>
         </control>
       </control>

@@ -15,7 +15,7 @@
         <bottom>-8</bottom>
         <colordiffuse>$VAR[OSDPanel]</colordiffuse>
         <animation effect="fade" start="100" end="90" condition="true" time="0" delay="0">Conditional</animation>
-        <texture border="16">common/rounded-shadow8.png</texture>
+        <texture border="16">localhome/rounded-box.png</texture>
       </control>
       <control type="group">
         <left>15</left>
@@ -28,7 +28,7 @@
           <include>FontTop</include>
           <textcolor>$VAR[OSDPanelWhite70]</textcolor>
         </control>
-        <include>Kodi_Logo</include>
+
         <control type="image">
           <top>70</top>
           <left>15</left>

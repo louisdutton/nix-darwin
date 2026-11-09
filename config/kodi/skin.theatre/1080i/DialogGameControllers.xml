@@ -12,7 +12,7 @@
         <posy>-30</posy>
         <width>1860</width>
         <height>975</height>
-        <texture border="16" colordiffuse="White100">common/rounded-shadow8.png</texture>
+        <texture border="16" colordiffuse="White100">localhome/rounded-box.png</texture>
       </control>
       <control type="group">
         <left>0</left>
@@ -26,7 +26,7 @@
           <textcolor>Dark2</textcolor>
           <label>35058</label>
         </control>
-        <include>Kodi_Logo</include>
+
         <control type="image">
           <top>70</top>
           <left>10</left>
@@ -113,8 +113,8 @@
           <description>OK</description>
           <align>center</align>
           <width>300</width>
-          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="5">common/box.png</texturefocus>
-          <texturenofocus colordiffuse="Black12" border="5">common/box.png</texturenofocus>
+          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
+          <texturenofocus colordiffuse="Black12" border="16">localhome/rounded-box.png</texturenofocus>
           <include>DefDialogButtons</include>
           <label>$LOCALIZE[186]</label>
           <focusedcolor>FocusText</focusedcolor>
@@ -123,8 +123,8 @@
           <description>Reset</description>
           <align>center</align>
           <width>300</width>
-          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="5">common/box.png</texturefocus>
-          <texturenofocus colordiffuse="Black12" border="5">common/box.png</texturenofocus>
+          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
+          <texturenofocus colordiffuse="Black12" border="16">localhome/rounded-box.png</texturenofocus>
           <include>DefDialogButtons</include>
           <label>$LOCALIZE[13007]</label>
           <focusedcolor>FocusText</focusedcolor>
@@ -133,8 +133,8 @@
           <description>Install More Controllers</description>
           <align>center</align>
           <width>300</width>
-          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="5">common/box.png</texturefocus>
-          <texturenofocus colordiffuse="Black12" border="5">common/box.png</texturenofocus>
+          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
+          <texturenofocus colordiffuse="Black12" border="16">localhome/rounded-box.png</texturenofocus>
           <include>DefDialogButtons</include>
           <label>$LOCALIZE[21452]</label>
           <focusedcolor>FocusText</focusedcolor>
@@ -143,8 +143,8 @@
           <description>Install All</description>
           <align>center</align>
           <width>300</width>
-          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="5">common/box.png</texturefocus>
-          <texturenofocus colordiffuse="Black12" border="5">common/box.png</texturenofocus>
+          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
+          <texturenofocus colordiffuse="Black12" border="16">localhome/rounded-box.png</texturenofocus>
           <include>DefDialogButtons</include>
           <label>$LOCALIZE[35021]</label>
           <focusedcolor>FocusText</focusedcolor>
@@ -153,8 +153,8 @@
           <description>Fix Skipping</description>
           <align>center</align>
           <width>300</width>
-          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="5">common/box.png</texturefocus>
-          <texturenofocus colordiffuse="Black12" border="5">common/box.png</texturenofocus>
+          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
+          <texturenofocus colordiffuse="Black12" border="16">localhome/rounded-box.png</texturenofocus>
           <include>DefDialogButtons</include>
           <label>$LOCALIZE[35019]</label>
           <focusedcolor>FocusText</focusedcolor>
@@ -163,8 +163,8 @@
           <description>Help</description>
           <align>center</align>
           <width>300</width>
-          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="5">common/box.png</texturefocus>
-          <texturenofocus colordiffuse="Black12" border="5">common/box.png</texturenofocus>
+          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
+          <texturenofocus colordiffuse="Black12" border="16">localhome/rounded-box.png</texturenofocus>
           <include>DefDialogButtons</include>
           <label>$LOCALIZE[10043]</label>
           <focusedcolor>FocusText</focusedcolor>
@@ -183,16 +183,16 @@
     <control type="button" id="7">
       <align>center</align>
       <width>380</width>
-      <texturefocus colordiffuse="$VAR[ColorHighlight]" border="5">common/box.png</texturefocus>
-      <texturenofocus colordiffuse="Black12" border="5">common/box.png</texturenofocus>
+      <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
+      <texturenofocus colordiffuse="Black12" border="16">localhome/rounded-box.png</texturenofocus>
       <include>DefDialogButtons</include>
       <focusedcolor>FocusText</focusedcolor>
     </control>
     <control type="button" id="10">
       <align>center</align>
       <width>380</width>
-      <texturefocus colordiffuse="$VAR[ColorHighlight]" border="5">common/box.png</texturefocus>
-      <texturenofocus colordiffuse="Black12" border="5">common/box.png</texturenofocus>
+      <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
+      <texturenofocus colordiffuse="Black12" border="16">localhome/rounded-box.png</texturenofocus>
       <include>DefDialogButtons</include>
       <focusedcolor>FocusText</focusedcolor>
     </control>

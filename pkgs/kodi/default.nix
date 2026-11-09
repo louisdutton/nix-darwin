@@ -113,6 +113,7 @@
     profileFiles = {
       "userdata/keymaps/local-home-gamepad.xml" = "${assets}/gamepad.xml";
       "userdata/addon_data/peripheral.joystick/resources/buttonmaps/xml/linux/Pro_Controller_14b_6a.xml" = "${assets}/Pro_Controller_14b_6a.xml";
+      "userdata/addon_data/peripheral.joystick/resources/buttonmaps/xml/udev/Microsoft_X-Box_360_pad_v045E_p028E_15b_8a.xml" = "${assets}/Microsoft_X-Box_360_pad_v045E_p028E_15b_8a.xml";
     };
   });
   prepare = pkgs.writeShellScript "prepare-kodi" ''

@@ -13,7 +13,10 @@ Smoke tests explicitly stop their entire named scope, not just systemd-run.
 Kodi is pinned to 22.0rc1 (Piers), including the upstream native PipeWire
 HDMI-device-change deadlock fix. Matching joystick support is pinned and rebuilt
 against the same Kodi. This is a release candidate, not a stable release.
-`pkgs/kodi/core.nix` can be removed when nixpkgs ships a fixed Piers release.
+The local core patches fix initial Wayland fullscreen sizing and play navigation
+sounds only when selection, focus or a control value actually changes. Revisit
+`pkgs/kodi/core.nix` when nixpkgs includes these fixes.
+Queued native controller actions use the same sound handling as keyboard actions.
 The package selects `--audio-backend=pipewire` and the default PipeWire device so
 HDMI disappearance/reappearance can be handled by the audio backend.
 Before launch, a bounded PipeWire IPC check fails with a diagnostic rather than
@@ -46,9 +49,14 @@ layout and native playback/dialogs without runtime menu generation.
   Settings and Power remain accessible through controller shortcuts.
 - `Pro_Controller_14b_6a.xml`: Nintendo A selects, B goes back; D-pad and sticks
   navigate. Retained native-Kodi fallback; normal controller input is now
-  owned by InputPlumber, with Kodi's joystick handling disabled.
+  owned by InputPlumber. Sticks pass through to Kodi's native joystick handling;
+  buttons and the D-pad retain their keyboard mappings.
+- `Microsoft_X-Box_360_pad_v045E_p028E_15b_8a.xml`: native stick mapping for
+  InputPlumber's virtual controller. Its 15 buttons do not match Kodi's bundled
+  11-button wired Xbox map, so this declares the standard Xbox axis layout.
 - `inputplumber.nix`: declarative Pro Controller capture and stable
-  Xbox-compatible virtual gamepad/keyboard targets. Kodi gets navigation keys;
+  Xbox-compatible virtual gamepad/keyboard targets. Kodi gets native stick axes
+  and keyboard button events;
   games get letter-matched gamepad input. Home opens Power in Kodi (F7); the game profile retains its session shortcut (F13).
   The local `modules/inputplumber.nix` extends nixpkgs' module with devices,
   profiles and capability maps with nested Nix submodules and enums defined in
@@ -57,10 +65,15 @@ layout and native playback/dialogs without runtime menu generation.
   the module generates YAML without a Python validator. Theatre turns
   off bundled device definitions and selects Kodi as the default profile;
   runtime profiles live under `/etc/inputplumber/profiles.d/`.
+  Kodi's default 20% stick deadzone and native navigation repeat apply. There
+  are no stick-to-keyboard thresholds or repeat timers in InputPlumber.
   `options.auto_manage=true` is required: matching a controller does not by
-  itself capture it. Native Kodi input stays enabled as a bootstrap/fallback
-  until the routing service detects and configures a managed controller.
-- `gamepad.xml`: + opens Settings, Home opens Power, and X opens context options.
+  itself capture it. The router disables Kodi's joystick handling before
+  loading a game's profile, and restores it after loading the Kodi profile.
+  This prevents background Kodi from consuming the game's controller events.
+- `gamepad.xml`: + opens Settings, Home opens Power, X opens context options,
+  and Minus opens the video's sort/filter options. Left/right remain in the list;
+  scrollbars are position indicators and cannot receive focus.
   InputPlumber emits F6/F7 for +/Home to avoid the application-launch keysyms
   assigned to Linux F14/F15 by the keyboard layout. On Home, B focuses the visible content, and
   holding B opens Power. During full-screen video, A directly toggles pause
@@ -157,11 +170,37 @@ video database, using a schema check and SQLite transaction; it never replaces
 the database. The media files, episode NFOs and artwork are library data, not
 Nix store contents. Keep/back up `~/Videos` separately.
 
+Theatre runs Skiptro against the same declared TV sources after boot and nightly
+at 03:00. The low-priority `skiptro-scan.service` scans incrementally and exports
+only `Episode.edl` beside `Episode.mkv`; it does not rewrite videos or require a
+Kodi add-on. Native Kodi EDL action 3 skips the detected intro automatically but
+still allows rewinding into it. Kodi reads the sidecar when playback opens, so
+new exports need no library rescan. Detection needs at least two episodes in a
+season and may not find an intro in every show.
+Short-format shows have a five-minute search window declared in the host
+configuration, keeping their end credits outside the intro search.
+Changes to this policy trigger one full rescan before incremental scanning resumes.
+For new shows, Skiptro first scans without exporting so its CLI can discover
+the show records, then applies the search windows and rescans before export.
+
+`modules/skiptro.nix` owns the timer and library paths; `pkgs/skiptro` pins the
+upstream scanner release. Its database is under
+`/var/lib/skiptro/Skiptro/skiptro.db`, shared by the service and the system
+`skiptro` command. Use `skiptro status` to inspect results and
+`journalctl -u skiptro-scan.service` to inspect scans. The scanner manages EDL
+sidecars for detected episodes; keep any manually edited EDLs backed up.
+
 `game-launches.nix` declares installed executables and custom command entries.
 Custom entries use a `custom:` ID, an explicit argument list, and a working
 directory relative to the user's home. Hollie runs `devenv tasks run hollie:run`
 from `~/projects/hollie`, building the live checkout on every launch. It uses
 the same owned launch service and window hand-off as the other games.
+Fable II launches the prebuilt US/EU Rev 2 candidate from `~/projects/fable2`
+using `devenv shell -- scripts/play-rev2 --fullscreen`. Build it first with
+`devenv shell -- scripts/build-rev2` in that checkout. Its artwork is extracted
+from the supplied game into `assets-extracted/.kodi-art/cover.jpg`; it stays
+local rather than being included in the Nix store or repository. The launch
+uses X11/Xwayland so the existing Gamescope window hand-off can identify it.
 Native Linux games use the Nix library environment `steam-run` (not the client);
 Windows games use UMU and the Nix-pinned GE-Proton runner. There is no
 Steam fallback, and undeclared games cannot launch. Declarations for untested
@@ -171,6 +210,11 @@ conflicting existing files or symlinks; it never patches game binaries.
 Each Windows candidate gets `~/Games/Prefixes/steam-independent-APPID` unless
 an explicit prefix is declared. Original Steam prefixes/saves remain untouched;
 these new prefixes do not automatically inherit arbitrary games' save data.
+
+UMU launches reuse the installed compatibility runtime (`UMU_RUNTIME_UPDATE=0`).
+Large runtime updates must be performed explicitly outside Kodi's game-start
+timeout, which would otherwise cancel the download on each launch attempt.
+UMU still installs a runtime if none exists yet.
 
 Every launch runs in a uniquely named transient systemd user service with
 `KillMode=control-group` and a three-second termination grace period. Cancelling

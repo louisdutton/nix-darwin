@@ -6,6 +6,7 @@
       <f7>ActivateWindow(ShutdownMenu)</f7>
       <f8>Noop</f8>
       <f9>Noop</f9>
+      <f10>Noop</f10>
       <c>ContextMenu</c>
     </keyboard>
     <joystick profile="game.controller.default">
@@ -14,6 +15,10 @@
       <start>ActivateWindow(Settings)</start>
       <back>Noop</back>
       <guide>ActivateWindow(ShutdownMenu)</guide>
+      <rightstick direction="up">Noop</rightstick>
+      <rightstick direction="down">Noop</rightstick>
+      <rightstick direction="left">Noop</rightstick>
+      <rightstick direction="right">Noop</rightstick>
     </joystick>
   </global>
   <window1100>
@@ -69,6 +74,10 @@
       <up>OSD</up>
       <down>OSD</down>
       <guide>ActivateWindow(ShutdownMenu)</guide>
+      <leftstick direction="left">StepBack</leftstick>
+      <leftstick direction="right">StepForward</leftstick>
+      <leftstick direction="up">OSD</leftstick>
+      <leftstick direction="down">OSD</leftstick>
     </joystick>
   </FullscreenVideo>
   <VideoOSD>
@@ -88,15 +97,21 @@
       <start>Close</start>
       <left>StepBack</left>
       <right>StepForward</right>
+      <leftstick direction="left">StepBack</leftstick>
+      <leftstick direction="right">StepForward</leftstick>
       <guide>ActivateWindow(ShutdownMenu)</guide>
     </joystick>
   </VideoOSD>
   <Videos>
     <keyboard>
+      <c>RunScript(plugin.program.localhome,episodeoptions)</c>
+      <f10>SetFocus(9000)</f10>
       <pageup>RunScript(plugin.program.localhome,page,previous)</pageup>
       <pagedown>RunScript(plugin.program.localhome,page,next)</pagedown>
     </keyboard>
     <joystick profile="game.controller.default">
+      <x>RunScript(plugin.program.localhome,episodeoptions)</x>
+      <back>SetFocus(9000)</back>
       <leftbumper>RunScript(plugin.program.localhome,page,previous)</leftbumper>
       <rightbumper>RunScript(plugin.program.localhome,page,next)</rightbumper>
     </joystick>

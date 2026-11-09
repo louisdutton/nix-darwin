@@ -17,7 +17,7 @@
         <control type="image">
           <width>100%</width>
           <height>100%</height>
-          <texture border="5" colordiffuse="Panel">common/box.png</texture>
+          <texture colordiffuse="Panel" border="16">localhome/rounded-box.png</texture>
         </control>
         <control type="label" id="101">
           <description>Header Label</description>
@@ -124,7 +124,7 @@
         <control type="image">
           <width>100%</width>
           <height>100%</height>
-          <texture border="5" colordiffuse="Panel">common/box.png</texture>
+          <texture colordiffuse="Panel" border="16">localhome/rounded-box.png</texture>
         </control>
         <control type="label" id="102">
           <description>Header Label</description>

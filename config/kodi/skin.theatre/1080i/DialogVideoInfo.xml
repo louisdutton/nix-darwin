@@ -32,6 +32,9 @@
   <onunload>ClearProperty(Item_DBTYPE,home)</onunload>
   <controls>
     <include>DialogVideoInfoWIP</include>
+    <include content="TheatreBreadcrumb">
+      <param name="title" value="$INFO[ListItem.Title]" />
+    </include>
     <include content="DialogInfoOverlay">
       <param name="headerinfo" value="$INFO[ListItem.Title]" />
       <param name="plotinfo" value="$INFO[ListItem.Tagline,[B],[/B][CR][CR]]$INFO[ListItem.Plot]" />

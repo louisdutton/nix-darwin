@@ -98,6 +98,31 @@ def cache_description(item):
     return {**item, 'description': text, 'description_source': url}
 
 
+def cache_details(item):
+    """Cache GOG's game credits and classification for offline detail pages."""
+    if item.get('details_source'):
+        return item
+    appid = str(item['id'])
+    if not appid.isdecimal():
+        raise ValueError('GOG ID must be numeric')
+    url = 'https://gamesdb.gog.com/platforms/gog/external_releases/' + appid
+    with urlopen(url, timeout=20) as response:
+        game = json.load(response)['game']
+    def names(field):
+        result = []
+        for entry in game.get(field) or []:
+            name = entry.get('name', '')
+            if isinstance(name, dict):
+                name = name.get('en-US') or name.get('*') or ''
+            if isinstance(name, str) and name and name not in result:
+                result.append(name)
+        return result
+    return {**item, **{field: names(field) for field in
+                      ('developers', 'publishers', 'genres', 'themes', 'game_modes')},
+            'release_date': game.get('first_release_date') or '',
+            'rating': game.get('aggregated_rating'), 'details_source': url}
+
+
 def refresh_metadata(items, ids=None):
     result = []
     for item in items:
@@ -110,6 +135,10 @@ def refresh_metadata(items, ids=None):
                 item = cache_description(item)
             except Exception as error:
                 print('Description unavailable:', item['id'], type(error).__name__, file=sys.stderr)
+            try:
+                item = cache_details(item)
+            except Exception as error:
+                print('Details unavailable:', item['id'], type(error).__name__, file=sys.stderr)
         result.append(item)
     save(state_dir() / 'library.json', result)
     return result

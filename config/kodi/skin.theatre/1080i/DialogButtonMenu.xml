@@ -37,7 +37,7 @@
         <posy>-16</posy>
         <width>466</width>
         <height>210</height>
-        <texture border="16" colordiffuse="White100">common/rounded-shadow8.png</texture>
+        <texture border="16" colordiffuse="White100">localhome/rounded-box.png</texture>
         <visible>Integer.IsEqual(Container(3110).NumItems,1)</visible>
       </control>
       <control type="image">
@@ -46,7 +46,7 @@
         <posy>-16</posy>
         <width>466</width>
         <height>280</height>
-        <texture border="16" colordiffuse="White100">common/rounded-shadow8.png</texture>
+        <texture border="16" colordiffuse="White100">localhome/rounded-box.png</texture>
         <visible>Integer.IsEqual(Container(3110).NumItems,2)</visible>
       </control>
       <control type="image">
@@ -55,7 +55,7 @@
         <posy>-16</posy>
         <width>466</width>
         <height>350</height>
-        <texture border="16" colordiffuse="White100">common/rounded-shadow8.png</texture>
+        <texture border="16" colordiffuse="White100">localhome/rounded-box.png</texture>
         <visible>Integer.IsEqual(Container(3110).NumItems,3)</visible>
       </control>
       <control type="image">
@@ -64,7 +64,7 @@
         <posy>-16</posy>
         <width>466</width>
         <height>420</height>
-        <texture border="16" colordiffuse="White100">common/rounded-shadow8.png</texture>
+        <texture border="16" colordiffuse="White100">localhome/rounded-box.png</texture>
         <visible>Integer.IsEqual(Container(3110).NumItems,4)</visible>
       </control>
       <control type="image">
@@ -73,7 +73,7 @@
         <posy>-16</posy>
         <width>466</width>
         <height>490</height>
-        <texture border="16" colordiffuse="White100">common/rounded-shadow8.png</texture>
+        <texture border="16" colordiffuse="White100">localhome/rounded-box.png</texture>
         <visible>Integer.IsEqual(Container(3110).NumItems,5)</visible>
       </control>
       <control type="image">
@@ -82,7 +82,7 @@
         <posy>-16</posy>
         <width>466</width>
         <height>560</height>
-        <texture border="16" colordiffuse="White100">common/rounded-shadow8.png</texture>
+        <texture border="16" colordiffuse="White100">localhome/rounded-box.png</texture>
         <visible>Integer.IsEqual(Container(3110).NumItems,6)</visible>
       </control>
       <control type="image">
@@ -91,7 +91,7 @@
         <posy>-16</posy>
         <width>466</width>
         <height>630</height>
-        <texture border="16" colordiffuse="White100">common/rounded-shadow8.png</texture>
+        <texture border="16" colordiffuse="White100">localhome/rounded-box.png</texture>
         <visible>Integer.IsEqual(Container(3110).NumItems,7)</visible>
       </control>
       <control type="image">
@@ -100,7 +100,7 @@
         <posy>-16</posy>
         <width>466</width>
         <height>695</height>
-        <texture border="16" colordiffuse="White100">common/rounded-shadow8.png</texture>
+        <texture border="16" colordiffuse="White100">localhome/rounded-box.png</texture>
         <visible>Integer.IsGreater(Container(3110).NumItems,7)</visible>
       </control>
       <control type="group">
@@ -115,7 +115,7 @@
           <textcolor>Dark2</textcolor>
           <label>31151</label>
         </control>
-        <include>Kodi_Logo</include>
+
         <control type="image">
           <top>70</top>
           <left>17</left>
@@ -177,24 +177,8 @@
         </focusedlayout>
         <content>
           <item>
-            <label>Settings</label>
-            <onclick>ActivateWindow(Settings)</onclick>
-          </item>
-          <item>
-            <label>Suspend</label>
-            <onclick>Suspend()</onclick>
-          </item>
-          <item>
-            <label>Power off</label>
+            <label>Shutdown</label>
             <onclick>Powerdown()</onclick>
-          </item>
-          <item>
-            <label>Restart</label>
-            <onclick>Reboot()</onclick>
-          </item>
-          <item>
-            <label>Exit Kodi</label>
-            <onclick>Quit()</onclick>
           </item>
         </content>
       </control>

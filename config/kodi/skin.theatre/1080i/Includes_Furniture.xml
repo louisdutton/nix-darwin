@@ -95,7 +95,7 @@
         <top>-8</top>
         <bottom>-8</bottom>
         <right>-8</right>
-        <texture border="16" colordiffuse="Background">common/rounded-shadow8.png</texture>
+        <texture border="16" colordiffuse="Background">localhome/rounded-box.png</texture>
         <animation effect="fade" start="100" end="90" time="0" condition="true" delay="0">Conditional</animation>
       </control>
       <control type="image">
@@ -610,7 +610,7 @@
         <control type="image">
           <width>80</width>
           <height>80</height>
-          <texture colordiffuse="Panel" border="8">common/box.png</texture>
+          <texture colordiffuse="Panel" border="16">localhome/rounded-box.png</texture>
         </control>
         <control type="image">
           <top>-14</top>

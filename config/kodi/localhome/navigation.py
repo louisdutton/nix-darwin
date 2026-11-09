@@ -69,6 +69,8 @@ def switch_page(xbmc, xbmcgui, action):
                 control = EMPTY_FOCUS
             xbmc.executebuiltin(f'SetFocus({control})')
             home.clearProperty('LocalHome.PageRequest')
+            if page != current:
+                xbmc.playSFX('special://skin/sounds/tab-switch.wav')
             return
         if time.monotonic() >= deadline:
             xbmc.log('Local Home: page provider did not finish: ' + page, xbmc.LOGERROR)

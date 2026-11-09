@@ -169,8 +169,8 @@
   <include name="buttontexturesnumpad">
     <font>Null</font>
     <textcolor>Dark2</textcolor>
-    <texturenofocus colordiffuse="Black12" border="5">common/box.png</texturenofocus>
-    <texturefocus colordiffuse="$VAR[ColorHighlight]" border="5">common/box.png</texturefocus>
+    <texturenofocus colordiffuse="Black12" border="16">localhome/rounded-box.png</texturenofocus>
+    <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
     <textureradioonfocus colordiffuse="FocusText">$PARAM[icon]</textureradioonfocus>
     <textureradioonnofocus colordiffuse="FFFFFFFF">$PARAM[icon]</textureradioonnofocus>
     <textureradioofffocus colordiffuse="FocusText">$PARAM[icon]</textureradioofffocus>
@@ -231,8 +231,8 @@
       <width>270</width>
       <label>107</label>
       <font>Button</font>
-      <texturefocus colordiffuse="$VAR[ColorHighlight]" border="5">common/box.png</texturefocus>
-      <texturenofocus colordiffuse="Black12" border="5">common/box.png</texturenofocus>
+      <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
+      <texturenofocus colordiffuse="Black12" border="16">localhome/rounded-box.png</texturenofocus>
       <focusedcolor>FocusText</focusedcolor>
     </control>
     <control type="button" id="11">
@@ -240,8 +240,8 @@
       <width>270</width>
       <label>107</label>
       <font>Button</font>
-      <texturefocus colordiffuse="$VAR[ColorHighlight]" border="5">common/box.png</texturefocus>
-      <texturenofocus colordiffuse="Black12" border="5">common/box.png</texturenofocus>
+      <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
+      <texturenofocus colordiffuse="Black12" border="16">localhome/rounded-box.png</texturenofocus>
       <focusedcolor>FocusText</focusedcolor>
     </control>
     <control type="button" id="10">
@@ -249,8 +249,8 @@
       <width>270</width>
       <label>106</label>
       <font>Button</font>
-      <texturefocus colordiffuse="$VAR[ColorHighlight]" border="5">common/box.png</texturefocus>
-      <texturenofocus colordiffuse="Black12" border="5">common/box.png</texturenofocus>
+      <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
+      <texturenofocus colordiffuse="Black12" border="16">localhome/rounded-box.png</texturenofocus>
       <focusedcolor>FocusText</focusedcolor>
     </control>
   </include>
@@ -537,7 +537,7 @@
     <control type="image">
       <width>100%</width>
       <height>100%</height>
-      <texture border="16" colordiffuse="White100">common/rounded-shadow8.png</texture>
+      <texture border="16" colordiffuse="White100">localhome/rounded-box.png</texture>
     </control>
   </include>
   <include name="DialogSelectUserRating">
@@ -718,7 +718,7 @@
           <right>10</right>
           <height>340</height>
           <colordiffuse>White100</colordiffuse>
-          <texture border="16">common/rounded-shadow8.png</texture>
+          <texture border="16">localhome/rounded-box.png</texture>
         </control>
         <control type="image">
           <visible>Integer.IsEqual(Container(9400).NumItems,4)</visible>
@@ -727,7 +727,7 @@
           <right>10</right>
           <height>410</height>
           <colordiffuse>White100</colordiffuse>
-          <texture border="16">common/rounded-shadow8.png</texture>
+          <texture border="16">localhome/rounded-box.png</texture>
         </control>
         <control type="image">
           <visible>Integer.IsEqual(Container(9400).NumItems,5)</visible>
@@ -736,7 +736,7 @@
           <right>10</right>
           <height>480</height>
           <colordiffuse>White100</colordiffuse>
-          <texture border="16">common/rounded-shadow8.png</texture>
+          <texture border="16">localhome/rounded-box.png</texture>
         </control>
         <control type="image">
           <visible>Integer.IsEqual(Container(9400).NumItems,6)</visible>
@@ -745,7 +745,7 @@
           <right>10</right>
           <height>550</height>
           <colordiffuse>White100</colordiffuse>
-          <texture border="16">common/rounded-shadow8.png</texture>
+          <texture border="16">localhome/rounded-box.png</texture>
         </control>
         <control type="image">
           <visible>Integer.IsEqual(Container(9400).NumItems,5)</visible>
@@ -754,7 +754,7 @@
           <right>10</right>
           <height>480</height>
           <colordiffuse>White100</colordiffuse>
-          <texture border="16">common/rounded-shadow8.png</texture>
+          <texture border="16">localhome/rounded-box.png</texture>
         </control>
         <control type="image">
           <visible>Integer.IsEqual(Container(9400).NumItems,6)</visible>
@@ -763,7 +763,7 @@
           <right>10</right>
           <height>550</height>
           <colordiffuse>White100</colordiffuse>
-          <texture border="16">common/rounded-shadow8.png</texture>
+          <texture border="16">localhome/rounded-box.png</texture>
         </control>
         <control type="image">
           <visible>Integer.IsGreater(Container(9400).NumItems,6)</visible>
@@ -772,7 +772,7 @@
           <right>10</right>
           <height>620</height>
           <colordiffuse>White100</colordiffuse>
-          <texture border="16">common/rounded-shadow8.png</texture>
+          <texture border="16">localhome/rounded-box.png</texture>
         </control>
         <control type="group">
           <left>18</left>
@@ -786,11 +786,7 @@
             <textcolor>Dark2</textcolor>
             <label>16106</label>
           </control>
-          <include content="Kodi_Logo">
-            <param name="dimensions" value="40" />
-            <param name="top" value="15" />
-            <param name="left" value="15" />
-          </include>
+
           <control type="image">
             <top>70</top>
             <left>17</left>
@@ -893,108 +889,6 @@
   <variable name="SetsPath">
     <value condition="ListItem.IsCollection + !String.IsEmpty(ListItem.DBID)">videodb://movies/sets/$INFO[ListItem.DBID]/?setid=$INFO[ListItem.DBID]</value>
   </variable>
-  <include name="ButtonPlaylist">
-    <control type="button" id="6148">
-      <description>Music playlist</description>
-      <label>13350</label>
-      <include>DefContextButtonGradient</include>
-      <align>left</align>
-      <onclick>ActivateWindow(musicplaylist)</onclick>
-      <visible>!String.IsEqual(Playlist.Length(music),0) + Window.IsVisible(MyMusicNav.xml)</visible>
-    </control>
-    <control type="button" id="6149">
-      <description>Video playlist</description>
-      <label>13350</label>
-      <include>DefContextButtonGradient</include>
-      <align>left</align>
-      <onclick>ActivateWindow(videoplaylist)</onclick>
-      <visible>!String.IsEqual(Playlist.Length(video),0) + Window.IsVisible(MyVideoNav.xml)</visible>
-    </control>
-  </include>
-  <include name="ControlButtons">
-    <control type="grouplist" id="6150">
-      <visible>Player.HasMedia | Player.Playing</visible>
-      <usecontrolcoords>true</usecontrolcoords>
-      <top>10</top>
-      <height>60</height>
-      <width>450</width>
-      <align>center</align>
-      <itemgap>10</itemgap>
-      <include>ScrolltimeViewsList</include>
-      <orientation>horizontal</orientation>
-      <onup>20</onup>
-      <ondown>9000</ondown>
-      <onleft>6150</onleft>
-      <onright>6150</onright>
-      <onback>50</onback>
-      <control type="button" id="6151">
-        <texturefocus colordiffuse="$VAR[ColorHighlight]" flipx="true">osd/next.png</texturefocus>
-        <texturenofocus colordiffuse="Black70" flipx="true">osd/next.png</texturenofocus>
-        <width>48</width>
-        <height>48</height>
-        <onclick>PlayerControl(Previous)</onclick>
-        <focusedcolor>FocusText</focusedcolor>
-      </control>
-      <control type="button" id="6152">
-        <texturefocus colordiffuse="$VAR[ColorHighlight]" flipx="true">osd/ff.png</texturefocus>
-        <texturenofocus colordiffuse="Black70" flipx="true">osd/ff.png</texturenofocus>
-        <width>48</width>
-        <height>48</height>
-        <onclick>PlayerControl(Rewind)</onclick>
-        <enable>Player.SeekEnabled</enable>
-        <animation effect="fade" start="100" end="33" time="0" condition="!Player.SeekEnabled" delay="0">Conditional</animation>
-        <focusedcolor>FocusText</focusedcolor>
-      </control>
-      <control type="togglebutton" id="6153">
-        <texturefocus colordiffuse="$VAR[ColorHighlight]">osd/pause.png</texturefocus>
-        <texturenofocus colordiffuse="Black70">osd/pause.png</texturenofocus>
-        <alttexturefocus colordiffuse="$VAR[ColorHighlight]">osd/play.png</alttexturefocus>
-        <alttexturenofocus colordiffuse="Black70">osd/play.png</alttexturenofocus>
-        <width>48</width>
-        <height>48</height>
-        <usealttexture>Player.Paused | Player.Forwarding | Player.Rewinding</usealttexture>
-        <onclick>PlayerControl(Play)</onclick>
-        <enable>Player.PauseEnabled</enable>
-        <animation effect="fade" start="100" end="33" time="0" condition="!Player.PauseEnabled" delay="0">Conditional</animation>
-        <focusedcolor>FocusText</focusedcolor>
-      </control>
-      <control type="button" id="6154">
-        <texturefocus colordiffuse="$VAR[ColorHighlight]">osd/stop.png</texturefocus>
-        <texturenofocus colordiffuse="Black70">osd/stop.png</texturenofocus>
-        <width>48</width>
-        <height>48</height>
-        <onclick>PlayerControl(Stop)</onclick>
-        <focusedcolor>FocusText</focusedcolor>
-      </control>
-      <control type="button" id="6155">
-        <texturefocus colordiffuse="$VAR[ColorHighlight]">osd/ff.png</texturefocus>
-        <texturenofocus colordiffuse="Black70">osd/ff.png</texturenofocus>
-        <width>48</width>
-        <height>48</height>
-        <onclick>PlayerControl(Forward)</onclick>
-        <enable>Player.SeekEnabled</enable>
-        <animation effect="fade" start="100" end="33" time="0" condition="!Player.SeekEnabled" delay="0">Conditional</animation>
-        <focusedcolor>FocusText</focusedcolor>
-      </control>
-      <control type="button" id="6156">
-        <texturefocus colordiffuse="$VAR[ColorHighlight]">osd/next.png</texturefocus>
-        <texturenofocus colordiffuse="Black70">osd/next.png</texturenofocus>
-        <width>48</width>
-        <height>48</height>
-        <onclick>PlayerControl(Next)</onclick>
-        <focusedcolor>FocusText</focusedcolor>
-      </control>
-      <control type="button" id="6157">
-        <texturefocus colordiffuse="$VAR[ColorHighlight]">osd/fullscreen.png</texturefocus>
-        <texturenofocus colordiffuse="Black70">osd/fullscreen.png</texturenofocus>
-        <width>48</width>
-        <height>48</height>
-        <onclick condition="Player.HasVideo">ActivateWindow(fullscreenvideo)</onclick>
-        <onclick condition="Player.HasAudio">ActivateWindow(visualisation)</onclick>
-        <focusedcolor>FocusText</focusedcolor>
-      </control>
-    </control>
-  </include>
   <include name="Container_NumItems">
     <param name="id" value="$PARAM[id]" default="9505" />
     <param name="visible" value="$PARAM[visible]" default="false" />

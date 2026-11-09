@@ -11,13 +11,9 @@
         <width>870</width>
         <height>650</height>
         <control type="image">
-          <texture border="15" diffuse="diffuse/wall-fanart.png" colordiffuse="A6000000">common/rounded-shadow8.png</texture>
+          <texture border="15" diffuse="diffuse/wall-fanart.png" colordiffuse="A6000000">localhome/rounded-box.png</texture>
         </control>
-        <include content="Kodi_Logo">
-          <param name="dimensions" value="30" />
-          <param name="top" value="44" />
-          <param name="left" value="45" />
-        </include>
+
         <control type="grouplist">
           <left>45</left>
           <top>23</top>
@@ -107,13 +103,9 @@
         <width>870</width>
         <height>293</height>
         <control type="image">
-          <texture border="15" diffuse="diffuse/wall-fanart.png" colordiffuse="A6000000">common/rounded-shadow8.png</texture>
+          <texture border="15" diffuse="diffuse/wall-fanart.png" colordiffuse="A6000000">localhome/rounded-box.png</texture>
         </control>
-        <include content="Kodi_Logo">
-          <param name="dimensions" value="30" />
-          <param name="top" value="44" />
-          <param name="left" value="45" />
-        </include>
+
         <control type="grouplist">
           <left>45</left>
           <top>23</top>
@@ -153,13 +145,9 @@
         <width>870</width>
         <height>293</height>
         <control type="image">
-          <texture border="15" diffuse="diffuse/wall-fanart.png" colordiffuse="A6000000">common/rounded-shadow8.png</texture>
+          <texture border="15" diffuse="diffuse/wall-fanart.png" colordiffuse="A6000000">localhome/rounded-box.png</texture>
         </control>
-        <include content="Kodi_Logo">
-          <param name="dimensions" value="30" />
-          <param name="top" value="44" />
-          <param name="left" value="45" />
-        </include>
+
         <control type="grouplist">
           <left>45</left>
           <top>23</top>
@@ -198,13 +186,9 @@
         <width>870</width>
         <height>490</height>
         <control type="image">
-          <texture border="15" diffuse="diffuse/wall-fanart.png" colordiffuse="A6000000">common/rounded-shadow8.png</texture>
+          <texture border="15" diffuse="diffuse/wall-fanart.png" colordiffuse="A6000000">localhome/rounded-box.png</texture>
         </control>
-        <include content="Kodi_Logo">
-          <param name="dimensions" value="30" />
-          <param name="top" value="44" />
-          <param name="left" value="45" />
-        </include>
+
         <control type="grouplist">
           <left>45</left>
           <top>23</top>

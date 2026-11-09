@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="428" height="640" viewBox="0 0 428 640">
+  <defs>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <!-- Kodi flips the diffuse mask together with the reflected artwork. -->
+      <stop offset="0.75" stop-color="white" stop-opacity="0"/>
+      <stop offset="1" stop-color="white" stop-opacity="0.30"/>
+    </linearGradient>
+  </defs>
+  <rect width="428" height="640" rx="16" fill="url(#fade)"/>
+</svg>

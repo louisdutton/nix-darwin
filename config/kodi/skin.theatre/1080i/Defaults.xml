@@ -215,6 +215,8 @@
     <textoffsety>0</textoffsety>
   </default>
   <default type="scrollbar">
+    <!-- Position indicator; scrolling stays with the list or right stick. -->
+    <enable>false</enable>
     <width>8</width>
     <texturesliderbackground colordiffuse="White12">common/white.png</texturesliderbackground>
     <texturesliderbar colordiffuse="White30">common/white.png</texturesliderbar>

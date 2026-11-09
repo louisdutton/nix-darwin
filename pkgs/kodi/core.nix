@@ -28,8 +28,8 @@
       hash = "sha512-jRLUduNS3vlxbsvXuhhKcN2brofc3mabhkeg75rBmR9hfJkYwEPhWes1MwLEzFD7cbxZHOrrodO51Hr3f6cscQ==";
     };
   };
-  # Remove this override once nixpkgs ships Piers with the PipeWire hotplug
-  # and Wayland initial fullscreen fixes.
+  # Revisit this override once nixpkgs ships Piers with the PipeWire hotplug,
+  # Wayland fullscreen and navigation sound fixes.
   # https://github.com/xbmc/xbmc/pull/27615
   core =
     (pkgs.kodi.override {
@@ -48,7 +48,10 @@
       # The nixpkgs GIFLIB patch is already included in this release.
       # Gamescope can initially configure a requested fullscreen surface as
       # windowed. Keep Kodi's mode in sync so it initializes the render size.
-      patches = [./wayland-initial-fullscreen.patch];
+      patches = [
+        ./wayland-initial-fullscreen.patch
+        ./navigation-sound.patch
+      ];
       buildInputs =
         old.buildInputs
         ++ [

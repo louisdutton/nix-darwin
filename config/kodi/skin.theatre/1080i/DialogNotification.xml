@@ -15,7 +15,7 @@
         <height>100</height>
         <colordiffuse>Background</colordiffuse>
         <animation effect="fade" start="100" end="90" condition="true" time="0" delay="0">Conditional</animation>
-        <texture diffuse="diffuse/wall-fanart.png" border="16">common/rounded-shadow8.png</texture>
+        <texture diffuse="diffuse/wall-fanart.png" border="16">localhome/rounded-box.png</texture>
       </control>
       <control type="group">
         <control type="image" id="400">

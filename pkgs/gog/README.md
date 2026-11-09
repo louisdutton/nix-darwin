@@ -57,6 +57,9 @@ caches missing artwork and official descriptions directly from GOG,
 independently of Heroic. Descriptions are plain text overviews from the product
 API, shown in the game inspector. `gog metadata` refreshes missing metadata
 without fetching the account inventory; `gog artwork` remains an alias.
+GOG's game database also supplies cached developers, publishers, original release
+date, genres, themes, game modes and rating. Kodi shows developer, year and genres
+beneath the title; opening details never makes a network request.
 Installed GOG games have an Uninstall context-menu action. The row also offers
 an explicit owned-library refresh (normal browsing remains offline).
 

@@ -3,142 +3,114 @@
   <defaultcontrol always="true">31101</defaultcontrol>
   <onload condition="!String.IsEmpty(Window(Home).Property(LocalHome.GameInfo.Error)) + String.IsEqual(Window(Home).Property(LocalHome.GameInfo.CanUninstall),true)">SetFocus(31102)</onload>
   <controls>
-    <control type="image">
-      <width>1920</width>
-      <height>1080</height>
-      <texture colordiffuse="FF181818">common/white.png</texture>
-    </control>
-    <include content="TheatreInspectorBackdrop">
-      <param name="focus_x" value="1280" />
+    <include content="GlobalBackground">
+      <param name="image" value="$INFO[Window(Home).Property(LocalHome.GameInfo.Fanart)]" />
     </include>
-    <control type="image">
-      <width>1920</width>
-      <height>1080</height>
-      <texture>localhome/game-info-shade.png</texture>
-    </control>
-    <control type="label">
-      <left>90</left>
-      <top>70</top>
-      <width>800</width>
-      <height>55</height>
-      <font>LocalHomeSectionTitle</font>
-      <textcolor>Dark1</textcolor>
-      <label>Games</label>
-    </control>
+    <include content="TheatreBreadcrumb">
+      <param name="section" value="Games" />
+      <param name="title" value="$INFO[Window(Home).Property(LocalHome.GameInfo.Title)]" />
+    </include>
+    <include content="View_50_SidePoster">
+      <param name="image" value="$INFO[Window(Home).Property(LocalHome.GameInfo.Poster)]" />
+    </include>
     <control type="group">
-      <left>90</left>
-      <top>230</top>
-      <width>330</width>
-      <height>495</height>
-      <control type="image">
-        <left>-24</left>
-        <top>-24</top>
-        <width>378</width>
-        <height>543</height>
-        <texture border="32" infill="false">common/$VAR[shadow-24]</texture>
-      </control>
-      <control type="image">
-        <width>330</width>
-        <height>495</height>
-        <aspectratio scalediffuse="false">scale</aspectratio>
-        <texture diffuse="diffuse/widgetposter_new.png" background="false">$INFO[Window(Home).Property(LocalHome.GameInfo.Poster)]</texture>
-      </control>
-      <control type="image">
-        <top>505</top>
-        <width>330</width>
-        <height>495</height>
-        <aspectratio scalediffuse="false">scale</aspectratio>
-        <texture flipy="true" diffuse="diffuse/listposter-ref-widgets.png" background="false" colordiffuse="80FFFFFF">$INFO[Window(Home).Property(LocalHome.GameInfo.Poster)]</texture>
-      </control>
-    </control>
-    <control type="grouplist">
-      <left>500</left>
-      <top>240</top>
-      <width>850</width>
-      <height>760</height>
-      <orientation>vertical</orientation>
-      <itemgap>32</itemgap>
-      <control type="textbox" id="31100">
-        <width>850</width>
-        <height min="1" max="200">auto</height>
-        <font>Music_Big</font>
-        <textcolor>FFFFFFFF</textcolor>
-        <label>$INFO[Window(Home).Property(LocalHome.GameInfo.Title)]</label>
+      <left>572</left>
+      <top>PosterPad</top>
+      <width>684</width>
+      <height>PosterH</height>
+      <control type="grouplist">
+        <width>684</width>
+        <height>534</height>
+        <orientation>vertical</orientation>
+        <itemgap>20</itemgap>
+        <control type="textbox" id="31100">
+          <width>684</width>
+          <height min="1" max="140">auto</height>
+          <font>LargeNew</font>
+          <textcolor>FFFFFFFF</textcolor>
+          <label>$INFO[Window(Home).Property(LocalHome.GameInfo.Title)]</label>
+        </control>
+        <control type="label">
+          <width>684</width>
+          <height>32</height>
+          <font>Small24</font>
+          <textcolor>Dark2</textcolor>
+          <label>$INFO[Window(Home).Property(LocalHome.GameInfo.Metadata)]</label>
+          <visible>!String.IsEmpty(Window(Home).Property(LocalHome.GameInfo.Metadata))</visible>
+        </control>
+        <control type="group">
+          <width>684</width>
+          <height>320</height>
+          <control type="textbox" id="31103">
+            <width>650</width>
+            <height>320</height>
+            <font>Small</font>
+            <textcolor>Dark1</textcolor>
+            <label>$INFO[Window(Home).Property(LocalHome.GameInfo.Description)]</label>
+            <visible>String.IsEmpty(Window(Home).Property(LocalHome.GameInfo.Error))</visible>
+            <pagecontrol>31104</pagecontrol>
+            <scrolltime>180</scrolltime>
+          </control>
+          <control type="textbox">
+            <width>650</width>
+            <height>150</height>
+            <font>Small</font>
+            <textcolor>Dark1</textcolor>
+            <label>$INFO[Window(Home).Property(LocalHome.GameInfo.Error)]</label>
+            <visible>!String.IsEmpty(Window(Home).Property(LocalHome.GameInfo.Error))</visible>
+          </control>
+          <control type="scrollbar" id="31104">
+            <left>674</left>
+            <width>4</width>
+            <height>320</height>
+            <orientation>vertical</orientation>
+            <showonepage>false</showonepage>
+            <visible>String.IsEmpty(Window(Home).Property(LocalHome.GameInfo.Error))</visible>
+            <texturesliderbackground colordiffuse="30FFFFFF">common/white.png</texturesliderbackground>
+            <texturesliderbar colordiffuse="80FFFFFF">common/white.png</texturesliderbar>
+          </control>
+        </control>
       </control>
       <control type="group">
-        <height>480</height>
-        <width>850</width>
-        <control type="textbox" id="31103">
+        <bottom>0</bottom>
+        <width>684</width>
+        <height>86</height>
+        <control type="button" id="31101">
           <left>0</left>
-          <top>0</top>
-          <width>650</width>
-          <height>480</height>
+          <width>330</width>
+          <height>86</height>
+          <font>Small</font>
+          <textcolor>FFFFFFFF</textcolor>
+          <focusedcolor>Light1</focusedcolor>
+          <disabledcolor>Dark2</disabledcolor>
+          <texturefocus colordiffuse="FFFFFFFF" border="16">localhome/rounded-box.png</texturefocus>
+          <texturenofocus />
+          <label>$VAR[TheatreGameAction]</label>
+          <enable>String.IsEmpty(Window(Home).Property(LocalHome.GameInfo.Error))</enable>
+          <onclick>RunScript(plugin.program.localhome,gameaction,$INFO[Window(Home).Property(LocalHome.GameInfo.Id)])</onclick>
+          <onleft>31101</onleft>
+          <onright>31102</onright>
+          <onup>31101</onup>
+          <ondown>31101</ondown>
+        </control>
+        <control type="button" id="31102">
+          <left>354</left>
+          <width>330</width>
+          <height>86</height>
           <font>Small</font>
           <textcolor>Dark1</textcolor>
-          <label>$INFO[Window(Home).Property(LocalHome.GameInfo.Description)]</label>
-          <visible>String.IsEmpty(Window(Home).Property(LocalHome.GameInfo.Error))</visible>
-          <pagecontrol>31104</pagecontrol>
-          <scrolltime>180</scrolltime>
-        </control>
-        <control type="textbox">
-          <left>0</left>
-          <top>0</top>
-          <width>650</width>
-          <height>150</height>
-          <font>Small</font>
-          <textcolor>Dark1</textcolor>
-          <label>$INFO[Window(Home).Property(LocalHome.GameInfo.Error)]</label>
-          <visible>!String.IsEmpty(Window(Home).Property(LocalHome.GameInfo.Error))</visible>
-        </control>
-        <control type="scrollbar" id="31104">
-          <left>674</left>
-          <top>0</top>
-          <width>4</width>
-          <height>480</height>
-          <orientation>vertical</orientation>
-          <showonepage>false</showonepage>
-          <visible>String.IsEmpty(Window(Home).Property(LocalHome.GameInfo.Error))</visible>
-          <texturesliderbackground colordiffuse="30FFFFFF">common/white.png</texturesliderbackground>
-          <texturesliderbar colordiffuse="80FFFFFF">common/white.png</texturesliderbar>
+          <focusedcolor>Light1</focusedcolor>
+          <texturefocus colordiffuse="FFFFFFFF" border="16">localhome/rounded-box.png</texturefocus>
+          <texturenofocus colordiffuse="30181818" border="16">localhome/rounded-box.png</texturenofocus>
+          <label>Uninstall</label>
+          <visible>String.IsEqual(Window(Home).Property(LocalHome.GameInfo.CanUninstall),true)</visible>
+          <onclick>RunScript(plugin.program.localhome,gameuninstall,$INFO[Window(Home).Property(LocalHome.GameInfo.Id)])</onclick>
+          <onleft>31101</onleft>
+          <onright>31102</onright>
+          <onup>31102</onup>
+          <ondown>31102</ondown>
         </control>
       </control>
-    </control>
-    <control type="button" id="31101">
-      <left>90</left>
-      <top>760</top>
-      <width>330</width>
-      <height>86</height>
-      <font>Small</font>
-      <textcolor>FFFFFFFF</textcolor>
-      <focusedcolor>Light1</focusedcolor>
-      <disabledcolor>Dark2</disabledcolor>
-      <texturefocus colordiffuse="FFFFFFFF" border="8">common/box.png</texturefocus>
-      <texturenofocus colordiffuse="FF454545" border="8">common/box.png</texturenofocus>
-      <label>$VAR[TheatreGameAction]</label>
-      <enable>String.IsEmpty(Window(Home).Property(LocalHome.GameInfo.Error))</enable>
-      <onclick>RunScript(plugin.program.localhome,gameaction,$INFO[Window(Home).Property(LocalHome.GameInfo.Id)])</onclick>
-      <onleft>31101</onleft>
-      <onright>31101</onright>
-      <onup>31101</onup>
-      <ondown>31102</ondown>
-    </control>
-    <control type="button" id="31102">
-      <left>90</left>
-      <top>864</top>
-      <width>330</width>
-      <height>86</height>
-      <font>Small</font>
-      <textcolor>Dark1</textcolor>
-      <focusedcolor>Light1</focusedcolor>
-      <texturefocus colordiffuse="FFFFFFFF" border="8">common/box.png</texturefocus>
-      <texturenofocus colordiffuse="30181818" border="8">common/box.png</texturenofocus>
-      <label>Uninstall</label>
-      <visible>String.IsEqual(Window(Home).Property(LocalHome.GameInfo.CanUninstall),true)</visible>
-      <onclick>RunScript(plugin.program.localhome,gameuninstall,$INFO[Window(Home).Property(LocalHome.GameInfo.Id)])</onclick>
-      <onleft>31102</onleft>
-      <onright>31102</onright>
-      <onup>31101</onup>
-      <ondown>31102</ondown>
     </control>
     <include>TheatreButtonPrompts</include>
   </controls>

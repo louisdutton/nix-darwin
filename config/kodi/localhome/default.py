@@ -11,7 +11,8 @@ import xbmc
 import xbmcgui
 import xbmcplugin
 PAGE_ACTION = len(sys.argv) > 2 and sys.argv[1] == 'page'
-if not PAGE_ACTION:
+EPISODE_OPTIONS = len(sys.argv) > 1 and sys.argv[1] == 'episodeoptions'
+if not (PAGE_ACTION or EPISODE_OPTIONS):
     from game_session import run_game
     from standalone import launch_config, custom_launch, gog_launch, prepare_game
     from owned_launch import OwnedLaunch
@@ -85,7 +86,8 @@ def installed_gog_games():
             continue
         metadata = {**record, **artwork.get(appid, {})}
         game = {'title': record.get('title', appid), 'installed': True,
-                'description': metadata.get('description', ''), 'art': gog_art(metadata, appid)}
+                'description': metadata.get('description', ''), 'art': gog_art(metadata, appid),
+                'details': metadata}
         try:
             game.update(gog_launch(record, TOOLS))
         except (OSError, RuntimeError, KeyError) as error:
@@ -103,6 +105,7 @@ def owned_gog_games():
     return {'gog:' + str(g['id']): {
         'title': g.get('title', str(g['id'])), 'installed': False,
         'description': g.get('description', ''),
+        'details': g,
         'source': 'GOG (not installed)', 'art': gog_art({**art.get(str(g['id']), {}), **g}, str(g['id']))}
         for g in library if isinstance(g, dict) and str(g.get('id', '')).isdecimal()}
 
@@ -116,6 +119,7 @@ def game_catalog():
     for appid, declaration in declarations.items():
         if appid.startswith('custom:'):
             games[appid] = {'title': declaration['title'], 'description': declaration.get('description', ''),
+                            'details': declaration.get('details', {}),
                             'art': declaration.get('art', local_art(appid)), 'source': 'Custom game'}
             try:
                 games[appid].update(custom_launch(declaration))
@@ -125,6 +129,7 @@ def game_catalog():
             games[appid].update({
                 'title': declaration.get('title', games[appid]['title']),
                 'description': declaration.get('description', ''),
+                'details': declaration.get('details', {}),
             })
             try:
                 games[appid].update(launch_config(appid, declaration, records[appid]['path'], STEAM, TOOLS))
@@ -232,41 +237,6 @@ def game_item_info(item, title, description, appid=None, installed=True):
         item.addContextMenuItems(actions)
 
 
-def wrap_inspector_title(title, measure, width):
-    """Keep at most two measured lines, with an ellipsis for omitted text."""
-    lines, current = [], ''
-    for word in title.split():
-        candidate = (current + ' ' + word).strip()
-        if current and measure(candidate) > width:
-            lines.append(current)
-            current = word
-        else:
-            current = candidate
-    if current:
-        lines.append(current)
-    overflow = len(lines) > 2
-    lines = lines[:2]
-    for index, line in enumerate(lines):
-        if measure(line) > width or (overflow and index == len(lines) - 1):
-            while line and measure(line + '…') > width:
-                line = line[:-1].rstrip()
-            lines[index] = line + '…'
-    return '[CR]'.join(lines)
-
-
-def inspector_title(title):
-    """Use the inspector's declared geometry and font for title truncation."""
-    from PIL import ImageFont
-    import xml.etree.ElementTree as ET
-    skin = Path(__file__).parent.parent / 'skin.theatre'
-    control = ET.parse(skin / '1080i/custom_1100_GameInfo.xml').find(".//control[@id='31100']")
-    font = next(f for f in ET.parse(skin / '1080i/Font.xml').findall('.//font')
-                if f.findtext('name') == control.findtext('font'))
-    face = ImageFont.truetype(str(skin / 'fonts' / font.findtext('filename')), int(font.findtext('size')))
-    # Leave a little room for Kodi's pixel rounding at different TV resolutions.
-    return wrap_inspector_title(title, face.getlength, int(control.findtext('width')) - 32)
-
-
 def game_background(appid, art):
     # GOG's background is already faded; use its sharp wide cover and let the
     # skin apply the same crop and gradient as it does for other artwork.
@@ -283,10 +253,19 @@ def show_game_info(appid):
     home = xbmcgui.Window(10000)
     installed = game.get('installed', True)
     art = game.get('art', {})
+    details = game.get('details', {})
+    metadata = []
+    if details.get('developers'):
+        metadata.append(', '.join(details['developers']))
+    if re.match(r'^\d{4}-', details.get('release_date', '')):
+        metadata.append(details['release_date'][:4])
+    if details.get('genres'):
+        metadata.append(', '.join(details['genres']))
     fields = {
-        'Id': appid, 'Title': inspector_title(game['title']),
+        'Id': appid, 'Title': game['title'],
         'Action': 'Launch' if installed else 'Install',
         'Description': game.get('description') or game.get('plot') or '',
+        'Metadata': '  •  '.join(metadata),
         'Error': game.get('launch_error', ''),
         'Poster': art.get('poster', art.get('thumb', 'DefaultAddonGame.png')),
         'Fanart': game_background(appid, art),
@@ -454,5 +433,8 @@ if __name__ == '__main__':
     if PAGE_ACTION:
         from navigation import switch_page
         switch_page(xbmc, xbmcgui, sys.argv[2])
+    elif EPISODE_OPTIONS:
+        from video_controls import episode_options
+        episode_options(xbmc, xbmcgui)
     else:
         main()

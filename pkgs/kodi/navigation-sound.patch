@@ -1,0 +1,63 @@
+--- a/xbmc/input/InputManager.cpp
++++ b/xbmc/input/InputManager.cpp
+@@ -14,6 +14,7 @@
+ #include "application/ApplicationComponents.h"
+ #include "application/ApplicationPowerHandling.h"
+ #include "guilib/GUIAudioManager.h"
++#include "guilib/GUIBaseContainer.h"
+ #include "guilib/GUIComponent.h"
+ #include "guilib/GUIControl.h"
+ #include "guilib/GUIWindow.h"
+@@ -48,6 +49,7 @@
+ #include <algorithm>
+ #include <math.h>
+ #include <mutex>
++#include <tuple>
+ 
+ using EVENTSERVER::CEventServer;
+ 
+@@ -317,7 +319,9 @@
+   }
+ 
+   for (const CAction& action : queuedActions)
+-    g_application.OnAction(action);
++    // Native controller actions need the same UI sound handling as keys.
++    // Execute on the main thread after collecting this frame's input.
++    ExecuteInputAction(action);
+ 
+   // Process CEC keys
+   std::vector<CKey> queuedCecKeys;
+@@ -749,6 +753,33 @@
+   bool bResult = false;
+   CGUIComponent* gui = CServiceBroker::GetGUI();
+ 
++  const int id = action.GetID();
++  const bool navigation = id == ACTION_MOVE_LEFT || id == ACTION_MOVE_RIGHT ||
++                          id == ACTION_MOVE_UP || id == ACTION_MOVE_DOWN ||
++                          id == ACTION_PAGE_UP || id == ACTION_PAGE_DOWN ||
++                          id == ACTION_FIRST_PAGE || id == ACTION_LAST_PAGE ||
++                          id == ACTION_NEXT_CONTROL || id == ACTION_PREV_CONTROL;
++  if (gui && navigation)
++  {
++    // A handled direction may be blocked at an edge or consumed by the
++    // held-input accumulator without moving anything. Sound follows the UI.
++    const auto state = [gui]() {
++      auto& manager = gui->GetWindowManager();
++      const int windowId = manager.GetActiveWindowOrDialog();
++      const auto* window = manager.GetWindow(windowId);
++      const auto* control = window ? window->GetFocusedControl() : nullptr;
++      const auto* container = dynamic_cast<const CGUIBaseContainer*>(control);
++      return std::make_tuple(windowId, control ? control->GetID() : -1,
++                             container ? container->GetSelectedItem() : -1,
++                             control ? control->GetDescription() : std::string{});
++    };
++    const auto before = state();
++    bResult = g_application.OnAction(action);
++    if (bResult && before != state())
++      gui->GetAudioManager().PlayActionSound(action);
++    return bResult;
++  }
++
+   // play sound before the action unless the button is held,
+   // where we execute after the action as held actions aren't fired every time.
+   if (action.GetHoldTime())

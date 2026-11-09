@@ -18,8 +18,10 @@ pkgs.stdenvNoCC.mkDerivation {
     rsvg-convert "$target/media/localhome/neutral-background.svg" -o "$target/media/localhome/neutral.png"
     rsvg-convert "$target/media/localhome/tab-underline.svg" -o "$target/media/localhome/tab-underline.png"
     rsvg-convert "$target/media/localhome/watch-unwatched.svg" -o "$target/media/localhome/watch-unwatched.png"
-    rsvg-convert "$target/media/localhome/game-info-shade.svg" -o "$target/media/localhome/game-info-shade.png"
     rsvg-convert "$target/media/localhome/grid-edge-fade.svg" -o "$target/media/localhome/grid-edge-fade.png"
+    for source in rounded-box detail-cover-mask detail-cover-reflection; do
+      rsvg-convert "$target/media/localhome/$source.svg" -o "$target/media/localhome/$source.png"
+    done
     # Nintendo Switch L/R glyphs: Kenney Input Prompts 1.5A (CC0).
     # https://kenney.nl/assets/input-prompts
     rsvg-convert "$target/media/localhome/bumper-left.svg" -o "$target/media/localhome/bumper-left.png"

@@ -4,11 +4,11 @@
   user,
   ...
 }: let
-  theatreKodi =
-    (import ../../pkgs/kodi {
-      inherit pkgs;
-      homeDirectory = "/home/${user.name}";
-    }).package;
+  kodi = import ../../pkgs/kodi {
+    inherit pkgs;
+    homeDirectory = "/home/${user.name}";
+  };
+  theatreKodi = kodi.package;
 in {
   imports = [
     inputs.disko.nixosModules.disko
@@ -17,6 +17,7 @@ in {
     ./wireguard.nix
     ../../modules/configuration.nix
     ../../modules/inputplumber.nix
+    ../../modules/skiptro.nix
     ../../modules/sops.nix
   ];
 
@@ -76,6 +77,15 @@ in {
   };
 
   services.inputplumber = {enable = true;} // import ../../config/kodi/inputplumber.nix;
+  services.skiptro = {
+    enable = true;
+    user = user.name;
+    libraries = map (source: source.path) (builtins.filter (source: source.content == "tvshows") kodi.mediaSources);
+    searchWindows = {
+      "/home/${user.name}/Videos/TV Shows/Adventure Time (2010)" = 5;
+      "/home/${user.name}/Videos/TV Shows/Over the Garden Wall (2014)" = 5;
+    };
+  };
   services.logind.settings.Login.IdleAction = "ignore";
   services.udev.packages = [
     # Run before seat ACLs are assigned. InputPlumber only needs evdev;

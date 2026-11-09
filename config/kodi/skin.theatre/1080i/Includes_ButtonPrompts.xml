@@ -2,18 +2,18 @@
 <includes>
   <variable name="TheatrePromptSelect">
     <value condition="Window.IsActive(11100)">Select</value>
-    <value condition="!System.HasModalDialog + Window.IsActive(Home) + String.IsEqual(Window(Home).Property(LocalHome.Page),games)">Open</value>
-    <value condition="!System.HasModalDialog + Window.IsActive(Home) + [String.IsEqual(Window(Home).Property(LocalHome.Page),home) | String.IsEmpty(Window(Home).Property(LocalHome.Page))] + !String.IsEqual(Container(30111).ListItem.DBTYPE,movie)">Open</value>
-    <value condition="!System.HasModalDialog + Window.IsActive(Home) + String.IsEqual(Window(Home).Property(LocalHome.Page),videos) + String.IsEqual(Container(30121).ListItem.DBTYPE,tvshow)">Open</value>
-    <value condition="!System.HasModalDialog + Window.IsActive(Home) + [String.IsEqual(Window(Home).Property(LocalHome.Page),home) | String.IsEmpty(Window(Home).Property(LocalHome.Page)) | String.IsEqual(Window(Home).Property(LocalHome.Page),videos)]">Play</value>
-    <value condition="!System.HasModalDialog + Window.IsActive(Videos) + ListItem.IsFolder">Open</value>
-    <value condition="!System.HasModalDialog + Window.IsActive(Videos)">Play</value>
+    <value condition="!System.HasActiveModalDialog + Window.IsActive(Home) + String.IsEqual(Window(Home).Property(LocalHome.Page),games)">Open</value>
+    <value condition="!System.HasActiveModalDialog + Window.IsActive(Home) + [String.IsEqual(Window(Home).Property(LocalHome.Page),home) | String.IsEmpty(Window(Home).Property(LocalHome.Page))] + !String.IsEqual(Container(30111).ListItem.DBTYPE,movie)">Open</value>
+    <value condition="!System.HasActiveModalDialog + Window.IsActive(Home) + String.IsEqual(Window(Home).Property(LocalHome.Page),videos) + String.IsEqual(Container(30121).ListItem.DBTYPE,tvshow)">Open</value>
+    <value condition="!System.HasActiveModalDialog + Window.IsActive(Home) + [String.IsEqual(Window(Home).Property(LocalHome.Page),home) | String.IsEmpty(Window(Home).Property(LocalHome.Page)) | String.IsEqual(Window(Home).Property(LocalHome.Page),videos)]">Play</value>
+    <value condition="!System.HasActiveModalDialog + Window.IsActive(Videos) + ListItem.IsFolder">Open</value>
+    <value condition="!System.HasActiveModalDialog + Window.IsActive(Videos)">Play</value>
     <value condition="Window.IsActive(virtualkeyboard)">Type</value>
     <value>Select</value>
   </variable>
   <variable name="TheatrePromptBack">
     <value condition="Window.IsActive(VideoOSD)">Close</value>
-    <value condition="!System.HasModalDialog + Window.IsActive(Home)">Home</value>
+    <value condition="!System.HasActiveModalDialog + Window.IsActive(Home)">Home</value>
     <value>Back</value>
   </variable>
   <variable name="TheatrePromptPause">
@@ -71,10 +71,18 @@
           <param name="textwidth" value="118" />
         </include>
         <include content="TheatreButtonPrompt">
+          <param name="id" value="30913" />
+          <param name="icon" value="localhome/prompt-minus.png" />
+          <param name="label" value="List options" />
+          <param name="visible" value="Window.IsActive(Videos) + !System.HasActiveModalDialog + !ControlGroup(9000).HasFocus() + !String.StartsWith(Container.FolderPath,plugin://plugin.program.localhome/)" />
+          <param name="width" value="240" />
+          <param name="textwidth" value="188" />
+        </include>
+        <include content="TheatreButtonPrompt">
           <param name="id" value="30912" />
           <param name="icon" value="localhome/prompt-scroll.png" />
           <param name="label" value="Scroll" />
-          <param name="visible" value="Window.IsActive(11100) + !System.HasModalDialog + Integer.IsGreater(Container(31103).NumPages,1) + String.IsEmpty(Window(Home).Property(LocalHome.GameInfo.Error))" />
+          <param name="visible" value="Window.IsActive(11100) + !System.HasActiveModalDialog + Integer.IsGreater(Container(31103).NumPages,1) + String.IsEmpty(Window(Home).Property(LocalHome.GameInfo.Error))" />
           <param name="width" value="180" />
           <param name="textwidth" value="128" />
         </include>
@@ -108,11 +116,11 @@
       </control>
     </control>
   </include>
-  <expression name="TheatrePromptBrowsing">!System.HasModalDialog + !Window.IsActive(FullScreenVideo)</expression>
+  <expression name="TheatrePromptBrowsing">!System.HasActiveModalDialog + !Window.IsActive(FullScreenVideo)</expression>
   <expression name="TheatrePromptPages">$EXP[TheatrePromptBrowsing] + [Window.IsActive(Home) | Window.IsActive(Videos) | Window.IsActive(Programs)]</expression>
-  <expression name="TheatrePromptSelection">Window.IsActive(VideoOSD) | System.HasModalDialog | [$EXP[TheatrePromptBrowsing] + [[Window.IsActive(Home) + [Control.HasFocus(30111) | Control.HasFocus(30121) | Control.HasFocus(30122)]] | [!Window.IsActive(Home) + [[!Window.IsActive(Videos) + !Window.IsActive(Programs)] | Integer.IsGreater(Container.NumItems,0)]]]]</expression>
-  <expression name="TheatrePromptBackAvailable">System.HasModalDialog | !Window.IsActive(Home) | [Window.IsActive(Home) + [String.IsEqual(Window(Home).Property(LocalHome.Page),videos) | String.IsEqual(Window(Home).Property(LocalHome.Page),games)]]</expression>
-  <expression name="TheatrePromptOptions">$EXP[TheatrePromptPages] + $EXP[TheatrePromptSelection]</expression>
+  <expression name="TheatrePromptSelection">Window.IsActive(VideoOSD) | System.HasActiveModalDialog | [$EXP[TheatrePromptBrowsing] + [[Window.IsActive(Home) + [Control.HasFocus(30111) | Control.HasFocus(30121) | Control.HasFocus(30122)]] | [!Window.IsActive(Home) + [[!Window.IsActive(Videos) + !Window.IsActive(Programs)] | Integer.IsGreater(Container.NumItems,0)]]]]</expression>
+  <expression name="TheatrePromptBackAvailable">System.HasActiveModalDialog | !Window.IsActive(Home) | [Window.IsActive(Home) + [String.IsEqual(Window(Home).Property(LocalHome.Page),videos) | String.IsEqual(Window(Home).Property(LocalHome.Page),games)]]</expression>
+  <expression name="TheatrePromptOptions">$EXP[TheatrePromptPages] + $EXP[TheatrePromptSelection] + !ControlGroup(9000).HasFocus()</expression>
   <include name="TheatreButtonPrompt">
     <param name="id" />
     <param name="icon" />

@@ -11,8 +11,8 @@
           <left>70</left>
           <width>1800</width>
           <height>680</height>
-          <onleft>9000</onleft>
-          <onright>1635</onright>
+          <onleft>500</onleft>
+          <onright>500</onright>
           <onup>500</onup>
           <ondown>500</ondown>
           <preloaditems>0</preloaditems>

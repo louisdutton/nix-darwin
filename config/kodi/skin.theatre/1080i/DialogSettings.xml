@@ -18,11 +18,7 @@
         <include>FontTop</include>
         <textcolor>Dark2</textcolor>
       </control>
-      <include content="Kodi_Logo">
-        <param name="dimensions" value="40" />
-        <param name="top" value="35" />
-        <param name="left" value="45" />
-      </include>
+
       <control type="image">
         <top>90</top>
         <left>45</left>
@@ -69,24 +65,24 @@
           <description>OK</description>
           <width>270</width>
           <font>Button</font>
-          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="5">common/box.png</texturefocus>
-          <texturenofocus colordiffuse="Black12" border="5">common/box.png</texturenofocus>
+          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
+          <texturenofocus colordiffuse="Black12" border="16">localhome/rounded-box.png</texturenofocus>
           <focusedcolor>FocusText</focusedcolor>
         </control>
         <control type="button" id="29">
           <description>Defaults</description>
           <width>270</width>
           <font>Button</font>
-          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="5">common/box.png</texturefocus>
-          <texturenofocus colordiffuse="Black12" border="5">common/box.png</texturenofocus>
+          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
+          <texturenofocus colordiffuse="Black12" border="16">localhome/rounded-box.png</texturenofocus>
           <focusedcolor>FocusText</focusedcolor>
         </control>
         <control type="button" id="30">
           <description>Defaults</description>
           <width>270</width>
           <font>Button</font>
-          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="5">common/box.png</texturefocus>
-          <texturenofocus colordiffuse="Black12" border="5">common/box.png</texturenofocus>
+          <texturefocus colordiffuse="$VAR[ColorHighlight]" border="16">localhome/rounded-box.png</texturefocus>
+          <texturenofocus colordiffuse="Black12" border="16">localhome/rounded-box.png</texturenofocus>
           <focusedcolor>FocusText</focusedcolor>
         </control>
       </control>

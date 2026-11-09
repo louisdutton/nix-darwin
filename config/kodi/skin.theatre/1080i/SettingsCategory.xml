@@ -15,7 +15,7 @@
       <control type="image">
         <width>100%</width>
         <height>100%</height>
-        <texture border="16" colordiffuse="Panel">common/rounded-shadow8.png</texture>
+        <texture border="16" colordiffuse="Panel">localhome/rounded-box.png</texture>
       </control>
       <include content="Def_Gradient_Settings_Image">
         <param name="controlid" value="5" />
@@ -41,7 +41,7 @@
           <width>80</width>
           <bottom>0</bottom>
           <colordiffuse>PanelWhite12</colordiffuse>
-          <texture border="5">common/box.png</texture>
+          <texture border="16">localhome/rounded-box.png</texture>
           <animation effect="fade" end="50" start="100" time="0" condition="true" delay="0">Conditional</animation>
         </control>
         <control type="grouplist" id="5">
@@ -105,7 +105,7 @@
           <control type="image">
             <width>100%</width>
             <height>80</height>
-            <texture colordiffuse="$VAR[ColorSelectOtherBar]" border="5">common/box.png</texture>
+            <texture colordiffuse="$VAR[ColorSelectOtherBar]" border="16">localhome/rounded-box.png</texture>
           </control>
           <control type="image">
             <width>100%</width>

@@ -32,7 +32,7 @@
           <textcolor>Dark2</textcolor>
           <label>14018</label>
         </control>
-        <include>Kodi_Logo</include>
+
         <control type="image">
           <top>70</top>
           <left>17</left>

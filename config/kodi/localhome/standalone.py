@@ -43,6 +43,9 @@ def launch_config(appid, declaration, installation, steam, tools, home=None):
     # GAMEID=0 disables title-specific protonfixes/Steam launch integration.
     environment.update({
         'WINEPREFIX': str(prefix), 'PROTONPATH': str(proton),
+        # Reuse the installed runtime: large automatic downloads can exceed
+        # the game-window timeout and be cancelled on every launch attempt.
+        'UMU_RUNTIME_UPDATE': '0',
         'GAMEID': '0', 'STORE': 'none', 'SteamAppId': appid, 'SteamGameId': appid,
         'SteamNoOverlayUI': '1', 'SDL_JOYSTICK_HIDAPI_SWITCH': '0',
         'SDL_GAMECONTROLLER_IGNORE_DEVICES': '0x057e/0x2009',
@@ -72,6 +75,7 @@ def gog_launch(record, tools):
     environment = dict(os.environ)
     environment.update({
         'WINEPREFIX': record['prefix'], 'PROTONPATH': tools['proton'],
+        'UMU_RUNTIME_UPDATE': '0',
         'GAMEID': '0', 'STORE': 'gog', 'SteamAppId': '0', 'SteamGameId': '0',
         'SteamNoOverlayUI': '1', 'SDL_JOYSTICK_HIDAPI_SWITCH': '0',
         'SDL_GAMECONTROLLER_IGNORE_DEVICES': '0x057e/0x2009',

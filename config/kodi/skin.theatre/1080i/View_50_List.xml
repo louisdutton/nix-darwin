@@ -18,8 +18,8 @@
             <param name="width" value="ListW" />
           </include>
           <right>SidePad</right>
-          <onleft>9000</onleft>
-          <onright>1627</onright>
+          <onleft>50</onleft>
+          <onright>50</onright>
           <onup>50</onup>
           <ondown>50</ondown>
           <pagecontrol>1627</pagecontrol>
@@ -35,7 +35,7 @@
             <control type="image">
               <width>100%</width>
               <height>100%</height>
-              <texture border="8" colordiffuse="$VAR[ColorSelectBar]">common/box.png</texture>
+              <texture colordiffuse="$VAR[ColorSelectBar]" border="16">localhome/rounded-box.png</texture>
             </control>
             <include content="TheatreEpisodeRow">
               <param name="titlecolor" value="Light1" />
@@ -109,46 +109,49 @@
     </definition>
   </include>
   <include name="View_50_SidePoster">
-    <control type="group" description="Poster">
-      <include>Animation.PosterSlide</include>
-      <left>SidePad</left>
-      <top>PosterPad</top>
-      <control type="image">
-        <top>PosterH</top>
-        <width>PosterW</width>
-        <height>PosterH</height>
-        <fadetime>0</fadetime>
-        <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
-        <texture flipy="true" diffuse="diffuse/listposter-ref-widgets.png" background="false">$VAR[PosterImage]</texture>
-        <visible>true</visible>
+    <param name="image" default="$VAR[PosterImage]" />
+    <definition>
+      <control type="group" description="Poster">
+        <include>Animation.PosterSlide</include>
+        <left>SidePad</left>
+        <top>PosterPad</top>
+        <control type="image">
+          <top>PosterH</top>
+          <width>PosterW</width>
+          <height>PosterH</height>
+          <fadetime>0</fadetime>
+          <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+          <texture flipy="true" diffuse="localhome/detail-cover-reflection.png" background="false">$PARAM[image]</texture>
+          <visible>true</visible>
+        </control>
+        <control type="image">
+          <centertop>PosterH</centertop>
+          <width>PosterW</width>
+          <height>48</height>
+          <aspectratio>stretch</aspectratio>
+          <texture>diffuse/shadowspot.png</texture>
+        </control>
+        <control type="image">
+          <left>-24</left>
+          <top>-24</top>
+          <width>PosterShadowW</width>
+          <height>PosterShadowH</height>
+          <texture border="32" infill="false">common/$VAR[shadow-24]</texture>
+        </control>
+        <control type="image">
+          <width>PosterW</width>
+          <height>PosterH</height>
+          <texture colordiffuse="FF181818" border="16">localhome/rounded-box.png</texture>
+        </control>
+        <control type="image">
+          <width>PosterW</width>
+          <height>PosterH</height>
+          <fadetime>0</fadetime>
+          <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
+          <texture diffuse="localhome/detail-cover-mask.png" background="false">$PARAM[image]</texture>
+        </control>
       </control>
-      <control type="image">
-        <centertop>PosterH</centertop>
-        <width>PosterW</width>
-        <height>48</height>
-        <aspectratio>stretch</aspectratio>
-        <texture>diffuse/shadowspot.png</texture>
-      </control>
-      <control type="image">
-        <left>-24</left>
-        <top>-24</top>
-        <width>PosterShadowW</width>
-        <height>PosterShadowH</height>
-        <texture border="32" infill="false">common/$VAR[shadow-24]</texture>
-      </control>
-      <control type="image">
-        <width>PosterW</width>
-        <height>PosterH</height>
-        <texture border="5" colordiffuse="FF181818">common/box.png</texture>
-      </control>
-      <control type="image">
-        <width>PosterW</width>
-        <height>PosterH</height>
-        <fadetime>0</fadetime>
-        <aspectratio align="center" aligny="center" scalediffuse="false">scale</aspectratio>
-        <texture diffuse="diffuse/listposter2.png" background="false">$VAR[PosterImage]</texture>
-      </control>
-    </control>
+    </definition>
   </include>
   <include name="View_50_SidePoster_Square">
     <control type="group" description="Poster">
@@ -191,7 +194,7 @@
       <control type="image">
         <width>PosterH</width>
         <height>PosterH</height>
-        <texture border="5" colordiffuse="FF181818">common/box.png</texture>
+        <texture colordiffuse="FF181818" border="16">localhome/rounded-box.png</texture>
       </control>
       <control type="image">
         <width>PosterH</width>
@@ -232,8 +235,8 @@
           <height>PosterH</height>
           <left>ListSquareX</left>
           <right>SidePad</right>
-          <onleft>9000</onleft>
-          <onright>1679</onright>
+          <onleft>50</onleft>
+          <onright>50</onright>
           <onup>50</onup>
           <ondown>50</ondown>
           <pagecontrol>1679</pagecontrol>
@@ -268,8 +271,8 @@
           <height>PosterH</height>
           <left>ListSquareX</left>
           <right>SidePad</right>
-          <onleft>9000</onleft>
-          <onright>60</onright>
+          <onleft>50</onleft>
+          <onright>50</onright>
           <onup>50</onup>
           <ondown>50</ondown>
           <pagecontrol>60</pagecontrol>
@@ -301,8 +304,8 @@
           <height>PosterH</height>
           <left>ListSquareX</left>
           <right>SidePad</right>
-          <onleft>9000</onleft>
-          <onright>60</onright>
+          <onleft>550</onleft>
+          <onright>550</onright>
           <onup>550</onup>
           <ondown>550</ondown>
           <pagecontrol>60</pagecontrol>
@@ -324,7 +327,7 @@
     <control type="image">
       <width>100%</width>
       <height>100%</height>
-      <texture border="8" colordiffuse="$VAR[ColorSelectBar]">common/box.png</texture>
+      <texture colordiffuse="$VAR[ColorSelectBar]" border="16">localhome/rounded-box.png</texture>
     </control>
     <control type="image">
       <width>100%</width>
@@ -590,7 +593,7 @@
     <control type="image">
       <width>100%</width>
       <height>100%</height>
-      <texture border="8" colordiffuse="$VAR[ColorSelectBar]">common/box.png</texture>
+      <texture colordiffuse="$VAR[ColorSelectBar]" border="16">localhome/rounded-box.png</texture>
     </control>
     <control type="image">
       <width>100%</width>
@@ -765,7 +768,7 @@
     <control type="image">
       <width>100%</width>
       <height>100%</height>
-      <texture border="8" colordiffuse="$VAR[ColorSelectBar]">common/box.png</texture>
+      <texture colordiffuse="$VAR[ColorSelectBar]" border="16">localhome/rounded-box.png</texture>
     </control>
     <control type="image">
       <width>100%</width>
@@ -835,7 +838,7 @@
     <control type="image">
       <width>100%</width>
       <height>100%</height>
-      <texture border="8" colordiffuse="$VAR[ColorSelectBar]">common/box.png</texture>
+      <texture colordiffuse="$VAR[ColorSelectBar]" border="16">localhome/rounded-box.png</texture>
     </control>
     <control type="image">
       <width>100%</width>

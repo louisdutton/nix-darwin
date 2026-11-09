@@ -55,6 +55,7 @@
         preview = true;
       };
     in {
+      skiptro = import ./pkgs/skiptro {inherit pkgs;};
       theatre-skin = preview.skin;
       theatre-kodi-preview = preview.package;
     };
@@ -70,6 +71,12 @@
     checks.x86_64-linux.inputplumber = import ./tests/inputplumber.nix {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
       inherit nixpkgs;
+    };
+
+    checks.x86_64-linux.skiptro = import ./tests/skiptro.nix {
+      inherit nixpkgs;
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      package = self.packages.x86_64-linux.skiptro;
     };
 
     nixosConfigurations.mini = nixpkgs.lib.nixosSystem {

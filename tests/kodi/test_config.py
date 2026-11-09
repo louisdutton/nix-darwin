@@ -58,6 +58,24 @@ gog_cli = load_module('gog_cli', ROOT / 'pkgs/gog/gog.py')
 
 
 class GameMetadataTests(unittest.TestCase):
+    def test_gog_details_normalize_localized_names_and_work_offline(self):
+        response = mock.MagicMock()
+        response.__enter__.return_value.read.return_value = json.dumps({'game': {
+            'developers': [{'name': 'Studio'}],
+            'publishers': [{'name': 'Publisher'}],
+            'genres': [{'name': {'en-US': 'Adventure', '*': 'Adventure'}},
+                       {'name': {'*': 'Indie'}}],
+            'first_release_date': '2019-07-30T00:00:00+0000',
+            'game_modes': [{'name': 'Single player'}], 'aggregated_rating': 77.5}})
+        with mock.patch.object(gog_cli, 'urlopen', return_value=response) as request:
+            game = gog_cli.cache_details({'id': '123', 'description': 'Keep this overview'})
+            self.assertEqual(game['developers'], ['Studio'])
+            self.assertEqual(game['genres'], ['Adventure', 'Indie'])
+            self.assertEqual(game['release_date'][:4], '2019')
+            self.assertEqual(game['description'], 'Keep this overview')
+            self.assertEqual(gog_cli.cache_details(game), game)
+            request.assert_called_once()
+
     def test_official_overview_is_plain_text_and_cached_offline(self):
         response = mock.MagicMock()
         response.__enter__.return_value.read.return_value = json.dumps({
@@ -80,15 +98,6 @@ class GameMetadataTests(unittest.TestCase):
 
 
 class GameLaunchTests(unittest.TestCase):
-    def test_inspector_titles_are_limited_to_two_lines_with_ellipsis(self):
-        self.assertEqual(launcher.wrap_inspector_title('Short title', len, 12), 'Short title')
-        self.assertEqual(launcher.wrap_inspector_title('One title on two lines', len, 12), 'One title on[CR]two lines')
-        for title in ('An unusually long game title with several extra words', 'W' * 40 + ' Other words'):
-            lines = launcher.wrap_inspector_title(title, len, 12).split('[CR]')
-            self.assertLessEqual(len(lines), 2)
-            self.assertTrue(any(line.endswith('…') for line in lines))
-            self.assertTrue(all(len(line) <= 12 for line in lines))
-
     def test_game_info_action_keeps_game_tag_without_video_actions(self):
         item = mock.Mock()
         launcher.game_item_info(item, 'Game', 'Description', 'gog:123')
@@ -103,7 +112,18 @@ class GameLaunchTests(unittest.TestCase):
             properties = dict(call.args for call in window.return_value.setProperty.call_args_list)
             self.assertEqual(properties['LocalHome.GameInfo.Title'], 'Test game')
             self.assertEqual(properties['LocalHome.GameInfo.Action'], 'Launch')
+            self.assertEqual(properties['LocalHome.GameInfo.Metadata'], '')
             launcher.xbmc.executebuiltin.assert_called_once_with('ActivateWindow(11100)')
+
+    def test_game_details_show_cached_credits_and_release_year(self):
+        game = {'title': 'Test', 'details': {'developers': ['Studio'],
+                'release_date': '2019-07-30', 'genres': ['Adventure', 'Indie']}}
+        with mock.patch.object(launcher, 'game_catalog', return_value={'123': game}), \
+                mock.patch.object(launcher.xbmcgui, 'Window', create=True) as window:
+            launcher.show_game_info('123')
+            properties = dict(call.args for call in window.return_value.setProperty.call_args_list)
+            self.assertEqual(properties['LocalHome.GameInfo.Metadata'],
+                             'Studio  •  2019  •  Adventure, Indie')
 
     def test_game_actions_are_not_videos_or_playable_media(self):
         item = mock.Mock()
@@ -127,7 +147,6 @@ class GameLaunchTests(unittest.TestCase):
                 mock.patch.object(launcher, 'installed_games', return_value={'123': 'Test game'}),
                 mock.patch.object(launcher, 'game_catalog', return_value={'123': {'title': 'Test game', 'source': 'Standalone (native)', 'command': ['/trusted/runtime', '/installed/game']}}),
                 mock.patch.object(launcher, 'local_art', return_value={}),
-                mock.patch.object(launcher, 'inspector_title', side_effect=lambda title: title),
                 mock.patch.object(launcher, 'run_game', side_effect=lambda appid, game, spawn: (spawn(), True)[1]),
                 mock.patch.object(launcher.xbmcgui, 'Dialog', return_value=self.dialog, create=True),
                 mock.patch.object(launcher.xbmc, 'executebuiltin', create=True),
@@ -193,7 +212,8 @@ class StandaloneTests(unittest.TestCase):
                 standalone.custom_launch(declaration, home)
 
     def test_custom_game_is_available_without_a_steam_install(self):
-        declaration = {'title': 'Hollie', 'description': 'Development checkout'}
+        declaration = {'title': 'Hollie', 'description': 'Development checkout',
+                       'details': {'developers': ['Louis Dutton']}}
         with mock.patch.object(launcher, 'installed_games', return_value={}), \
                 mock.patch.object(launcher, 'installed_steam_records', return_value={}), \
                 mock.patch.object(launcher, 'read_json', return_value={'custom:hollie': declaration}), \
@@ -203,6 +223,7 @@ class StandaloneTests(unittest.TestCase):
                 mock.patch.object(launcher, 'custom_launch', return_value={'command': ['/trusted/devenv'], 'installed': True}) as custom:
             game = launcher.game_catalog()['custom:hollie']
             self.assertEqual(game['title'], 'Hollie')
+            self.assertEqual(game['details'], declaration['details'])
             self.assertTrue(game['installed'])
             self.assertNotIn('launch_error', game)
             custom.assert_called_once_with(declaration)
@@ -218,15 +239,17 @@ class StandaloneTests(unittest.TestCase):
             tools = {'umu': '/trusted/umu-run', 'proton': str(install / 'managed-proton')}
             config = standalone.launch_config('123', {'executable': 'game.exe'}, install, install / 'Steam', tools, install)
             self.assertEqual(config['environment']['PROTONPATH'], tools['proton'])
+            self.assertEqual(config['environment']['UMU_RUNTIME_UPDATE'], '0')
             record = {'install_path': str(install), 'executable': str(install / 'game.exe'), 'prefix': '/preserved/prefix', 'arguments': ['--test']}
             game = standalone.gog_launch(record, tools)
             self.assertEqual(game['command'], ['/trusted/umu-run', str(install / 'game.exe'), '--test'])
             self.assertEqual(game['environment']['WINEPREFIX'], '/preserved/prefix')
+            self.assertEqual(game['environment']['UMU_RUNTIME_UPDATE'], '0')
             self.assertNotIn('steam_appid', game)
 
     def test_declared_launcher_clears_unconfigured_error(self):
         with mock.patch.object(launcher, 'installed_games', return_value={'123': 'Declared game'}), \
-                mock.patch.object(launcher, 'read_json', return_value={'123': {'executable': 'game', 'title': 'Custom title', 'description': 'Official overview'}}), \
+                mock.patch.object(launcher, 'read_json', return_value={'123': {'executable': 'game', 'title': 'Custom title', 'description': 'Official overview', 'details': {'developers': ['Studio']}}}), \
                 mock.patch.object(launcher, 'installed_steam_records', return_value={'123': {'path': '/installed'}}), \
                 mock.patch.object(launcher, 'launch_config', return_value={'command': ['/trusted/runtime', '/installed/game'], 'source': 'Standalone (native)'}), \
                 mock.patch.object(launcher, 'local_art', return_value={}):
@@ -235,6 +258,7 @@ class StandaloneTests(unittest.TestCase):
         self.assertEqual(game['command'], ['/trusted/runtime', '/installed/game'])
         self.assertEqual(game['title'], 'Custom title')
         self.assertEqual(game['description'], 'Official overview')
+        self.assertEqual(game['details'], {'developers': ['Studio']})
 
     def test_undeclared_game_has_no_steam_fallback(self):
         with mock.patch.object(launcher, 'installed_games', return_value={'123': 'Unknown game'}), \
@@ -871,6 +895,11 @@ class ContinueTests(unittest.TestCase):
 
 
 class NavigationTests(unittest.TestCase):
+    def test_selecting_current_tab_does_not_play_transition_sound(self):
+        self.updating = False
+        navigation.switch_page(self.xbmc, self.gui, 'home')
+        self.xbmc.playSFX.assert_not_called()
+
     def test_delayed_home_restore_does_not_close_a_detail_screen(self):
         self.xbmc.getCondVisibility.return_value = False
         self.xbmc.getCondVisibility.side_effect = None
@@ -904,6 +933,7 @@ class NavigationTests(unittest.TestCase):
             self.assertEqual(self.properties['LocalHome.Page'], 'home')
             self.xbmc.executebuiltin.assert_not_called()
             self.assertNotIn('LocalHome.PageMotion', self.properties)
+            self.xbmc.playSFX.assert_not_called()
             self.properties['LocalHome.VideosReady'] = 'true'
             self.updating = False
             return False
@@ -913,6 +943,7 @@ class NavigationTests(unittest.TestCase):
         self.assertEqual(self.properties['LocalHome.PageMotion'], 'videos.next')
         self.xbmc.executebuiltin.assert_called_once_with('SetFocus(30121)')
         self.assertNotIn('LocalHome.PageRequest', self.properties)
+        self.xbmc.playSFX.assert_called_once_with('special://skin/sounds/tab-switch.wav')
 
     def test_newer_request_prevents_stale_page_from_being_committed(self):
         def supersede(_):
@@ -923,6 +954,7 @@ class NavigationTests(unittest.TestCase):
         self.assertEqual(self.properties['LocalHome.Page'], 'home')
         self.assertEqual(self.properties['LocalHome.PageRequest'], 'games')
         self.xbmc.executebuiltin.assert_not_called()
+        self.xbmc.playSFX.assert_not_called()
 
     def test_completed_empty_page_keeps_focus_outside_navigation(self):
         self.properties['LocalHome.GamesReady'] = 'true'
@@ -936,6 +968,7 @@ class NavigationTests(unittest.TestCase):
         navigation.switch_page(self.xbmc, self.gui, 'next')
         self.assertEqual(self.properties['LocalHome.Page'], 'home')
         self.xbmc.executebuiltin.assert_not_called()
+        self.xbmc.playSFX.assert_not_called()
 
 
 class DeclarationTests(unittest.TestCase):
@@ -987,6 +1020,12 @@ class DeclarationTests(unittest.TestCase):
         self.assertEqual(keymap.find('FullscreenVideo/keyboard/return').text, 'PlayPause')
         self.assertEqual(keymap.find('FullscreenVideo/joystick/a').text, 'PlayPause')
         self.assertEqual(keymap.find('VideoOSD/keyboard/right').text, 'StepForward')
+        self.assertEqual(keymap.findall('.//keyboard/leftstick'), [])
+        for window, directions in [('FullscreenVideo', ('left', 'right', 'up', 'down')),
+                                   ('VideoOSD', ('left', 'right'))]:
+            for direction in directions:
+                self.assertEqual(keymap.find(f'{window}/joystick/leftstick[@direction="{direction}"]').text,
+                                 keymap.find(f'{window}/keyboard/{direction}').text)
         self.assertEqual(keymap.find('global/joystick/x').text, 'ContextMenu')
         self.assertEqual(keymap.find('FullscreenVideo/joystick/x').text, 'OSD')
         self.assertEqual(keymap.find('VideoOSD/joystick/x').text, 'Close')
@@ -1028,6 +1067,61 @@ class SessionOwnershipTests(unittest.TestCase):
 
 
 class VideoControlTests(unittest.TestCase):
+    def test_episode_options_follow_watch_and_resume_state(self):
+        for position, playcount, labels in (
+                (0, 0, ['Play', 'Mark as watched', 'Episode information']),
+                (45, 1, ['Resume', 'Play from beginning', 'Mark as unwatched',
+                         'Clear resume point', 'Episode information'])):
+            xbmc, gui = mock.Mock(), mock.Mock()
+            xbmc.getCondVisibility.return_value = True
+            xbmc.getInfoLabel.return_value = '9'
+            xbmc.executeJSONRPC.return_value = json.dumps({'result': {'episodedetails': {
+                'file': '/shows/episode.mkv', 'playcount': playcount,
+                'resume': {'position': position}}}})
+            gui.Dialog.return_value.contextmenu.return_value = -1
+            video_controls.episode_options(xbmc, gui)
+            gui.Dialog.return_value.contextmenu.assert_called_once_with(labels)
+            self.assertEqual(xbmc.executeJSONRPC.call_count, 1)
+            xbmc.executebuiltin.assert_not_called()
+
+    def test_episode_watched_action_clears_resume_and_refreshes_list(self):
+        xbmc, gui = mock.Mock(), mock.Mock()
+        xbmc.getCondVisibility.return_value = True
+        xbmc.getInfoLabel.return_value = '9'
+        xbmc.executeJSONRPC.side_effect = [json.dumps({'result': {'episodedetails': {
+            'file': '/shows/episode.mkv', 'playcount': 0, 'resume': {'position': 45}}}}),
+            json.dumps({'result': 'OK'})]
+        gui.Dialog.return_value.contextmenu.return_value = 2
+        video_controls.episode_options(xbmc, gui)
+        request = json.loads(xbmc.executeJSONRPC.call_args.args[0])
+        self.assertEqual(request['method'], 'VideoLibrary.SetEpisodeDetails')
+        self.assertEqual(request['params'], {
+            'episodeid': 9, 'playcount': 1, 'resume': {'position': 0, 'total': 0}})
+        xbmc.executebuiltin.assert_called_once_with('Container.Refresh')
+
+    def test_episode_play_actions_explicitly_choose_resume(self):
+        for choice, resume in ((0, True), (1, False)):
+            xbmc, gui = mock.Mock(), mock.Mock()
+            xbmc.getCondVisibility.return_value = True
+            xbmc.getInfoLabel.return_value = '9'
+            xbmc.executeJSONRPC.side_effect = [json.dumps({'result': {'episodedetails': {
+                'file': '/shows/episode.mkv', 'resume': {'position': 45}}}}),
+                json.dumps({'result': 'OK'})]
+            gui.Dialog.return_value.contextmenu.return_value = choice
+            video_controls.episode_options(xbmc, gui)
+            request = json.loads(xbmc.executeJSONRPC.call_args.args[0])
+            self.assertEqual(request['method'], 'Player.Open')
+            self.assertEqual(request['params'], {
+                'item': {'episodeid': 9}, 'options': {'resume': resume}})
+
+    def test_non_episode_options_keep_native_context_menu(self):
+        xbmc, gui = mock.Mock(), mock.Mock()
+        xbmc.getCondVisibility.return_value = False
+        video_controls.episode_options(xbmc, gui)
+        xbmc.executebuiltin.assert_called_once_with('Action(ContextMenu)')
+        xbmc.executeJSONRPC.assert_not_called()
+        gui.Dialog.assert_not_called()
+
     def test_compact_native_osd(self):
         root = ET.parse(ROOT / 'config/kodi/skin.theatre/1080i/VideoOSD.xml').getroot()
         buttons = root.findall('.//control[@type="button"]')
@@ -1147,12 +1241,30 @@ class InputRoutingTests(unittest.TestCase):
                 mock.patch.object(router, 'profile', return_value=True) as profile, \
                 mock.patch.object(router, 'native_input') as native, \
                 mock.patch.object(input_router, 'windows') as windows:
+            order = mock.Mock()
+            order.attach_mock(native, 'native')
+            order.attach_mock(profile, 'profile')
             router.tick({})
             profile.assert_called_with('game')
+            native.assert_called_with(False)
             router.tick({})
             profile.assert_called_with('kodi')
-            native.assert_called_with(False)
+            native.assert_called_with(True)
+            self.assertEqual(order.mock_calls, [mock.call.native(False),
+                                               mock.call.profile('game'),
+                                               mock.call.profile('kodi'),
+                                               mock.call.native(True)])
             windows.assert_not_called()
+
+    def test_game_focus_blocks_native_input_even_without_inputplumber_devices(self):
+        router = input_router.Router()
+        with mock.patch.dict(os.environ, {'THEATRE_COMPOSITOR': 'gamescope'}), \
+                mock.patch.dict(game_session.TOOLS, {'xprop': '/trusted/xprop'}), \
+                mock.patch.object(gamescope, 'focused', return_value=gamescope.GAME_APP), \
+                mock.patch.object(router, 'profile', return_value=False), \
+                mock.patch.object(router, 'native_input') as native:
+            router.tick({})
+            native.assert_called_once_with(False)
 
     def test_gamescope_focus_keeps_kodi_as_loading_fallback(self):
         with mock.patch.object(gamescope.subprocess, 'run') as run:
@@ -1214,6 +1326,7 @@ class InputRoutingTests(unittest.TestCase):
             command.return_value = '_NET_ACTIVE_WINDOW: 0x1'
             router.tick(catalog)
             profile.assert_called_with('kodi')
+            native.assert_called_with(True)
             current.pop('0x2')
             router.tick(catalog)
             command.assert_any_call('xdotool', 'windowactivate', '0x1')
