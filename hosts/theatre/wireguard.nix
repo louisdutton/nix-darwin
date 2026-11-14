@@ -27,6 +27,10 @@ in {
           allowedIPs = ["10.70.0.0/24"];
           endpoint = "mini.lan:51820";
           persistentKeepalive = 25;
+          # DNS can still be unavailable after network-online.target. Refresh
+          # also enables unlimited service retries and follows address changes.
+          dynamicEndpointRefreshSeconds = 30;
+          dynamicEndpointRefreshRestartSeconds = 5;
         }
       ];
     };

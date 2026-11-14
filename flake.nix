@@ -11,6 +11,8 @@
     disko.inputs.nixpkgs.follows = "nixpkgs";
     apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
     apple-silicon.inputs.nixpkgs.follows = "nixpkgs";
+    tether.url = "github:louisdutton/tether";
+    tether.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs @ {
@@ -77,6 +79,11 @@
       inherit nixpkgs;
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
       package = self.packages.x86_64-linux.skiptro;
+    };
+
+    checks.x86_64-linux.wireguard-recovery = import ./tests/wireguard.nix {
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      interfaceConfig = self.nixosConfigurations.theatre.config.networking.wireguard.interfaces.wg0;
     };
 
     nixosConfigurations.mini = nixpkgs.lib.nixosSystem {

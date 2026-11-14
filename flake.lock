@@ -98,7 +98,8 @@
         "disko": "disko",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "sops-nix": "sops-nix"
+        "sops-nix": "sops-nix",
+        "tether": "tether"
       }
     },
     "sops-nix": {
@@ -118,6 +119,26 @@
       "original": {
         "owner": "mic92",
         "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "tether": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794602586,
+        "narHash": "sha256-fqR/UkxY3mo1APD+BF86cwV3zNqvM5JKXmohNDMLWUA=",
+        "owner": "louisdutton",
+        "repo": "tether",
+        "rev": "a2d8f14c9d7dad85933d88bd87e53268eba6c6f5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "louisdutton",
+        "repo": "tether",
         "type": "github"
       }
     }

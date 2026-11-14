@@ -15,6 +15,8 @@ in {
     ./disk-config.nix
     ./hardware-configuration.nix
     ./wireguard.nix
+    ./tether.nix
+    ./webdav.nix
     ../../modules/configuration.nix
     ../../modules/inputplumber.nix
     ../../modules/skiptro.nix
@@ -95,6 +97,13 @@ in {
     '')
   ];
   security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if (subject.user === "${user.name}" &&
+          (action.id === "org.freedesktop.login1.power-off" ||
+           action.id === "org.freedesktop.login1.power-off-multiple-sessions")) {
+        return polkit.Result.YES;
+      }
+    });
     polkit.addRule(function(action, subject) {
       if (action.id === "org.shadowblip.Input.CompositeDevice.LoadProfilePath" &&
           subject.user === "${user.name}" && subject.local && subject.active) {
